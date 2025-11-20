@@ -18,6 +18,7 @@ allprojects {
 }
 
 dependencies {
+    implementation(project(":plugins:fancycore:fc-api"))
     implementation("de.oliver.FancyAnalytics:java-sdk:0.0.4")
     implementation("de.oliver.FancyAnalytics:logger:0.0.8")
 }
