@@ -4,12 +4,14 @@ import com.fancyinnovations.fancycore.api.FancyCore;
 import com.fancyinnovations.fancycore.api.FancyCoreConfig;
 import com.fancyinnovations.fancycore.api.player.FancyPlayerService;
 import com.fancyinnovations.fancycore.api.player.FancyPlayerStorage;
+import com.fancyinnovations.fancycore.api.punishments.PunishmentStorage;
 import com.fancyinnovations.fancycore.config.FancyCoreConfigImpl;
 import com.fancyinnovations.fancycore.metrics.PluginMetrics;
 import com.fancyinnovations.fancycore.player.service.CleanUpPlayerCacheRunnable;
 import com.fancyinnovations.fancycore.player.service.FancyPlayerServiceImpl;
 import com.fancyinnovations.fancycore.player.storage.SavePlayersRunnable;
 import com.fancyinnovations.fancycore.player.storage.json.FancyPlayerJsonStorage;
+import com.fancyinnovations.fancycore.punishments.storage.json.PunishmentJsonStorage;
 import de.oliver.fancyanalytics.logger.ExtendedFancyLogger;
 import de.oliver.fancyanalytics.logger.LogLevel;
 import de.oliver.fancyanalytics.logger.appender.Appender;
@@ -32,12 +34,15 @@ public class FancyCorePlugin implements FancyCore {
 
     private final FancyCoreConfig fancyCoreConfig;
 
+    private final PluginMetrics pluginMetrics;
+
     private final FancyPlayerStorage playerStorage;
     private final FancyPlayerService playerService;
     private final SavePlayersRunnable savePlayersRunnable;
     private final CleanUpPlayerCacheRunnable cleanUpPlayerCacheRunnable;
 
-    private final PluginMetrics pluginMetrics;
+    private final PunishmentStorage punishmentStorage;
+
 
     public FancyCorePlugin() {
         INSTANCE = this;
@@ -75,6 +80,8 @@ public class FancyCorePlugin implements FancyCore {
         playerService = new FancyPlayerServiceImpl();
         savePlayersRunnable = new SavePlayersRunnable();
         cleanUpPlayerCacheRunnable = new CleanUpPlayerCacheRunnable();
+
+        punishmentStorage = new PunishmentJsonStorage();
     }
 
     public static FancyCorePlugin get() {
@@ -139,5 +146,10 @@ public class FancyCorePlugin implements FancyCore {
     @Override
     public FancyPlayerService getPlayerService() {
         return playerService;
+    }
+
+    @Override
+    public PunishmentStorage getPunishmentStorage() {
+        return punishmentStorage;
     }
 }

@@ -8,7 +8,6 @@ import de.oliver.fancyanalytics.logger.properties.StringProperty;
 import de.oliver.fancyanalytics.logger.properties.ThrowableProperty;
 import de.oliver.jdb.JDB;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.List;
 import java.util.UUID;
@@ -16,7 +15,6 @@ import java.util.UUID;
 public class FancyPlayerJsonStorage implements FancyPlayerStorage {
 
     private static final String DATA_DIR_PATH = "plugins/FancyCore/data/players";
-    private static final File DATA_DIR = new File(DATA_DIR_PATH);
     private final JDB jdb;
 
     public FancyPlayerJsonStorage() {
