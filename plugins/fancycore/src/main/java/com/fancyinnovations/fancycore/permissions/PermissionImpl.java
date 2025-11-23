@@ -5,7 +5,7 @@ import com.fancyinnovations.fancycore.api.permissions.Permission;
 public class PermissionImpl implements Permission {
 
     private final String permission;
-    private final boolean enabled;
+    private boolean enabled;
 
     public PermissionImpl(String permission, boolean enabled) {
         this.permission = permission;
@@ -20,5 +20,10 @@ public class PermissionImpl implements Permission {
     @Override
     public boolean isEnabled() {
         return enabled;
+    }
+
+    @Override
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
     }
 }

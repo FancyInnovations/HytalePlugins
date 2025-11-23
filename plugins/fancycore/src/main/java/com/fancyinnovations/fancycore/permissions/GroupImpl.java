@@ -33,6 +33,7 @@ public class GroupImpl implements Group {
         this.members = members;
     }
 
+    @Override
     public boolean checkPermission(String permission) {
         for (Permission p : permissions) {
             if (p.getPermission().equalsIgnoreCase(permission)) {

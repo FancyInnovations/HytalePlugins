@@ -52,6 +52,8 @@ public class PlayerModifiedEvent extends PlayerEvent {
     }
 
     public enum ModifiedField {
+        PERMISSIONS,
+        GROUPS,
         NICKNAME,
         CHAT_COLOR,
         BALANCE,
