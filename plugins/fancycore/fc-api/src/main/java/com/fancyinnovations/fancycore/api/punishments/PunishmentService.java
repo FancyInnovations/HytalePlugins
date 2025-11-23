@@ -18,4 +18,6 @@ public interface PunishmentService {
 
     List<Punishment> getPunishmentsForPlayer(FancyPlayer player);
 
+    void reportPlayer(FancyPlayer reported, FancyPlayer staff, String reason);
+
 }

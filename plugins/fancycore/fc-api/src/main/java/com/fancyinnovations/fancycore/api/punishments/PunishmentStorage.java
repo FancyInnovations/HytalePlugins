@@ -16,4 +16,11 @@ public interface PunishmentStorage {
 
     @ApiStatus.Internal
     List<Punishment> getAllPunishments();
+
+
+    @ApiStatus.Internal
+    void createReport(PlayerReport report);
+
+    @ApiStatus.Internal
+    List<PlayerReport> getAllReports();
 }

@@ -1,5 +1,6 @@
 package com.fancyinnovations.fancycore.punishments.storage.json;
 
+import com.fancyinnovations.fancycore.api.punishments.PlayerReport;
 import com.fancyinnovations.fancycore.api.punishments.Punishment;
 import com.fancyinnovations.fancycore.api.punishments.PunishmentStorage;
 import com.fancyinnovations.fancycore.main.FancyCorePlugin;
@@ -15,17 +16,20 @@ import java.util.UUID;
 
 public class PunishmentJsonStorage implements PunishmentStorage {
 
-    private static final String DATA_DIR_PATH = "plugins/FancyCore/data/punishments";
-    private final JDB jdb;
+    private static final String PUNISHMENTS_DATA_DIR_PATH = "plugins/FancyCore/data/punishments";
+    private static final String REPORTS_DATA_DIR_PATH = "plugins/FancyCore/data/reports";
+    private final JDB punishmentDB;
+    private final JDB reportDB;
 
     public PunishmentJsonStorage() {
-        this.jdb = new JDB(DATA_DIR_PATH);
+        this.punishmentDB = new JDB(PUNISHMENTS_DATA_DIR_PATH);
+        this.reportDB = new JDB(REPORTS_DATA_DIR_PATH);
     }
 
     @Override
     public void createPunishment(Punishment punishment) {
         try {
-            jdb.set(punishment.player().toString() + "/" + punishment.id().toString(), punishment);
+            punishmentDB.set(punishment.player().toString() + "/" + punishment.id().toString(), punishment);
         } catch (IOException e) {
             FancyCorePlugin.get().getFancyLogger().error(
                     "Failed to store Punishment",
@@ -38,7 +42,7 @@ public class PunishmentJsonStorage implements PunishmentStorage {
     @Override
     public List<Punishment> getPunishmentsForPlayer(UUID player) {
         try {
-            return jdb.getAll(player.toString(), Punishment.class);
+            return punishmentDB.getAll(player.toString(), Punishment.class);
         } catch (IOException e) {
             FancyCorePlugin.get().getFancyLogger().error(
                     "Failed to load Punishments for player",
@@ -52,7 +56,7 @@ public class PunishmentJsonStorage implements PunishmentStorage {
 
     @Override
     public List<Punishment> getAllPunishments() {
-        File dir = new File(DATA_DIR_PATH);
+        File dir = new File(PUNISHMENTS_DATA_DIR_PATH);
         File[] playerDirs = dir.listFiles(File::isDirectory);
         if (playerDirs == null) {
             return List.of();
@@ -64,5 +68,32 @@ public class PunishmentJsonStorage implements PunishmentStorage {
         }
 
         return all;
+    }
+
+    @Override
+    public void createReport(PlayerReport report) {
+        try {
+            reportDB.set(report.id().toString(), report);
+        } catch (IOException e) {
+            FancyCorePlugin.get().getFancyLogger().error(
+                    "Failed to store PlayerReport",
+                    StringProperty.of("reportedPlayer", report.reportedPlayer().toString()),
+                    ThrowableProperty.of(e)
+            );
+        }
+    }
+
+    @Override
+    public List<PlayerReport> getAllReports() {
+        try {
+            return reportDB.getAll("", PlayerReport.class);
+        } catch (IOException e) {
+            FancyCorePlugin.get().getFancyLogger().error(
+                    "Failed to load PlayerReports",
+                    ThrowableProperty.of(e)
+            );
+        }
+
+        return List.of();
     }
 }

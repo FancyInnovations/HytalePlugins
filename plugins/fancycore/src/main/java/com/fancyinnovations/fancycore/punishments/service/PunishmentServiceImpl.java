@@ -1,12 +1,14 @@
 package com.fancyinnovations.fancycore.punishments.service;
 
 import com.fancyinnovations.fancycore.api.events.player.PlayerPunishedEvent;
+import com.fancyinnovations.fancycore.api.events.player.PlayerReportedEvent;
 import com.fancyinnovations.fancycore.api.player.FancyPlayer;
 import com.fancyinnovations.fancycore.api.punishments.Punishment;
 import com.fancyinnovations.fancycore.api.punishments.PunishmentService;
 import com.fancyinnovations.fancycore.api.punishments.PunishmentStorage;
 import com.fancyinnovations.fancycore.api.punishments.PunishmentType;
 import com.fancyinnovations.fancycore.main.FancyCorePlugin;
+import com.fancyinnovations.fancycore.punishments.PlayerReportImpl;
 import com.fancyinnovations.fancycore.punishments.PunishmentImpl;
 import com.fancyinnovations.fancycore.translations.TranslationService;
 
@@ -38,6 +40,8 @@ public class PunishmentServiceImpl implements PunishmentService {
                 .addMessage("punishments.ban.perm.success", "Successfully banned {player} for: {reason}.")
                 .addMessage("punishments.ban.temp.default_reason", "You have been temporarily banned from the server for: {reason}. Duration: {duration}.")
                 .addMessage("punishments.ban.temp.success", "Successfully temporarily banned {player} for: {reason}. Duration: {duration}.")
+
+                .addMessage("punishments.report.successfully_reported", "You have reported {reported} for: {reason}.\nOur staff will review your report soon.")
         ;
     }
 
@@ -207,5 +211,26 @@ public class PunishmentServiceImpl implements PunishmentService {
     @Override
     public List<Punishment> getPunishmentsForPlayer(FancyPlayer player) {
         return storage.getPunishmentsForPlayer(player.getUUID());
+    }
+
+    @Override
+    public void reportPlayer(FancyPlayer reported, FancyPlayer staff, String reason) {
+        PlayerReportImpl report = new PlayerReportImpl(
+                UUID.randomUUID(),
+                reported,
+                staff,
+                reason
+        );
+
+        if (!new PlayerReportedEvent(reported, report).fire()) {
+            return;
+        }
+
+        storage.createReport(report);
+
+        translator.getMessage("punishments.report.successfully_reported")
+                .replace("{reported}", reported.getUsername())
+                .replace("{reason}", reason)
+                .sendTo(staff);
     }
 }
