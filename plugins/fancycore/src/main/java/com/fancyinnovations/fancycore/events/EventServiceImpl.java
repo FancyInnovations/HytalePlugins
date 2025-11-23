@@ -1,8 +1,8 @@
 package com.fancyinnovations.fancycore.events;
 
-import com.fancyinnovations.fancycore.api.events.EventListener;
-import com.fancyinnovations.fancycore.api.events.EventService;
 import com.fancyinnovations.fancycore.api.events.FancyEvent;
+import com.fancyinnovations.fancycore.api.events.service.EventListener;
+import com.fancyinnovations.fancycore.api.events.service.EventService;
 
 import java.util.ArrayList;
 import java.util.List;

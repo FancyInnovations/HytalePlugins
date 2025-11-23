@@ -1,4 +1,6 @@
-package com.fancyinnovations.fancycore.api.events;
+package com.fancyinnovations.fancycore.api.events.service;
+
+import com.fancyinnovations.fancycore.api.events.FancyEvent;
 
 public interface EventService {
 

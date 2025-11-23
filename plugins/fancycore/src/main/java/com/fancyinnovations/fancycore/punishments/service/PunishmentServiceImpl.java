@@ -1,11 +1,11 @@
 package com.fancyinnovations.fancycore.punishments.service;
 
+import com.fancyinnovations.fancycore.api.events.punishments.PlayerPunishedEvent;
 import com.fancyinnovations.fancycore.api.player.FancyPlayer;
 import com.fancyinnovations.fancycore.api.punishments.Punishment;
 import com.fancyinnovations.fancycore.api.punishments.PunishmentService;
 import com.fancyinnovations.fancycore.api.punishments.PunishmentStorage;
 import com.fancyinnovations.fancycore.api.punishments.PunishmentType;
-import com.fancyinnovations.fancycore.api.punishments.events.PlayerPunishedEvent;
 import com.fancyinnovations.fancycore.main.FancyCorePlugin;
 import com.fancyinnovations.fancycore.punishments.PunishmentImpl;
 

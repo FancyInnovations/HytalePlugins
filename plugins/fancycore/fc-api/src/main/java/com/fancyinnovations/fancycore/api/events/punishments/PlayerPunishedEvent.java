@@ -1,6 +1,6 @@
-package com.fancyinnovations.fancycore.api.punishments.events;
+package com.fancyinnovations.fancycore.api.events.punishments;
 
-import com.fancyinnovations.fancycore.api.events.PlayerEvent;
+import com.fancyinnovations.fancycore.api.events.player.PlayerEvent;
 import com.fancyinnovations.fancycore.api.player.FancyPlayer;
 import com.fancyinnovations.fancycore.api.punishments.Punishment;
 

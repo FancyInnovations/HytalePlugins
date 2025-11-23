@@ -1,6 +1,6 @@
 package com.fancyinnovations.fancycore.api;
 
-import com.fancyinnovations.fancycore.api.events.EventService;
+import com.fancyinnovations.fancycore.api.events.service.EventService;
 import com.fancyinnovations.fancycore.api.player.FancyPlayerService;
 import com.fancyinnovations.fancycore.api.player.FancyPlayerStorage;
 import com.fancyinnovations.fancycore.api.punishments.PunishmentService;
