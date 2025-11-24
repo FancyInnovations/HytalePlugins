@@ -4,4 +4,8 @@ This repository contains a collection of Hytale plugins developed by FancyInnova
 
 ## Plugins
 
-- **FancyCore**: A core plugin that provides essential functionalities and utilities.
+### FancyCore
+
+A core plugin that provides essential functionalities and utilities.
+
+Documentation: https://docs.fancyinnovations.com/fancycore/
