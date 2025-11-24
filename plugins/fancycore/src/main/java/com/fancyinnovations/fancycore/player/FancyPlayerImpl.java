@@ -1,5 +1,8 @@
 package com.fancyinnovations.fancycore.player;
 
+import com.fancyinnovations.fancycore.api.FancyCore;
+import com.fancyinnovations.fancycore.api.moderation.Punishment;
+import com.fancyinnovations.fancycore.api.moderation.PunishmentType;
 import com.fancyinnovations.fancycore.api.permissions.Permission;
 import com.fancyinnovations.fancycore.api.player.FakeHytalePlayer;
 import com.fancyinnovations.fancycore.api.player.FancyPlayer;
@@ -74,6 +77,28 @@ public class FancyPlayerImpl implements FancyPlayer {
             }
         }
         return false;
+    }
+
+    @Override
+    public Punishment isMuted() {
+        for (Punishment punishment : FancyCore.get().getPunishmentService().getPunishmentsForPlayer(this)) {
+            if (punishment.type() == PunishmentType.MUTE && punishment.isActive()) {
+                return punishment;
+            }
+        }
+
+        return null;
+    }
+
+    @Override
+    public Punishment isBanned() {
+        for (Punishment punishment : FancyCore.get().getPunishmentService().getPunishmentsForPlayer(this)) {
+            if (punishment.type() == PunishmentType.BAN && punishment.isActive()) {
+                return punishment;
+            }
+        }
+
+        return null;
     }
 
 
