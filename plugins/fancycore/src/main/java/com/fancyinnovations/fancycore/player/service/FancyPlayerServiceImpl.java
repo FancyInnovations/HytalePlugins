@@ -6,6 +6,7 @@ import com.fancyinnovations.fancycore.api.player.FancyPlayerService;
 import com.fancyinnovations.fancycore.api.player.FancyPlayerStorage;
 import com.fancyinnovations.fancycore.main.FancyCorePlugin;
 import com.fancyinnovations.fancycore.player.FancyPlayerImpl;
+import org.jetbrains.annotations.ApiStatus;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,10 +17,12 @@ import java.util.concurrent.ConcurrentHashMap;
 public class FancyPlayerServiceImpl implements FancyPlayerService {
 
     private final Map<UUID, FancyPlayer> cache;
+    private final List<FancyPlayer> onlinePlayers;
     private final FancyPlayerStorage storage;
 
     public FancyPlayerServiceImpl() {
         this.cache = new ConcurrentHashMap<>();
+        this.onlinePlayers = new ArrayList<>();
         this.storage = FancyCorePlugin.get().getPlayerStorage();
     }
 
@@ -44,7 +47,22 @@ public class FancyPlayerServiceImpl implements FancyPlayerService {
     }
 
     @Override
-    public List<FancyPlayer> getAll() {
+    public List<FancyPlayer> getOnlinePlayers() {
+        return new ArrayList<>(onlinePlayers);
+    }
+
+    @ApiStatus.Internal
+    public void addOnlinePlayer(FancyPlayer player) {
+        onlinePlayers.add(player);
+    }
+
+    @ApiStatus.Internal
+    public void removeOnlinePlayer(FancyPlayer player) {
+        onlinePlayers.remove(player);
+    }
+
+    @ApiStatus.Internal
+    public List<FancyPlayer> getAllCached() {
         return new ArrayList<>(cache.values());
     }
 

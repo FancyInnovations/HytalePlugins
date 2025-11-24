@@ -1,9 +1,9 @@
 package com.fancyinnovations.fancycore.player.storage;
 
 import com.fancyinnovations.fancycore.api.player.FancyPlayer;
-import com.fancyinnovations.fancycore.api.player.FancyPlayerService;
 import com.fancyinnovations.fancycore.api.player.FancyPlayerStorage;
 import com.fancyinnovations.fancycore.main.FancyCorePlugin;
+import com.fancyinnovations.fancycore.player.service.FancyPlayerServiceImpl;
 import de.oliver.fancyanalytics.logger.properties.NumberProperty;
 import de.oliver.fancyanalytics.logger.properties.ThrowableProperty;
 
@@ -13,12 +13,12 @@ import java.util.concurrent.TimeUnit;
 
 public class SavePlayersRunnable implements Runnable{
 
-    private final FancyPlayerService service;
+    private final FancyPlayerServiceImpl service;
     private final FancyPlayerStorage storage;
     private ScheduledFuture<?> schedule;
 
     public SavePlayersRunnable() {
-        this.service = FancyCorePlugin.get().getPlayerService();
+        this.service = (FancyPlayerServiceImpl) FancyCorePlugin.get().getPlayerService();
         this.storage = FancyCorePlugin.get().getPlayerStorage();
     }
 
@@ -27,7 +27,7 @@ public class SavePlayersRunnable implements Runnable{
         try {
             long start = System.currentTimeMillis();
 
-            List<FancyPlayer> all = service.getAll();
+            List<FancyPlayer> all = service.getAllCached();
             for (FancyPlayer fp : all) {
                 if (fp.getData().isDirty()) {
                     storage.savePlayer(fp.getData());

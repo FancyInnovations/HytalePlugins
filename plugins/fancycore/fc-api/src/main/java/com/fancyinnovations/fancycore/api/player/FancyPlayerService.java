@@ -11,5 +11,5 @@ public interface FancyPlayerService {
 
     @Nullable FancyPlayer getByUsername(String username);
 
-    List<FancyPlayer> getAll();
+    List<FancyPlayer> getOnlinePlayers();
 }
