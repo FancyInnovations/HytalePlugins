@@ -1,0 +1,11 @@
+version: 2
+updates:
+  # gradle dependencies
+  - package-ecosystem: "gradle"
+    directory: "/"
+    schedule:
+      interval: "daily"
+    groups:
+      gradle-all:
+        patterns:
+          - "*"
