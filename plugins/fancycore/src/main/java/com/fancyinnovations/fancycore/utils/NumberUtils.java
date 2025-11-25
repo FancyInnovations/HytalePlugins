@@ -1,14 +1,21 @@
 package com.fancyinnovations.fancycore.utils;
 
 import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
+import java.util.Locale;
 
 public class NumberUtils {
 
     private static final String[] NUMBER_SUFFIXES = {
-        "", "k", "m", "b", "t", "q", "Q"
+            "", "k", "m", "b", "t", "q", "Q"
     };
 
-    private static final DecimalFormat FORMAT_TWO_DECIMALS = new DecimalFormat("#.##");
+    private static final DecimalFormat FORMAT_TWO_DECIMALS;
+
+    static {
+        DecimalFormatSymbols symbols = new DecimalFormatSymbols(Locale.US);
+        FORMAT_TWO_DECIMALS = new DecimalFormat("#.##", symbols);
+    }
 
     public static String formatNumber(double value) {
         if (Double.isNaN(value) || Double.isInfinite(value)) {
