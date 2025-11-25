@@ -30,6 +30,9 @@ dependencies {
 
     compileOnly("com.google.code.gson:gson:2.13.2")
     implementation("org.jetbrains:annotations:26.0.2-1")
+
+    testImplementation("org.junit.jupiter:junit-jupiter:5.10.0")
+    testRuntimeOnly("org.junit.platform:junit-platform-launcher")
 }
 
 runHytale {
@@ -65,6 +68,11 @@ tasks {
             expand(props)
         }
     }
+
+    test {
+        useJUnitPlatform()
+    }
+
 }
 
 java {
