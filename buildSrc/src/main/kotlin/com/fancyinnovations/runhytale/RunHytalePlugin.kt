@@ -74,6 +74,14 @@ open class RunServerTask : DefaultTask() {
             .directory(runDir)
             .start()
 
+        // Handle task cancellation
+        project.gradle.buildFinished {
+            if (process.isAlive) {
+                println("Task cancelled. Stopping the server...")
+                process.destroy()
+            }
+        }
+
         // Thread to read stdout and print it live
         Thread {
             process.inputStream.bufferedReader().useLines { lines ->
