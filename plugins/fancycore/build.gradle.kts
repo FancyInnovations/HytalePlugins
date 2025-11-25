@@ -28,8 +28,8 @@ dependencies {
     implementation("de.oliver.FancyAnalytics:java-sdk:0.0.4")
     implementation("de.oliver.FancyAnalytics:logger:0.0.8")
 
-    compileOnly("com.google.code.gson:gson:2.13.1")
-    implementation("org.jetbrains:annotations:26.0.2")
+    compileOnly("com.google.code.gson:gson:2.13.2")
+    implementation("org.jetbrains:annotations:26.0.2-1")
 }
 
 runHytale {
