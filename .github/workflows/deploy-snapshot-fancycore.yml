@@ -37,6 +37,7 @@ jobs:
         uses: fancyinnovations/fancyverteiler@main
         with:
           config_path: "/plugins/fancycore/snapshot_deployment_config.json"
+          fancyspaces_api_key: ${{ secrets.FANCYSPACES_API_KEY }}
           modtale_api_key: ${{ secrets.MODTALE_API_KEY }}
           discord_webhook_url: ${{ secrets.DISCORD_WEBHOOK_URL }}
 

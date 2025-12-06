@@ -3,6 +3,11 @@
   "plugin_jar_path": "/plugins/fancycore/build/libs/FancyCore-%VERSION%.jar",
   "changelog_path": "/plugins/fancycore/CHANGELOG-SNAPSHOT.md",
   "version_path": "/plugins/fancycore/VERSION",
+  "fancyspaces": {
+    "space_id": "fc",
+    "channel": "alpha",
+    "supported_versions": [ "TODO" ]
+  },
   "modtale": {
     "project_id": "fancycore-56e19ffa-ee14-443e-9cff-b3d56ff37935",
     "game_versions": [ "TODO" ]
