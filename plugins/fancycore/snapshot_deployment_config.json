@@ -5,6 +5,7 @@
   "version_path": "/plugins/fancycore/VERSION",
   "fancyspaces": {
     "space_id": "fc",
+    "platform": "hytale_plugin",
     "channel": "alpha",
     "supported_versions": [ "TODO" ]
   },
