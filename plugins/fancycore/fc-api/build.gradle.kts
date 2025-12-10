@@ -5,7 +5,7 @@ plugins {
 }
 
 dependencies {
-    compileOnly("de.oliver.FancyAnalytics:logger:0.0.8")
+    compileOnly("de.oliver.FancyAnalytics:logger:0.0.9")
     compileOnly("org.jetbrains:annotations:26.0.2-1")
 }
 
