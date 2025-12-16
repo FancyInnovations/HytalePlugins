@@ -1,0 +1,11 @@
+{
+  "Group": "FancyInnovations",
+  "Name": "FancyCore",
+  "Version": "$version",
+  "Website": "https://fancyinnovations.com/docs/hytale-plugins/fancycore",
+  "Main": "com.fancyinnovations.fancycore.FancyCorePlugin",
+  "ServerVersion": "*",
+  "Dependencies": {
+    "Hytale:I18nModule": "*"
+  }
+}

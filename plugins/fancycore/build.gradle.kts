@@ -67,6 +67,9 @@ tasks {
         filesMatching("version.yml") {
             expand(props)
         }
+        filesMatching("plugin-manifest.json") {
+            expand(props)
+        }
     }
 
     test {
