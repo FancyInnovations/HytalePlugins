@@ -15,6 +15,7 @@ public class FancyPlayerImpl implements FancyPlayer {
 
     private final FancyPlayerData data;
     private FakeHytalePlayer player;
+    private long joinedAt;
 
     public FancyPlayerImpl(FancyPlayerData data) {
         this.data = data;
@@ -24,6 +25,7 @@ public class FancyPlayerImpl implements FancyPlayer {
     public FancyPlayerImpl(FancyPlayerData data, FakeHytalePlayer player) {
         this.data = data;
         this.player = player;
+        this.joinedAt = -1;
 
         this.data.setUUID(player.getUUID());
         this.data.setUsername(data.getUsername());
@@ -49,6 +51,14 @@ public class FancyPlayerImpl implements FancyPlayer {
 
         this.data.setUUID(player.getUUID());
         this.data.setUsername(data.getUsername());
+    }
+
+    public long getJoinedAt() {
+        return joinedAt;
+    }
+
+    public void setJoinedAt(long joinedAt) {
+        this.joinedAt = joinedAt;
     }
 
     @Override

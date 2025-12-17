@@ -2,8 +2,8 @@ package com.fancyinnovations.fancycore.listeners;
 
 import com.fancyinnovations.fancycore.api.moderation.Punishment;
 import com.fancyinnovations.fancycore.api.player.FakeHytalePlayer;
-import com.fancyinnovations.fancycore.api.player.FancyPlayer;
 import com.fancyinnovations.fancycore.main.FancyCorePlugin;
+import com.fancyinnovations.fancycore.player.FancyPlayerImpl;
 import com.fancyinnovations.fancycore.player.service.FancyPlayerServiceImpl;
 import org.jetbrains.annotations.NotNull;
 
@@ -14,7 +14,7 @@ public class PlayerJoinListener {
     public void onPlayerJoin(PlayerJoinEvent event) {
         // TODO: use real event and register listener properly
 
-        FancyPlayer fp = playerService.getByUUID(event.getPlayer().getUUID());
+        FancyPlayerImpl fp = (FancyPlayerImpl) playerService.getByUUID(event.getPlayer().getUUID());
         Punishment punishment = fp.isBanned();
         if (punishment != null) {
             event.cancel();
@@ -24,6 +24,7 @@ public class PlayerJoinListener {
 
 
         fp.setPlayer(event.getPlayer());
+        fp.setJoinedAt(System.currentTimeMillis());
 
         playerService.addOnlinePlayer(fp);
     }

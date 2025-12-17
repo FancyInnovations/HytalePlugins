@@ -1,8 +1,8 @@
 package com.fancyinnovations.fancycore.listeners;
 
 import com.fancyinnovations.fancycore.api.player.FakeHytalePlayer;
-import com.fancyinnovations.fancycore.api.player.FancyPlayer;
 import com.fancyinnovations.fancycore.main.FancyCorePlugin;
+import com.fancyinnovations.fancycore.player.FancyPlayerImpl;
 import com.fancyinnovations.fancycore.player.service.FancyPlayerServiceImpl;
 import org.jetbrains.annotations.NotNull;
 
@@ -13,8 +13,12 @@ public class PlayerLeaveListener {
     public void onPlayerLeave(PlayerLeaveEvent event) {
         // TODO: use real event and register listener properly
 
-        FancyPlayer fp = playerService.getByUUID(event.getPlayer().getUUID());
+        FancyPlayerImpl fp = (FancyPlayerImpl) playerService.getByUUID(event.getPlayer().getUUID());
         fp.setPlayer(null);
+
+        long playtime = System.currentTimeMillis() - fp.getJoinedAt();
+        fp.getData().addPlayTime(playtime);
+        fp.setJoinedAt(-1);
 
         playerService.removeOnlinePlayer(fp);
     }
