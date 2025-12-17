@@ -1,5 +1,6 @@
 package com.fancyinnovations.fancycore.placeholders.builtin.player;
 
+import com.fancyinnovations.fancycore.api.FancyCore;
 import com.fancyinnovations.fancycore.api.placeholders.PlaceholderProvider;
 import com.fancyinnovations.fancycore.api.player.FancyPlayer;
 import com.fancyinnovations.fancycore.utils.NumberUtils;
@@ -25,6 +26,6 @@ public class PlayerBalanceFormattedPlaceholder implements PlaceholderProvider {
 
     @Override
     public String parse(@Nullable FancyPlayer player, @NotNull String input) {
-        return NumberUtils.formatNumber(player.getData().getBalance());
+        return NumberUtils.formatNumber(player.getData().getBalance(FancyCore.get().getCurrencyService().getPrimaryCurrency()));
     }
 }

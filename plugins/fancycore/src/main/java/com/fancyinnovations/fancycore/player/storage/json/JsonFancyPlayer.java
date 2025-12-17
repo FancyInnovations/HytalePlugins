@@ -1,15 +1,15 @@
 package com.fancyinnovations.fancycore.player.storage.json;
 
+import com.fancyinnovations.fancycore.api.FancyCore;
+import com.fancyinnovations.fancycore.api.economy.Currency;
 import com.fancyinnovations.fancycore.api.permissions.Permission;
 import com.fancyinnovations.fancycore.api.player.FancyPlayerData;
 import com.fancyinnovations.fancycore.player.FancyPlayerDataImpl;
 import com.google.gson.annotations.SerializedName;
 
 import java.awt.*;
-import java.util.ArrayList;
+import java.util.*;
 import java.util.List;
-import java.util.Map;
-import java.util.UUID;
 
 public record JsonFancyPlayer(
         String uuid,
@@ -18,7 +18,7 @@ public record JsonFancyPlayer(
         @SerializedName("group_ids") List<String> groupIDs,
         String nickname,
         @SerializedName("chat_color") String chatColor,
-        double balance,
+        Map<String, Double> balances,
         @SerializedName("first_login_time") long firstLoginTime,
         @SerializedName("play_time") long playTime,
         @SerializedName("custom_data") Map<String, Object> customData
@@ -38,6 +38,11 @@ public record JsonFancyPlayer(
             groupIDs.add(groupID.toString());
         }
 
+        Map<String, Double> balances = new HashMap<>();
+        for (var entry : player.getBalances().entrySet()) {
+            balances.put(entry.getKey().name(), entry.getValue());
+        }
+
         return new JsonFancyPlayer(
                 player.getUUID().toString(),
                 player.getUsername(),
@@ -45,7 +50,7 @@ public record JsonFancyPlayer(
                 groupIDs,
                 player.getNickname(),
                 Integer.toHexString(player.getChatColor().getRGB()),
-                player.getBalance(),
+                balances,
                 player.getFirstLoginTime(),
                 player.getPlayTime(),
                 player.getCustomData()
@@ -66,6 +71,17 @@ public record JsonFancyPlayer(
             groups.add(UUID.fromString(groupID));
         }
 
+        Map<Currency, Double> balances = new HashMap<>();
+        for (var entry : this.balances.entrySet()) {
+            Currency currency = FancyCore.get().getCurrencyService().getCurrency(entry.getKey());
+            if (currency == null) {
+                FancyCore.get().getFancyLogger().warn("Currency with name '" + entry.getKey() + "' not found for player " + username);
+                continue;
+            }
+
+            balances.put(currency, entry.getValue());
+        }
+
         return new FancyPlayerDataImpl(
                 UUID.fromString(uuid),
                 username,
@@ -73,7 +89,7 @@ public record JsonFancyPlayer(
                 groups,
                 nickname,
                 new Color((int) Long.parseLong(chatColor, 16), true),
-                balance,
+                balances,
                 firstLoginTime,
                 playTime,
                 customData

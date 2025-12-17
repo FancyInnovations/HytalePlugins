@@ -1,5 +1,6 @@
 package com.fancyinnovations.fancycore.placeholders.builtin.player;
 
+import com.fancyinnovations.fancycore.api.FancyCore;
 import com.fancyinnovations.fancycore.api.placeholders.PlaceholderProvider;
 import com.fancyinnovations.fancycore.api.player.FancyPlayer;
 import org.jetbrains.annotations.NotNull;
@@ -24,6 +25,6 @@ public class PlayerBalanceRawPlaceholder implements PlaceholderProvider {
 
     @Override
     public String parse(@Nullable FancyPlayer player, @NotNull String input) {
-        return String.valueOf(player.getData().getBalance());
+        return String.valueOf(player.getData().getBalance(FancyCore.get().getCurrencyService().getPrimaryCurrency()));
     }
 }

@@ -1,5 +1,6 @@
 package com.fancyinnovations.fancycore.api.player;
 
+import com.fancyinnovations.fancycore.api.economy.Currency;
 import com.fancyinnovations.fancycore.api.permissions.Permission;
 import org.jetbrains.annotations.ApiStatus;
 
@@ -47,13 +48,15 @@ public interface FancyPlayerData {
 
     void setChatColor(Color chatColor);
 
-    double getBalance();
+    double getBalance(Currency currency);
 
-    void setBalance(double balance);
+    Map<Currency, Double> getBalances();
 
-    void addBalance(double balance);
+    void setBalance(Currency currency, double balance);
 
-    void removeBalance(double balance);
+    void addBalance(Currency currency, double balance);
+
+    void removeBalance(Currency currency, double balance);
 
     long getFirstLoginTime();
 

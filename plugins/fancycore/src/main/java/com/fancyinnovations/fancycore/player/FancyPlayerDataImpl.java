@@ -1,5 +1,6 @@
 package com.fancyinnovations.fancycore.player;
 
+import com.fancyinnovations.fancycore.api.economy.Currency;
 import com.fancyinnovations.fancycore.api.permissions.Permission;
 import com.fancyinnovations.fancycore.api.player.FancyPlayerData;
 import com.fancyinnovations.fancycore.permissions.PermissionImpl;
@@ -21,7 +22,7 @@ public class FancyPlayerDataImpl implements FancyPlayerData {
     private String username;
     private String nickname;
     private Color chatColor;
-    private double balance;
+    private Map<Currency, Double> balances;
     private long firstLoginTime; // timestamp
     private long playTime; // in milliseconds
     private boolean isDirty;
@@ -36,7 +37,7 @@ public class FancyPlayerDataImpl implements FancyPlayerData {
         this.groups = new ArrayList<>();
         this.nickname = username; // default nickname is the username
         this.chatColor = Color.WHITE;
-        this.balance = 0.0;
+        this.balances = new ConcurrentHashMap<>();
         this.firstLoginTime = System.currentTimeMillis();
         this.playTime = 0L;
         this.customData = new ConcurrentHashMap<>();
@@ -51,7 +52,7 @@ public class FancyPlayerDataImpl implements FancyPlayerData {
             List<UUID> groups,
             String nickname,
             Color chatColor,
-            double balance,
+            Map<Currency, Double> balances,
             long firstLoginTime,
             long playTime,
             Map<String, Object> customData
@@ -62,7 +63,7 @@ public class FancyPlayerDataImpl implements FancyPlayerData {
         this.groups = groups;
         this.nickname = nickname;
         this.chatColor = chatColor;
-        this.balance = balance;
+        this.balances = balances;
         this.firstLoginTime = firstLoginTime;
         this.playTime = playTime;
         this.customData = customData;
@@ -169,24 +170,31 @@ public class FancyPlayerDataImpl implements FancyPlayerData {
     }
 
     @Override
-    public double getBalance() {
-        return balance;
+    public double getBalance(Currency currency) {
+        return balances.getOrDefault(currency, 0.0);
     }
 
     @Override
-    public void setBalance(double balance) {
-        this.balance = balance;
+    public Map<Currency, Double> getBalances() {
+        return balances;
+    }
+
+    @Override
+    public void setBalance(Currency currency, double balance) {
+        balances.put(currency, balance);
         this.isDirty = true;
     }
 
     @Override
-    public void addBalance(double amount) {
-        setBalance(this.balance + amount);
+    public void addBalance(Currency currency, double balance) {
+        double currentBalance = getBalance(currency);
+        setBalance(currency, currentBalance + balance);
     }
 
     @Override
-    public void removeBalance(double amount) {
-        setBalance(this.balance - amount);
+    public void removeBalance(Currency currency, double balance) {
+        double currentBalance = getBalance(currency);
+        setBalance(currency, currentBalance - balance);
     }
 
     @Override
