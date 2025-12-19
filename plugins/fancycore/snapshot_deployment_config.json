@@ -21,6 +21,6 @@
   "unifiedhytale": {
     "project_id": "bdf8f934-3fa6-4101-a666-86b77adcbb25",
     "game_versions": [ "Release 1.0" ],
-    "release_channel": "snapshot"
+    "release_channel": "alpha"
   }
 }
