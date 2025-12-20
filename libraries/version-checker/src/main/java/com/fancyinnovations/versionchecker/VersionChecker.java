@@ -48,16 +48,17 @@ public class VersionChecker {
      */
     public void checkPluginVersionChanged(ApiClient apiClient, String faProjectID) {
         try {
-            FetchedVersion currentVersion = versionFetcher.version(versionConfig.version());
             VersionConfig oldVersionConfig = VersionConfig.loadVersionConfig("plugins/" + pluginName + "/version.json");
 
-            if (currentVersion.name().equals(oldVersionConfig.version())) {
+            if (versionConfig.version().equals(oldVersionConfig.version())) {
                 return;
             }
 
+            versionConfig.saveFile("plugins/" + pluginName + "/version.json");
+
             Event event = new Event("PluginVersionChanged", new HashMap<>())
                     .withProperty("from", oldVersionConfig.version())
-                    .withProperty("to", currentVersion.name());
+                    .withProperty("to", versionConfig.version());
 
             apiClient.getEventService().createEvent(faProjectID, event);
 
