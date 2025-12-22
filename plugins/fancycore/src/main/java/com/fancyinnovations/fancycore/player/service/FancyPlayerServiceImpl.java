@@ -70,6 +70,10 @@ public class FancyPlayerServiceImpl implements FancyPlayerService {
     public FancyPlayer tryToGetFromStorage(UUID uuid) {
         try {
             FancyPlayerData data = storage.loadPlayer(uuid);
+            if (data == null) {
+                return null;
+            }
+
             FancyPlayer fancyPlayer = new FancyPlayerImpl(data);
             addPlayerToCache(fancyPlayer);
             return fancyPlayer;
@@ -81,6 +85,10 @@ public class FancyPlayerServiceImpl implements FancyPlayerService {
     public FancyPlayer tryToGetFromStorage(String username) {
         try {
             FancyPlayerData data = storage.loadPlayerByUsername(username);
+            if (data == null) {
+                return null;
+            }
+
             FancyPlayer fancyPlayer = new FancyPlayerImpl(data);
             addPlayerToCache(fancyPlayer);
             return fancyPlayer;

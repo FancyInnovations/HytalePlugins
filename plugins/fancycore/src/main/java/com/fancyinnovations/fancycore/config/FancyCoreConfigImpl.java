@@ -13,6 +13,9 @@ public class FancyCoreConfigImpl implements FancyCoreConfig {
     public static final String PRIMARY_CURRENCY_NAME_PATH = "settings.economy.primary_currency";
     public static final String CHAT_FORMAT_PATH = "settings.chat.format";
     public static final String DEFAULT_CHATROOM_PATH = "settings.chat.default_chatroom";
+    public static final String JOIN_MESSAGE_PATH = "settings.join_message";
+    public static final String FIRST_JOIN_MESSAGE_PATH = "settings.first_join_message";
+    public static final String LEAVE_MESSAGE_PATH = "settings.leave_message";
 
     private static final String CONFIG_FILE_PATH = "plugins/FancyHolograms/config.yml";
     private ConfigJSON config;
@@ -77,6 +80,39 @@ public class FancyCoreConfigImpl implements FancyCoreConfig {
                         String.class
                 )
         );
+
+        config.addField(
+                new ConfigField<>(
+                        JOIN_MESSAGE_PATH,
+                        "The message displayed when a player joins the server.",
+                        false,
+                        "%player_name% has joined the game.",
+                        false,
+                        String.class
+                )
+        );
+
+        config.addField(
+                new ConfigField<>(
+                        FIRST_JOIN_MESSAGE_PATH,
+                        "The message displayed when a player joins the server for the first time.",
+                        false,
+                        "Welcome %player_name% to the server for the first time!",
+                        false,
+                        String.class
+                )
+        );
+
+        config.addField(
+                new ConfigField<>(
+                        LEAVE_MESSAGE_PATH,
+                        "The message displayed when a player leaves the server.",
+                        false,
+                        "%player_name% has left the game.",
+                        false,
+                        String.class
+                )
+        );
     }
 
     @Override
@@ -112,5 +148,20 @@ public class FancyCoreConfigImpl implements FancyCoreConfig {
     @Override
     public String getDefaultChatroom() {
         return config.get(DEFAULT_CHATROOM_PATH);
+    }
+
+    @Override
+    public String getJoinMessage() {
+        return config.get(JOIN_MESSAGE_PATH);
+    }
+
+    @Override
+    public String getFirstJoinMessage() {
+        return config.get(FIRST_JOIN_MESSAGE_PATH);
+    }
+
+    @Override
+    public String getLeaveMessage() {
+        return config.get(LEAVE_MESSAGE_PATH);
     }
 }

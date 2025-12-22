@@ -1,8 +1,12 @@
 package com.fancyinnovations.fancycore.listeners;
 
+import com.fancyinnovations.fancycore.api.FancyCore;
 import com.fancyinnovations.fancycore.api.moderation.Punishment;
+import com.fancyinnovations.fancycore.api.placeholders.PlaceholderService;
 import com.fancyinnovations.fancycore.api.player.FakeHytalePlayer;
+import com.fancyinnovations.fancycore.api.player.FancyPlayer;
 import com.fancyinnovations.fancycore.main.FancyCorePlugin;
+import com.fancyinnovations.fancycore.player.FancyPlayerDataImpl;
 import com.fancyinnovations.fancycore.player.FancyPlayerImpl;
 import com.fancyinnovations.fancycore.player.service.FancyPlayerServiceImpl;
 import org.jetbrains.annotations.NotNull;
@@ -14,7 +18,17 @@ public class PlayerJoinListener {
     public void onPlayerJoin(PlayerJoinEvent event) {
         // TODO: use real event and register listener properly
 
+        boolean firstJoin = false;
+
         FancyPlayerImpl fp = (FancyPlayerImpl) playerService.getByUUID(event.getPlayer().getUUID());
+        if (fp == null) {
+            fp = new FancyPlayerImpl(
+                    new FancyPlayerDataImpl(event.getPlayer().getUUID(), event.getPlayer().getUsername()),
+                    event.getPlayer()
+            );
+            firstJoin = true;
+        }
+
         Punishment punishment = fp.isBanned();
         if (punishment != null) {
             event.cancel();
@@ -24,7 +38,19 @@ public class PlayerJoinListener {
 
 
         fp.setPlayer(event.getPlayer());
-        fp.setJoinedAt(System.currentTimeMillis());
+
+        if (firstJoin) {
+            fp.setJoinedAt(System.currentTimeMillis());
+            for (FancyPlayer onlinePlayer : playerService.getOnlinePlayers()) {
+                String firstJoinMsg = PlaceholderService.get().parse(fp, FancyCore.get().getConfig().getFirstJoinMessage());
+                onlinePlayer.sendMessage(firstJoinMsg);
+            }
+        } else {
+            String joinMsg = PlaceholderService.get().parse(fp, FancyCore.get().getConfig().getJoinMessage());
+            for (FancyPlayer onlinePlayer : playerService.getOnlinePlayers()) {
+                onlinePlayer.sendMessage(joinMsg);
+            }
+        }
 
         playerService.addOnlinePlayer(fp);
     }

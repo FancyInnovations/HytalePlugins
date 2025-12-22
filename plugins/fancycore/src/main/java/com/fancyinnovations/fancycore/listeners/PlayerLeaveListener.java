@@ -1,6 +1,9 @@
 package com.fancyinnovations.fancycore.listeners;
 
+import com.fancyinnovations.fancycore.api.FancyCore;
+import com.fancyinnovations.fancycore.api.placeholders.PlaceholderService;
 import com.fancyinnovations.fancycore.api.player.FakeHytalePlayer;
+import com.fancyinnovations.fancycore.api.player.FancyPlayer;
 import com.fancyinnovations.fancycore.main.FancyCorePlugin;
 import com.fancyinnovations.fancycore.player.FancyPlayerImpl;
 import com.fancyinnovations.fancycore.player.service.FancyPlayerServiceImpl;
@@ -21,6 +24,11 @@ public class PlayerLeaveListener {
         fp.setJoinedAt(-1);
 
         playerService.removeOnlinePlayer(fp);
+
+        String joinMsg = PlaceholderService.get().parse(fp, FancyCore.get().getConfig().getLeaveMessage());
+        for (FancyPlayer onlinePlayer : playerService.getOnlinePlayers()) {
+            onlinePlayer.sendMessage(joinMsg);
+        }
     }
 
     /**
