@@ -5,6 +5,8 @@ import com.fancyinnovations.fancycore.api.economy.CurrencyStorage;
 import com.fancyinnovations.fancycore.api.events.service.EventService;
 import com.fancyinnovations.fancycore.api.moderation.PunishmentService;
 import com.fancyinnovations.fancycore.api.moderation.PunishmentStorage;
+import com.fancyinnovations.fancycore.api.permissions.PermissionService;
+import com.fancyinnovations.fancycore.api.permissions.PermissionStorage;
 import com.fancyinnovations.fancycore.api.placeholders.PlaceholderService;
 import com.fancyinnovations.fancycore.api.player.FancyPlayerService;
 import com.fancyinnovations.fancycore.api.player.FancyPlayerStorage;
@@ -43,6 +45,11 @@ public interface FancyCore {
     CurrencyStorage getCurrencyStorage();
 
     CurrencyService getCurrencyService();
+
+    @ApiStatus.Internal
+    PermissionStorage getPermissionStorage();
+
+    PermissionService getPermissionService();
 
 
     @ApiStatus.Internal

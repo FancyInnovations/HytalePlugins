@@ -32,13 +32,13 @@ public interface FancyPlayerData {
 
     void removePermission(String permission);
 
-    List<UUID> getGroups();
+    List<String> getGroups();
 
-    void setGroups(List<UUID> groups);
+    void setGroups(List<String> groups);
 
-    void addGroup(UUID group);
+    void addGroup(String group);
 
-    void removeGroup(UUID group);
+    void removeGroup(String group);
 
     String getNickname();
 

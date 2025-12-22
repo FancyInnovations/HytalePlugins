@@ -5,13 +5,11 @@ import java.util.UUID;
 
 public interface Group {
 
-    UUID getId();
-
     String getName();
 
-    UUID getParentId();
+    String getParent();
 
-    void setParentId(UUID parentId);
+    void setParent(String parent);
 
     String getPrefix();
 

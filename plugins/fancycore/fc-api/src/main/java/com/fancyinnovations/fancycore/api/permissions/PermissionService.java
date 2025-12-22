@@ -1,5 +1,6 @@
 package com.fancyinnovations.fancycore.api.permissions;
 
+import com.fancyinnovations.fancycore.api.FancyCore;
 import com.fancyinnovations.fancycore.api.player.FancyPlayer;
 
 import java.util.List;
@@ -7,10 +8,9 @@ import java.util.UUID;
 
 public interface PermissionService {
 
-    // TODO: enable when integrated with FancyCore
-//    static PermissionService get() {
-//        return FancyCore.get().getPermissionService();
-//    }
+    static PermissionService get() {
+        return FancyCore.get().getPermissionService();
+    }
 
     List<Group> getGroups();
 

@@ -4,8 +4,6 @@ import com.fancyinnovations.fancycore.api.moderation.Punishment;
 import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.UUID;
-
 /**
  * Wrapper around the actual Player object from the Hytale API.
  * This interface provides methods to interact with the player.
@@ -48,7 +46,7 @@ public interface FancyPlayer {
      * @param group the group UUID to check.
      * @return true if the player is in the group, false otherwise.
      */
-    boolean isInGroup(UUID group);
+    boolean isInGroup(String group);
 
     /**
      * Checks if the player is currently muted.

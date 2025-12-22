@@ -7,6 +7,8 @@ import com.fancyinnovations.fancycore.api.economy.CurrencyStorage;
 import com.fancyinnovations.fancycore.api.events.service.EventService;
 import com.fancyinnovations.fancycore.api.moderation.PunishmentService;
 import com.fancyinnovations.fancycore.api.moderation.PunishmentStorage;
+import com.fancyinnovations.fancycore.api.permissions.PermissionService;
+import com.fancyinnovations.fancycore.api.permissions.PermissionStorage;
 import com.fancyinnovations.fancycore.api.placeholders.PlaceholderService;
 import com.fancyinnovations.fancycore.api.player.FancyPlayerService;
 import com.fancyinnovations.fancycore.api.player.FancyPlayerStorage;
@@ -17,6 +19,8 @@ import com.fancyinnovations.fancycore.events.EventServiceImpl;
 import com.fancyinnovations.fancycore.metrics.PluginMetrics;
 import com.fancyinnovations.fancycore.moderation.service.PunishmentServiceImpl;
 import com.fancyinnovations.fancycore.moderation.storage.json.PunishmentJsonStorage;
+import com.fancyinnovations.fancycore.permissions.service.PermissionServiceImpl;
+import com.fancyinnovations.fancycore.permissions.storage.json.PermissionJsonStorage;
 import com.fancyinnovations.fancycore.placeholders.PlaceholderServiceImpl;
 import com.fancyinnovations.fancycore.placeholders.builtin.BuiltInPlaceholderProviders;
 import com.fancyinnovations.fancycore.player.service.CleanUpPlayerCacheRunnable;
@@ -66,6 +70,9 @@ public class FancyCorePlugin implements FancyCore {
 
     private final CurrencyStorage currencyStorage;
     private final CurrencyService currencyService;
+
+    private final PermissionStorage permissionStorage;
+    private final PermissionService permissionService;
 
     public FancyCorePlugin() {
         INSTANCE = this;
@@ -117,6 +124,9 @@ public class FancyCorePlugin implements FancyCore {
 
         currencyStorage = new CurrencyJsonStorage();
         currencyService = new CurrencyServiceImpl();
+
+        permissionStorage = new PermissionJsonStorage();
+        permissionService = new PermissionServiceImpl();
     }
 
     public static FancyCorePlugin get() {
@@ -222,5 +232,15 @@ public class FancyCorePlugin implements FancyCore {
     @Override
     public CurrencyService getCurrencyService() {
         return currencyService;
+    }
+
+    @Override
+    public PermissionStorage getPermissionStorage() {
+        return permissionStorage;
+    }
+
+    @Override
+    public PermissionService getPermissionService() {
+        return permissionService;
     }
 }

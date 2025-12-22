@@ -16,7 +16,7 @@ import java.util.concurrent.ConcurrentHashMap;
 public class FancyPlayerDataImpl implements FancyPlayerData {
 
     private final List<Permission> permissions;
-    private final List<UUID> groups;
+    private final List<String> groups;
     private final Map<String, Object> customData;
     private UUID uuid;
     private String username;
@@ -49,7 +49,7 @@ public class FancyPlayerDataImpl implements FancyPlayerData {
             UUID uuid,
             String username,
             List<Permission> permissions,
-            List<UUID> groups,
+            List<String> groups,
             String nickname,
             Color chatColor,
             Map<Currency, Double> balances,
@@ -122,18 +122,18 @@ public class FancyPlayerDataImpl implements FancyPlayerData {
     }
 
     @Override
-    public List<UUID> getGroups() {
+    public List<String> getGroups() {
         return groups;
     }
 
     @Override
-    public void setGroups(List<UUID> groups) {
+    public void setGroups(List<String> groups) {
         this.groups.clear();
         this.groups.addAll(groups);
     }
 
     @Override
-    public void addGroup(UUID group) {
+    public void addGroup(String group) {
         if (!this.groups.contains(group)) {
             this.groups.add(group);
             this.isDirty = true;
@@ -141,7 +141,7 @@ public class FancyPlayerDataImpl implements FancyPlayerData {
     }
 
     @Override
-    public void removeGroup(UUID group) {
+    public void removeGroup(String group) {
         if (this.groups.remove(group)) {
             this.isDirty = true;
         }

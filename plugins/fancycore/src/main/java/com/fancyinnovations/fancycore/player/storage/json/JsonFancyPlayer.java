@@ -15,7 +15,7 @@ public record JsonFancyPlayer(
         String uuid,
         String username,
         List<JsonPermission> permissions,
-        @SerializedName("group_ids") List<String> groupIDs,
+        @SerializedName("groups") List<String> groups,
         String nickname,
         @SerializedName("chat_color") String chatColor,
         Map<String, Double> balances,
@@ -33,11 +33,6 @@ public record JsonFancyPlayer(
             permissions.add(JsonPermission.from(perm));
         }
 
-        List<String> groupIDs = new ArrayList<>();
-        for (UUID groupID : player.getGroups()) {
-            groupIDs.add(groupID.toString());
-        }
-
         Map<String, Double> balances = new HashMap<>();
         for (var entry : player.getBalances().entrySet()) {
             balances.put(entry.getKey().name(), entry.getValue());
@@ -47,7 +42,7 @@ public record JsonFancyPlayer(
                 player.getUUID().toString(),
                 player.getUsername(),
                 permissions,
-                groupIDs,
+                player.getGroups(),
                 player.getNickname(),
                 Integer.toHexString(player.getChatColor().getRGB()),
                 balances,
@@ -64,11 +59,6 @@ public record JsonFancyPlayer(
         List<Permission> perms = new ArrayList<>();
         for (JsonPermission jsonPerm : permissions) {
             perms.add(jsonPerm.toPermission());
-        }
-
-        List<UUID> groups = new ArrayList<>();
-        for (String groupID : groupIDs) {
-            groups.add(UUID.fromString(groupID));
         }
 
         Map<Currency, Double> balances = new HashMap<>();

@@ -3,13 +3,12 @@ package com.fancyinnovations.fancycore.player;
 import com.fancyinnovations.fancycore.api.FancyCore;
 import com.fancyinnovations.fancycore.api.moderation.Punishment;
 import com.fancyinnovations.fancycore.api.moderation.PunishmentType;
+import com.fancyinnovations.fancycore.api.permissions.Group;
 import com.fancyinnovations.fancycore.api.permissions.Permission;
 import com.fancyinnovations.fancycore.api.player.FakeHytalePlayer;
 import com.fancyinnovations.fancycore.api.player.FancyPlayer;
 import com.fancyinnovations.fancycore.api.player.FancyPlayerData;
 import org.jetbrains.annotations.Nullable;
-
-import java.util.UUID;
 
 public class FancyPlayerImpl implements FancyPlayer {
 
@@ -69,19 +68,23 @@ public class FancyPlayerImpl implements FancyPlayer {
             }
         }
 
-        for (UUID groupID : data.getGroups()) {
-            // TODO: Fetch group by ID and check its permissions
-//            if (g.checkPermission(permission)) {
-//                return true;
-//            }
+        for (String groupID : data.getGroups()) {
+            Group group = FancyCore.get().getPermissionService().getGroup(groupID);
+            if (group == null) {
+                continue;
+            }
+
+            if (group.checkPermission(permission)) {
+                return true;
+            }
         }
 
         return false; // permission not found
     }
 
     @Override
-    public boolean isInGroup(UUID group) {
-        for (UUID groupID : data.getGroups()) {
+    public boolean isInGroup(String group) {
+        for (String groupID : data.getGroups()) {
             if (groupID.equals(group)) {
                 return true;
             }

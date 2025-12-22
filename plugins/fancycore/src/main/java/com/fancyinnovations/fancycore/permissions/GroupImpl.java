@@ -1,5 +1,6 @@
 package com.fancyinnovations.fancycore.permissions;
 
+import com.fancyinnovations.fancycore.api.FancyCore;
 import com.fancyinnovations.fancycore.api.permissions.Group;
 import com.fancyinnovations.fancycore.api.permissions.Permission;
 
@@ -8,25 +9,22 @@ import java.util.UUID;
 
 public class GroupImpl implements Group {
 
-    private final UUID id;
     private final String name;
-    private UUID parentId;
+    private String parent;
     private String prefix;
     private String suffix;
     private List<Permission> permissions;
     private List<UUID> members;
 
     public GroupImpl(
-            UUID id,
             String name,
-            UUID parentId,
+            String parent,
             String prefix,
             String suffix,
             List<Permission> permissions,
             List<UUID> members) {
-        this.id = id;
         this.name = name;
-        this.parentId = parentId;
+        this.parent = parent;
         this.prefix = prefix;
         this.suffix = suffix;
         this.permissions = permissions;
@@ -41,16 +39,14 @@ public class GroupImpl implements Group {
             }
         }
 
-        if (parentId != null) {
-            // TODO: Recursively check parent group permissions
+        if (parent != null) {
+            Group group = FancyCore.get().getPermissionService().getGroup(parent);
+            if (group != null) {
+                return group.checkPermission(permission);
+            }
         }
 
         return false; // permission not found
-    }
-
-    @Override
-    public UUID getId() {
-        return id;
     }
 
     @Override
@@ -59,13 +55,13 @@ public class GroupImpl implements Group {
     }
 
     @Override
-    public UUID getParentId() {
-        return parentId;
+    public String getParent() {
+        return parent;
     }
 
     @Override
-    public void setParentId(UUID parentId) {
-        this.parentId = parentId;
+    public void setParent(String parent) {
+        this.parent = parent;
     }
 
     @Override
