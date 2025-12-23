@@ -6,6 +6,7 @@ import com.fancyinnovations.fancycore.api.player.FancyPlayerService;
 import com.fancyinnovations.fancycore.api.player.FancyPlayerStorage;
 import com.fancyinnovations.fancycore.main.FancyCorePlugin;
 import com.fancyinnovations.fancycore.player.FancyPlayerImpl;
+import com.fancyinnovations.fancycore.player.storage.json.JsonFancyPlayer;
 import org.jetbrains.annotations.ApiStatus;
 
 import java.util.*;
@@ -46,6 +47,11 @@ public class FancyPlayerServiceImpl implements FancyPlayerService {
     @Override
     public List<FancyPlayer> getOnlinePlayers() {
         return new ArrayList<>(onlinePlayers);
+    }
+
+    @Override
+    public FancyPlayerData fromJson(String json) {
+        return FancyCorePlugin.GSON.fromJson(json, JsonFancyPlayer.class).toFancyPlayer();
     }
 
     @ApiStatus.Internal

@@ -76,4 +76,7 @@ public interface FancyPlayerData {
 
     void setDirty(boolean dirty);
 
+    @ApiStatus.Internal
+    String toJson();
+
 }

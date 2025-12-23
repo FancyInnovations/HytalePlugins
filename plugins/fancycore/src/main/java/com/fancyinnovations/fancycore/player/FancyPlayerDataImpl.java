@@ -3,7 +3,9 @@ package com.fancyinnovations.fancycore.player;
 import com.fancyinnovations.fancycore.api.economy.Currency;
 import com.fancyinnovations.fancycore.api.permissions.Permission;
 import com.fancyinnovations.fancycore.api.player.FancyPlayerData;
+import com.fancyinnovations.fancycore.main.FancyCorePlugin;
 import com.fancyinnovations.fancycore.permissions.PermissionImpl;
+import com.fancyinnovations.fancycore.player.storage.json.JsonFancyPlayer;
 import org.jetbrains.annotations.ApiStatus;
 
 import java.awt.*;
@@ -252,6 +254,11 @@ public class FancyPlayerDataImpl implements FancyPlayerData {
     @Override
     public void setDirty(boolean dirty) {
         isDirty = dirty;
+    }
+
+    @Override
+    public String toJson() {
+        return FancyCorePlugin.GSON.toJson(JsonFancyPlayer.from(this));
     }
 
 }

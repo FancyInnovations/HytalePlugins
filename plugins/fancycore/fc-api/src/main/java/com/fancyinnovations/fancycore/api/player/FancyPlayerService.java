@@ -1,6 +1,7 @@
 package com.fancyinnovations.fancycore.api.player;
 
 import com.fancyinnovations.fancycore.api.FancyCore;
+import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
@@ -17,4 +18,7 @@ public interface FancyPlayerService {
     @Nullable FancyPlayer getByUsername(String username);
 
     List<FancyPlayer> getOnlinePlayers();
+
+    @ApiStatus.Internal
+    FancyPlayerData fromJson(String json);
 }

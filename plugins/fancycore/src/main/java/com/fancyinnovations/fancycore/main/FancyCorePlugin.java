@@ -34,6 +34,7 @@ import com.fancyinnovations.fancycore.player.storage.json.FancyPlayerJsonStorage
 import com.fancyinnovations.fancycore.translations.TranslationService;
 import com.fancyinnovations.versionchecker.FancySpacesVersionFetcher;
 import com.fancyinnovations.versionchecker.VersionChecker;
+import com.google.gson.Gson;
 import de.oliver.fancyanalytics.logger.ExtendedFancyLogger;
 import de.oliver.fancyanalytics.logger.LogLevel;
 import de.oliver.fancyanalytics.logger.appender.Appender;
@@ -49,6 +50,7 @@ import java.util.concurrent.ScheduledExecutorService;
 
 public class FancyCorePlugin implements FancyCore {
 
+    public static final Gson GSON = new Gson();
     private static FancyCorePlugin INSTANCE;
 
     private final ExtendedFancyLogger fancyLogger;
