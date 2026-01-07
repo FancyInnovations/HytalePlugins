@@ -53,6 +53,7 @@ jobs:
           orbis_api_key: ${{ secrets.ORBIS_API_KEY }}
           modtale_api_key: ${{ secrets.MODTALE_API_KEY }}
           unifiedhytale_api_key: ${{ secrets.UNIFIEDHYTALE_API_KEY }}
+          hytahub_api_key: ${{ secrets.HYTAHUB_API_KEY }}
           discord_webhook_url: ${{ secrets.DISCORD_WEBHOOK_URL }}
 
 #      - name: Publish to reposilite (snapshots)
