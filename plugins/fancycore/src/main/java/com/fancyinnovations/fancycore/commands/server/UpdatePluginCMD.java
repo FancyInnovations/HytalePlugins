@@ -53,7 +53,7 @@ public class UpdatePluginCMD {
 
         try {
             HttpResponse<byte[]> resp = req.send();
-            Files.write(Path.of("plugins/FancyCore.jar"), resp.body()); // TODO (HTEA): check if path is correct
+            Files.write(Path.of("mods/FancyCore.jar"), resp.body()); // TODO (HTEA): check if path is correct
 
             logger.info(
                     "Successfully downloaded the latest version of FancyCore",
