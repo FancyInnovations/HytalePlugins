@@ -17,7 +17,7 @@ public class FancyCoreConfigImpl implements FancyCoreConfig {
     public static final String FIRST_JOIN_MESSAGE_PATH = "settings.first_join_message";
     public static final String LEAVE_MESSAGE_PATH = "settings.leave_message";
 
-    private static final String CONFIG_FILE_PATH = "plugins/FancyHolograms/config.yml";
+    private static final String CONFIG_FILE_PATH = "mods/FancyCore/config.json";
     private ConfigJSON config;
 
     public void init() {
