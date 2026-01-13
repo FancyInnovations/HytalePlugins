@@ -129,6 +129,7 @@ public class FancyCorePlugin extends JavaPlugin implements FancyCore {
         fancyLogger.info("Setting up FancyCore...");
 
         fancyCoreConfig = new FancyCoreConfigImpl();
+
         versionChecker = new VersionChecker(fancyLogger, "FancyCore", new FancySpacesVersionFetcher("fc"));
 
         pluginMetrics = new PluginMetrics();
@@ -178,7 +179,7 @@ public class FancyCorePlugin extends JavaPlugin implements FancyCore {
         fancyLogger.setCurrentLevel(logLevel);
 
         // check if latest version is running
-//        versionChecker.checkForConsole();
+        versionChecker.checkForConsole();
 
         // TODO enable this once FA integration is configured
         // versionChecker.checkPluginVersionChanged(apiClient, "fc");

@@ -64,7 +64,7 @@ tasks {
         val props = mapOf(
             "description" to project.description,
             "version" to getFCVersion(),
-            "commit" to gitCommitHash,
+            "commit" to "N/A",
             "channel" to (System.getenv("RELEASE_CHANNEL") ?: "").ifEmpty { "undefined" },
         )
         inputs.properties(props)
