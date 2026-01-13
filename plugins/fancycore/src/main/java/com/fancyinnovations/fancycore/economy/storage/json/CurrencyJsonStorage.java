@@ -11,7 +11,7 @@ import java.util.List;
 
 public class CurrencyJsonStorage implements CurrencyStorage {
 
-    private static final String DATA_DIR_PATH = "plugins/FancyCore/data/currencies";
+    private static final String DATA_DIR_PATH = "mods/FancyCore/data/currencies";
     private final JDB db;
 
     public CurrencyJsonStorage() {

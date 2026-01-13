@@ -14,7 +14,7 @@ import java.util.UUID;
 
 public class FancyPlayerJsonStorage implements FancyPlayerStorage {
 
-    private static final String DATA_DIR_PATH = "plugins/FancyCore/data/players";
+    private static final String DATA_DIR_PATH = "mods/FancyCore/data/players";
     private final JDB jdb;
 
     public FancyPlayerJsonStorage() {
@@ -30,7 +30,7 @@ public class FancyPlayerJsonStorage implements FancyPlayerStorage {
 
         JsonFancyPlayer jsonFancyPlayer = JsonFancyPlayer.from(fpImpl);
         try {
-            jdb.set(fpImpl.getUUID().toString(), "/by-username/" + fpImpl.getUsername());
+            jdb.set(fpImpl.getUUID().toString(), jsonFancyPlayer, "/by-username/" + fpImpl.getUsername());
         } catch (IOException e) {
             FancyCorePlugin.get().getFancyLogger().error(
                     "Failed to save FancyPlayer",

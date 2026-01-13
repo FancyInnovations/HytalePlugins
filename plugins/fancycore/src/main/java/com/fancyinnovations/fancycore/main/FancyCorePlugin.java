@@ -18,6 +18,7 @@ import com.fancyinnovations.fancycore.chat.service.ChatServiceImpl;
 import com.fancyinnovations.fancycore.chat.storage.json.ChatJsonStorage;
 import com.fancyinnovations.fancycore.commands.server.UpdatePluginCMD;
 import com.fancyinnovations.fancycore.config.FancyCoreConfigImpl;
+import com.fancyinnovations.fancycore.economy.service.CurrencyServiceImpl;
 import com.fancyinnovations.fancycore.economy.storage.json.CurrencyJsonStorage;
 import com.fancyinnovations.fancycore.events.EventServiceImpl;
 import com.fancyinnovations.fancycore.listeners.PlayerChatListener;
@@ -38,6 +39,8 @@ import com.fancyinnovations.fancycore.translations.TranslationService;
 import com.fancyinnovations.versionchecker.FancySpacesVersionFetcher;
 import com.fancyinnovations.versionchecker.VersionChecker;
 import com.google.gson.Gson;
+import com.hypixel.hytale.event.EventRegistry;
+import com.hypixel.hytale.server.core.event.events.player.PlayerConnectEvent;
 import com.hypixel.hytale.server.core.plugin.JavaPlugin;
 import com.hypixel.hytale.server.core.plugin.JavaPluginInit;
 import de.oliver.fancyanalytics.logger.ExtendedFancyLogger;
@@ -96,7 +99,7 @@ public class FancyCorePlugin extends JavaPlugin implements FancyCore {
 
         Appender consoleAppender = new ConsoleAppender("[{loggerName}] ({threadName}) {logLevel}: {message}");
         String date = new SimpleDateFormat("yyyy-MM-dd").format(new Date(System.currentTimeMillis()));
-        File logsFile = new File("plugins/FancyCore/logs/FC-logs-" + date + ".txt");
+        File logsFile = new File("mods/FancyCore/logs/FC-logs-" + date + ".txt");
         if (!logsFile.exists()) {
             try {
                 logsFile.getParentFile().mkdirs();
@@ -149,7 +152,7 @@ public class FancyCorePlugin extends JavaPlugin implements FancyCore {
         punishmentService = new PunishmentServiceImpl();
 
         currencyStorage = new CurrencyJsonStorage();
-//        currencyService = new CurrencyServiceImpl();
+        currencyService = new CurrencyServiceImpl();
 
         permissionStorage = new PermissionJsonStorage();
         permissionService = new PermissionServiceImpl();
@@ -218,8 +221,9 @@ public class FancyCorePlugin extends JavaPlugin implements FancyCore {
 
     public void registerListeners() {
         // TODO (HTEA): register listeners properly
+        EventRegistry eventRegistry = this.getEventRegistry();
+        eventRegistry.register(PlayerConnectEvent.class, PlayerJoinListener::onPlayerJoin);
 
-        new PlayerJoinListener();
         new PlayerLeaveListener();
         new PlayerChatListener();
     }

@@ -7,5 +7,12 @@
   "ServerVersion": "*",
   "Dependencies": {
     "Hytale:I18nModule": "*"
-  }
+  },
+  "Authors": [
+    {
+      "Name": "Oliver Schlueter",
+      "Email": "oliver@fancyinnovations.com",
+      "Url": "https://fancyinnovations.com"
+    }
+  ]
 }

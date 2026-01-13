@@ -38,7 +38,7 @@ open class RunServerTask : DefaultTask() {
     @TaskAction
     fun run() {
         val runDir = File(project.projectDir, "run").apply { mkdirs() }
-        val pluginsDir = File(runDir, "plugins").apply { mkdirs() }
+        val pluginsDir = File(runDir, "mods").apply { mkdirs() }
         val jarFile = File(runDir, "server.jar")
 
         // Cache folder

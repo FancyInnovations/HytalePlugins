@@ -2,6 +2,7 @@ package com.fancyinnovations.fancycore.api.player;
 
 import com.fancyinnovations.fancycore.api.chat.ChatRoom;
 import com.fancyinnovations.fancycore.api.moderation.Punishment;
+import com.hypixel.hytale.server.core.universe.PlayerRef;
 import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.Nullable;
 
@@ -23,7 +24,7 @@ public interface FancyPlayer {
      *
      * @return the player object, or null if the player is offline.
      */
-    @Nullable FakeHytalePlayer getPlayer();
+    @Nullable PlayerRef getPlayer();
 
     /**
      * Sets the actual player object from the Hytale API.
@@ -31,7 +32,7 @@ public interface FancyPlayer {
      * @param player the player object.
      */
     @ApiStatus.Internal
-    void setPlayer(FakeHytalePlayer player);
+    void setPlayer(PlayerRef player);
 
     /**
      * Checks if the player has the specified permission (checks player permissions and group permissions).

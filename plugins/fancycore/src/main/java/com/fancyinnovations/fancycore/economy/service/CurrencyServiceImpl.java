@@ -11,7 +11,7 @@ import java.util.concurrent.ConcurrentHashMap;
 
 public class CurrencyServiceImpl implements CurrencyService {
 
-    private static final CurrencyStorage STORAGE = null;
+    private static final CurrencyStorage STORAGE = FancyCorePlugin.get().getCurrencyStorage();
     private static final FancyCoreConfig CONFIG = FancyCorePlugin.get().getConfig();
 
     private final Map<String, Currency> currencies;

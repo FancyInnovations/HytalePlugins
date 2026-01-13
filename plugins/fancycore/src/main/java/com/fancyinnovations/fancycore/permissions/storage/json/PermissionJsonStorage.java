@@ -10,7 +10,7 @@ import java.util.List;
 
 public class PermissionJsonStorage implements PermissionStorage {
 
-    private static final String DATA_DIR_PATH = "plugins/FancyCore/data/groups";
+    private static final String DATA_DIR_PATH = "mods/FancyCore/data/groups";
     private final JDB db;
 
     public PermissionJsonStorage() {

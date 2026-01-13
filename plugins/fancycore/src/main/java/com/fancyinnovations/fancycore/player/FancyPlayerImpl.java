@@ -7,15 +7,15 @@ import com.fancyinnovations.fancycore.api.moderation.Punishment;
 import com.fancyinnovations.fancycore.api.moderation.PunishmentType;
 import com.fancyinnovations.fancycore.api.permissions.Group;
 import com.fancyinnovations.fancycore.api.permissions.Permission;
-import com.fancyinnovations.fancycore.api.player.FakeHytalePlayer;
 import com.fancyinnovations.fancycore.api.player.FancyPlayer;
 import com.fancyinnovations.fancycore.api.player.FancyPlayerData;
+import com.hypixel.hytale.server.core.universe.PlayerRef;
 import org.jetbrains.annotations.Nullable;
 
 public class FancyPlayerImpl implements FancyPlayer {
 
     private final FancyPlayerData data;
-    private FakeHytalePlayer player;
+    private PlayerRef player;
     private long joinedAt;
     private ChatRoom currentChatRoom;
 
@@ -24,34 +24,34 @@ public class FancyPlayerImpl implements FancyPlayer {
         this.player = null;
     }
 
-    public FancyPlayerImpl(FancyPlayerData data, FakeHytalePlayer player) {
+    public FancyPlayerImpl(FancyPlayerData data, PlayerRef player) {
         this.data = data;
         this.player = player;
         this.joinedAt = -1;
 
-        this.data.setUUID(player.getUUID());
+        this.data.setUUID(player.getUuid());
         this.data.setUsername(data.getUsername());
     }
 
     @Override
     public FancyPlayerData getData() {
-        return null;
+        return data;
     }
 
     @Override
-    public @Nullable FakeHytalePlayer getPlayer() {
+    public @Nullable PlayerRef getPlayer() {
         return player;
     }
 
     @Override
-    public void setPlayer(FakeHytalePlayer player) {
+    public void setPlayer(PlayerRef player) {
         this.player = player;
 
         if (player == null) {
             return;
         }
 
-        this.data.setUUID(player.getUUID());
+        this.data.setUUID(player.getUuid());
         this.data.setUsername(data.getUsername());
     }
 

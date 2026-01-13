@@ -152,7 +152,7 @@ public class PunishmentServiceImpl implements PunishmentService {
                 .replace("{reason}", reason)
                 .sendTo(staff);
 
-        player.getPlayer().kick(kickMessage);
+        player.getPlayer().getPacketHandler().disconnect(kickMessage);
 
         return punishment;
     }
@@ -200,7 +200,7 @@ public class PunishmentServiceImpl implements PunishmentService {
                     .sendTo(staff);
         }
 
-        player.getPlayer().kick(kickMessage);
+        player.getPlayer().getPacketHandler().disconnect(kickMessage);
 
         return punishment;
     }

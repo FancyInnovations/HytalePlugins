@@ -17,7 +17,6 @@ public record VersionConfig(
 
     public static VersionConfig loadVersionConfig() {
         String fileStr = ResourceUtils.readResourceAsString("version.json");
-        System.out.println("Loaded version config: " + fileStr);
         return GSON.fromJson(fileStr, VersionConfig.class);
     }
 

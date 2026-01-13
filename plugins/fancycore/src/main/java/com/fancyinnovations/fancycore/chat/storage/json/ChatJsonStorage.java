@@ -10,7 +10,7 @@ import java.util.List;
 
 public class ChatJsonStorage implements ChatStorage {
 
-    private static final String DATA_DIR_PATH = "plugins/FancyCore/data/chatrooms";
+    private static final String DATA_DIR_PATH = "mods/FancyCore/data/chatrooms";
     private final JDB db;
 
     public ChatJsonStorage() {

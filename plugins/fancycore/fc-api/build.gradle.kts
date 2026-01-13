@@ -5,6 +5,8 @@ plugins {
 }
 
 dependencies {
+    compileOnly(files("../../../libraries/hytale-server/HytaleServer.jar"))
+
     compileOnly("de.oliver.FancyAnalytics:logger:0.0.9")
     compileOnly("org.jetbrains:annotations:26.0.2-1")
 }

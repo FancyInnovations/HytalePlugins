@@ -14,7 +14,7 @@ import java.util.List;
 public class SeedDefaultData {
 
     public static void seed() {
-        File pluginFolder = new File("plugins/FancyCore");
+        File pluginFolder = new File("mods/FancyCore");
         if (pluginFolder.exists()) {
             return;
         }

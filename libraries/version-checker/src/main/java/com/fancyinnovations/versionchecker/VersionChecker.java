@@ -63,13 +63,13 @@ public class VersionChecker {
      */
     public void checkPluginVersionChanged(ApiClient apiClient, String faProjectID) {
         try {
-            VersionConfig oldVersionConfig = VersionConfig.loadVersionConfig("plugins/" + pluginName + "/version.json");
+            VersionConfig oldVersionConfig = VersionConfig.loadVersionConfig("mods/" + pluginName + "/version.json");
 
             if (versionConfig.version().equals(oldVersionConfig.version())) {
                 return;
             }
 
-            versionConfig.saveFile("plugins/" + pluginName + "/version.json");
+            versionConfig.saveFile("mods/" + pluginName + "/version.json");
 
             Event event = new Event("PluginVersionChanged", new HashMap<>())
                     .withProperty("from", oldVersionConfig.version())
