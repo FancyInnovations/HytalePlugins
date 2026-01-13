@@ -40,7 +40,9 @@ import com.fancyinnovations.versionchecker.FancySpacesVersionFetcher;
 import com.fancyinnovations.versionchecker.VersionChecker;
 import com.google.gson.Gson;
 import com.hypixel.hytale.event.EventRegistry;
+import com.hypixel.hytale.server.core.event.events.player.PlayerChatEvent;
 import com.hypixel.hytale.server.core.event.events.player.PlayerConnectEvent;
+import com.hypixel.hytale.server.core.event.events.player.PlayerDisconnectEvent;
 import com.hypixel.hytale.server.core.plugin.JavaPlugin;
 import com.hypixel.hytale.server.core.plugin.JavaPluginInit;
 import de.oliver.fancyanalytics.logger.ExtendedFancyLogger;
@@ -220,12 +222,17 @@ public class FancyCorePlugin extends JavaPlugin implements FancyCore {
     }
 
     public void registerListeners() {
-        // TODO (HTEA): register listeners properly
         EventRegistry eventRegistry = this.getEventRegistry();
         eventRegistry.register(PlayerConnectEvent.class, PlayerJoinListener::onPlayerJoin);
+        eventRegistry.register(PlayerDisconnectEvent.class, PlayerLeaveListener::onPlayerLeave);
 
-        new PlayerLeaveListener();
-        new PlayerChatListener();
+        // TODO fix this stupid async event handling
+        eventRegistry.registerAsyncUnhandled(PlayerChatEvent.class, future ->
+                future.thenApply(event -> {
+                    PlayerChatListener.onPlayerChat(event);
+                    return event;
+                })
+        );
     }
 
     @Override

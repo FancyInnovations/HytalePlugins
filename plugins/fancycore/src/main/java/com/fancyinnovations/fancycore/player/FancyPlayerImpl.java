@@ -9,6 +9,7 @@ import com.fancyinnovations.fancycore.api.permissions.Group;
 import com.fancyinnovations.fancycore.api.permissions.Permission;
 import com.fancyinnovations.fancycore.api.player.FancyPlayer;
 import com.fancyinnovations.fancycore.api.player.FancyPlayerData;
+import com.hypixel.hytale.server.core.Message;
 import com.hypixel.hytale.server.core.universe.PlayerRef;
 import org.jetbrains.annotations.Nullable;
 
@@ -126,7 +127,7 @@ public class FancyPlayerImpl implements FancyPlayer {
 
     @Override
     public void sendMessage(String message) {
-        // TODO (HTEA): Implement message sending logic
+        player.sendMessage(Message.parse(message));
     }
 
     @Override

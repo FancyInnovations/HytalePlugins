@@ -2,21 +2,22 @@ package com.fancyinnovations.fancycore.listeners;
 
 import com.fancyinnovations.fancycore.api.FancyCore;
 import com.fancyinnovations.fancycore.api.placeholders.PlaceholderService;
-import com.fancyinnovations.fancycore.api.player.FakeHytalePlayer;
 import com.fancyinnovations.fancycore.api.player.FancyPlayer;
 import com.fancyinnovations.fancycore.main.FancyCorePlugin;
 import com.fancyinnovations.fancycore.player.FancyPlayerImpl;
 import com.fancyinnovations.fancycore.player.service.FancyPlayerServiceImpl;
-import org.jetbrains.annotations.NotNull;
+import com.hypixel.hytale.server.core.event.events.player.PlayerDisconnectEvent;
 
 public class PlayerLeaveListener {
 
     private final static FancyPlayerServiceImpl playerService = (FancyPlayerServiceImpl) FancyCorePlugin.get().getPlayerService();
 
-    public void onPlayerLeave(PlayerLeaveEvent event) {
-        // TODO (HTEA): use real event and register listener properly
+    public static void onPlayerLeave(PlayerDisconnectEvent event) {
+        FancyPlayerImpl fp = (FancyPlayerImpl) playerService.getByUUID(event.getPlayerRef().getUuid());
+        if (fp == null) {
+            return;
+        }
 
-        FancyPlayerImpl fp = (FancyPlayerImpl) playerService.getByUUID(event.getPlayer().getUUID());
         fp.setPlayer(null);
 
         long playtime = System.currentTimeMillis() - fp.getJoinedAt();
@@ -30,14 +31,4 @@ public class PlayerLeaveListener {
             onlinePlayer.sendMessage(joinMsg);
         }
     }
-
-    /**
-     * Mock PlayerLeaveEvent for demonstration purposes.
-     * <p>
-     * TODO (HTEA): remove this when using real event
-     */
-    interface PlayerLeaveEvent {
-        @NotNull FakeHytalePlayer getPlayer();
-    }
-
 }
