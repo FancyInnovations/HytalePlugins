@@ -19,7 +19,7 @@ import org.jetbrains.annotations.NotNull;
 
 public class TeleportHereCMD extends CommandBase {
 
-    protected final RequiredArg<PlayerRef> targetArg = this.withRequiredArg("player", "The player to teleport", TeleportArg.TYPE);
+    protected final RequiredArg<PlayerRef> targetArg = this.withRequiredArg("", "The player to teleport", TeleportArg.TYPE);
 
     public TeleportHereCMD() {
         super("tphere", "Teleports the specified player to your location");

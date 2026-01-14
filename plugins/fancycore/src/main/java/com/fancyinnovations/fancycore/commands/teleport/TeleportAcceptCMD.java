@@ -22,7 +22,7 @@ import java.util.UUID;
 
 public class TeleportAcceptCMD extends CommandBase {
 
-    protected final OptionalArg<PlayerRef> senderArg = this.withOptionalArg("player", "The player who sent the request", TeleportArg.TYPE);
+    protected final OptionalArg<PlayerRef> senderArg = this.withOptionalArg("", "The player who sent the request", TeleportArg.TYPE);
 
     public TeleportAcceptCMD() {
         super("tpaccept", "Accepts a pending teleport request from another player");

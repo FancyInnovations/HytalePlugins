@@ -12,7 +12,7 @@ import org.jetbrains.annotations.NotNull;
 
 public class TeleportRequestCMD extends CommandBase {
 
-    protected final RequiredArg<PlayerRef> targetArg = this.withRequiredArg("player", "The player to request teleportation to", TeleportArg.TYPE);
+    protected final RequiredArg<PlayerRef> targetArg = this.withRequiredArg("", "The player to request teleportation to", TeleportArg.TYPE);
 
     public TeleportRequestCMD() {
         super("tprequest", "Sends a teleport request to another player to teleport to their location");

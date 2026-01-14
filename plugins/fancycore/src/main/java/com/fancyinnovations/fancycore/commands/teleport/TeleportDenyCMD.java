@@ -14,7 +14,7 @@ import java.util.UUID;
 
 public class TeleportDenyCMD extends CommandBase {
 
-    protected final OptionalArg<PlayerRef> senderArg = this.withOptionalArg("player", "The player who sent the request", TeleportArg.TYPE);
+    protected final OptionalArg<PlayerRef> senderArg = this.withOptionalArg("", "The player who sent the request", TeleportArg.TYPE);
 
     public TeleportDenyCMD() {
         super("tpdeny", "Denies a pending teleport request from another player");

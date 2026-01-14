@@ -22,10 +22,10 @@ import org.jetbrains.annotations.NotNull;
 
 public class TeleportPosCMD extends CommandBase {
 
-    protected final RequiredArg<Double> xArg = this.withRequiredArg("x", "X coordinate", ArgTypes.DOUBLE);
-    protected final RequiredArg<Double> yArg = this.withRequiredArg("y", "Y coordinate", ArgTypes.DOUBLE);
-    protected final RequiredArg<Double> zArg = this.withRequiredArg("z", "Z coordinate", ArgTypes.DOUBLE);
-    protected final OptionalArg<World> worldArg = this.withOptionalArg("world", "World name", ArgTypes.WORLD);
+    protected final RequiredArg<Double> xArg = this.withRequiredArg("", "X coordinate", ArgTypes.DOUBLE);
+    protected final RequiredArg<Double> yArg = this.withRequiredArg("", "Y coordinate", ArgTypes.DOUBLE);
+    protected final RequiredArg<Double> zArg = this.withRequiredArg("", "Z coordinate", ArgTypes.DOUBLE);
+    protected final OptionalArg<World> worldArg = this.withOptionalArg("", "World name", ArgTypes.WORLD);
 
     public TeleportPosCMD() {
         super("tppos", "Teleports you to the specified coordinates");

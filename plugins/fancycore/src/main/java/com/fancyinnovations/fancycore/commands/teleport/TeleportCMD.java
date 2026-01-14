@@ -20,8 +20,8 @@ import org.jetbrains.annotations.NotNull;
 
 public class TeleportCMD extends CommandBase {
 
-    protected final RequiredArg<PlayerRef> targetArg = this.withRequiredArg(TeleportArg.NAME, TeleportArg.DESCRIPTION, TeleportArg.TYPE);
-    protected final OptionalArg<PlayerRef> destinationArg = this.withOptionalArg("destination", "The destination player", TeleportArg.TYPE);
+    protected final RequiredArg<PlayerRef> targetArg = this.withRequiredArg("", TeleportArg.DESCRIPTION, TeleportArg.TYPE);
+    protected final OptionalArg<PlayerRef> destinationArg = this.withOptionalArg("", "The destination player", TeleportArg.TYPE);
 
     public TeleportCMD() {
         super("tp", "Teleports you or the specified player to another player's location");

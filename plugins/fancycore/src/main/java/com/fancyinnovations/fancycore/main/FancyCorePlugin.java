@@ -44,6 +44,8 @@ import com.fancyinnovations.fancycore.player.service.FancyPlayerServiceImpl;
 import com.fancyinnovations.fancycore.player.storage.SavePlayersRunnable;
 import com.fancyinnovations.fancycore.player.storage.json.FancyPlayerJsonStorage;
 import com.fancyinnovations.fancycore.teleport.service.TeleportRequestServiceImpl;
+import com.fancyinnovations.fancycore.teleport.storage.SpawnLocationStorage;
+import com.fancyinnovations.fancycore.teleport.storage.WarpStorage;
 import com.fancyinnovations.fancycore.translations.TranslationService;
 import com.fancyinnovations.versionchecker.FancySpacesVersionFetcher;
 import com.fancyinnovations.versionchecker.VersionChecker;
@@ -108,6 +110,8 @@ public class FancyCorePlugin extends JavaPlugin implements FancyCore {
     private ChatService chatService;
 
     private com.fancyinnovations.fancycore.api.teleport.TeleportRequestService teleportRequestService;
+    private SpawnLocationStorage spawnLocationStorage;
+    private WarpStorage warpStorage;
 
     public FancyCorePlugin(@Nonnull JavaPluginInit init) {
         super(init);
@@ -179,6 +183,8 @@ public class FancyCorePlugin extends JavaPlugin implements FancyCore {
         chatService = new ChatServiceImpl();
 
         teleportRequestService = new TeleportRequestServiceImpl();
+        spawnLocationStorage = new SpawnLocationStorage();
+        warpStorage = new WarpStorage();
 
         SeedDefaultData.seed();
 
@@ -259,6 +265,16 @@ public class FancyCorePlugin extends JavaPlugin implements FancyCore {
         CommandManager.get().register(new TeleportDenyCMD());
         CommandManager.get().register(new TeleportBackCMD());
         CommandManager.get().register(new TeleportDeathBackCMD());
+        CommandManager.get().register(new SetSpawnCMD());
+        CommandManager.get().register(new SpawnCMD());
+        CommandManager.get().register(new SetHomeCMD());
+        CommandManager.get().register(new DeleteHomeCMD());
+        CommandManager.get().register(new HomeCMD());
+        CommandManager.get().register(new ListHomesCMD());
+        CommandManager.get().register(new CreateWarpCMD());
+        CommandManager.get().register(new DeleteWarpCMD());
+        CommandManager.get().register(new WarpCMD());
+        CommandManager.get().register(new ListWarpsCMD());
 
         // player
         CommandManager.get().register(new PlayerListCMD());
@@ -377,5 +393,13 @@ public class FancyCorePlugin extends JavaPlugin implements FancyCore {
     @Override
     public com.fancyinnovations.fancycore.api.teleport.TeleportRequestService getTeleportRequestService() {
         return teleportRequestService;
+    }
+
+    public SpawnLocationStorage getSpawnLocationStorage() {
+        return spawnLocationStorage;
+    }
+
+    public WarpStorage getWarpStorage() {
+        return warpStorage;
     }
 }
