@@ -21,6 +21,10 @@ import com.fancyinnovations.fancycore.chat.storage.json.ChatJsonStorage;
 import com.fancyinnovations.fancycore.commands.chat.chatroom.ChatRoomCMD;
 import com.fancyinnovations.fancycore.commands.chat.message.*;
 import com.fancyinnovations.fancycore.commands.fancycore.FancyCoreCMD;
+import com.fancyinnovations.fancycore.commands.teleport.TeleportCMD;
+import com.fancyinnovations.fancycore.commands.teleport.TeleportHereCMD;
+import com.fancyinnovations.fancycore.commands.teleport.TeleportAllCMD;
+import com.fancyinnovations.fancycore.commands.teleport.TeleportPosCMD;
 import com.fancyinnovations.fancycore.config.FancyCoreConfigImpl;
 import com.fancyinnovations.fancycore.economy.service.CurrencyServiceImpl;
 import com.fancyinnovations.fancycore.economy.storage.json.CurrencyJsonStorage;
@@ -236,6 +240,12 @@ public class FancyCorePlugin extends JavaPlugin implements FancyCore {
         CommandManager.get().register(new IgnoreCMD());
         CommandManager.get().register(new UnignoreCMD());
         CommandManager.get().register(new ToggleMessagesCMD());
+
+        // teleport
+        CommandManager.get().register(new TeleportCMD());
+        CommandManager.get().register(new TeleportHereCMD());
+        CommandManager.get().register(new TeleportAllCMD());
+        CommandManager.get().register(new TeleportPosCMD());
     }
 
     public void registerListeners() {
