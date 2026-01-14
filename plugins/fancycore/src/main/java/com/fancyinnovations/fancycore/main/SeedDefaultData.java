@@ -8,7 +8,7 @@ import com.fancyinnovations.fancycore.api.permissions.PermissionService;
 import com.fancyinnovations.fancycore.permissions.GroupImpl;
 
 import java.io.File;
-import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 
 public class SeedDefaultData {
@@ -32,31 +32,31 @@ public class SeedDefaultData {
     private static void seedGroups() {
         Group memberGroup = new GroupImpl(
                 "member",
-                null,
+                new HashSet<>(),
                 "[Member]",
                 "",
                 List.of(),
-                new ArrayList<>()
+                new HashSet<>()
         );
         PermissionService.get().addGroup(memberGroup);
 
         Group moderatorGroup = new GroupImpl(
                 "moderator",
-                null,
+                new HashSet<>(),
                 "[Moderator]",
                 "",
                 List.of(),
-                new ArrayList<>()
+                new HashSet<>()
         );
         PermissionService.get().addGroup(moderatorGroup);
 
         Group ownerGroup = new GroupImpl(
                 "owner",
-                null,
+                new HashSet<>(),
                 "[Owner]",
                 "",
                 List.of(),
-                new ArrayList<>()
+                new HashSet<>()
         );
         PermissionService.get().addGroup(ownerGroup);
     }

@@ -76,8 +76,8 @@ public class FancyPlayerImpl implements FancyPlayer {
             }
         }
 
-        for (String groupID : data.getGroups()) {
-            Group group = FancyCore.get().getPermissionService().getGroup(groupID);
+        for (String groupName : data.getGroups()) {
+            Group group = FancyCore.get().getPermissionService().getGroup(groupName);
             if (group == null) {
                 continue;
             }

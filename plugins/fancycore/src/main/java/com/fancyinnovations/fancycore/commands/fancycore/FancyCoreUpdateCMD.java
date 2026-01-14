@@ -27,6 +27,7 @@ public class FancyCoreUpdateCMD extends CommandBase {
 
     public FancyCoreUpdateCMD()  {
         super("update", "Update the FancyCore plugin to the latest version");
+        requirePermission("fancycore.commands.fancycore.update");
         this.logger = FancyCorePlugin.get().getFancyLogger();
         this.versionChecker = FancyCorePlugin.get().getVersionChecker();
     }
@@ -35,7 +36,6 @@ public class FancyCoreUpdateCMD extends CommandBase {
     protected void executeSync(@NotNull CommandContext ctx) {
         FetchedVersion latestVersion = this.versionChecker.check();
         if (latestVersion == null) {
-            // TODO (I18N): make translatable
             ctx.sender().sendMessage(
                     Message.raw("You are already using the latest version of FancyCore.")
             );
@@ -43,7 +43,6 @@ public class FancyCoreUpdateCMD extends CommandBase {
             return;
         }
 
-        // TODO (I18N): make translatable
         ctx.sender().sendMessage(
                 Message.raw("A new version of FancyCore is available: " + latestVersion.name() + ". It will be downloaded now. Please restart the server after the download is complete.")
         );
@@ -54,7 +53,6 @@ public class FancyCoreUpdateCMD extends CommandBase {
                 StringProperty.of("download_link", latestVersion.downloadURL())
         );
 
-        // TODO (I18N): make translatable
         ctx.sender().sendMessage(
                 Message.raw("Downloading FancyCore version " + latestVersion.name() + "...")
         );

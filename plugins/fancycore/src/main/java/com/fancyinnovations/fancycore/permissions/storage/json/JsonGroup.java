@@ -4,13 +4,11 @@ import com.fancyinnovations.fancycore.api.permissions.Group;
 import com.fancyinnovations.fancycore.api.permissions.Permission;
 import com.fancyinnovations.fancycore.permissions.GroupImpl;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 public record JsonGroup (
         String name,
-        String parent,
+        List<String> parents,
         String prefix,
         String suffix,
         List<JsonPermission> permissions,
@@ -28,7 +26,7 @@ public record JsonGroup (
 
         return new JsonGroup(
                 group.getName(),
-                group.getParent(),
+                group.getParents(),
                 group.getPrefix(),
                 group.getSuffix(),
                 jsonPermissions,
@@ -37,6 +35,11 @@ public record JsonGroup (
     }
 
     public Group toGroup() {
+        Set<String> parentsSet = new HashSet<>();
+        if (parents != null) {
+            parentsSet.addAll(parents);
+        }
+
         List<Permission> perms = new ArrayList<>();
         if (permissions != null) {
             for (JsonPermission jsonPerm : permissions) {
@@ -44,7 +47,7 @@ public record JsonGroup (
             }
         }
 
-        List<UUID> memberUUIDs = new ArrayList<>();
+        Set<UUID> memberUUIDs = new HashSet<>();
         if (members != null) {
             for (String member : members) {
                 memberUUIDs.add(UUID.fromString(member));
@@ -53,7 +56,7 @@ public record JsonGroup (
 
         return new GroupImpl(
                 this.name,
-                this.parent,
+                parentsSet,
                 this.prefix,
                 this.suffix,
                 perms,

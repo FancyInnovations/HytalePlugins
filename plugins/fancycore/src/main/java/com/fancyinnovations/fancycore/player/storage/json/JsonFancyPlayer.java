@@ -40,6 +40,7 @@ public record JsonFancyPlayer(
                 .toList();
 
         Map<String, Double> balances = new HashMap<>();
+        //hytale.system.command.help
         for (var entry : player.getBalances().entrySet()) {
             balances.put(entry.getKey().name(), entry.getValue());
         }

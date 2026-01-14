@@ -34,12 +34,6 @@ public class GroupSetSuffixCMD extends CommandBase {
             return;
         }
 
-        // TODO: Permission check
-//        if (!fp.checkPermission("fancycore.commands.chatroom.delete")) {
-//            fp.sendMessage(Message.raw("You do not have permission to delete a chat room."));
-//            return;
-//        }
-
         Group group = groupArg.get(ctx);
         String suffix = suffixArg.get(ctx);
         if (suffix.startsWith("\"")) {

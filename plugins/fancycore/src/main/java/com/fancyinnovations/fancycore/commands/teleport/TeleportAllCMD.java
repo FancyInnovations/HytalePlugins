@@ -23,8 +23,7 @@ public class TeleportAllCMD extends CommandBase {
     public TeleportAllCMD() {
         super("tpall", "Teleports all players on the server to your location");
         addAliases("teleportall");
-        // TODO: Permission check
-        // requirePermission("fancycore.commands.tpall");
+         requirePermission("fancycore.commands.tpall");
     }
 
     @Override

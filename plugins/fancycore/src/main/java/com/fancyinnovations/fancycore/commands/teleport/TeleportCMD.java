@@ -26,8 +26,7 @@ public class TeleportCMD extends CommandBase {
     public TeleportCMD() {
         super("tp", "Teleports you or the specified player to another player's location");
         addAliases("teleport");
-        // TODO: Permission check
-        // requirePermission("fancycore.commands.tp");
+        requirePermission("fancycore.commands.tp");
     }
 
     @Override

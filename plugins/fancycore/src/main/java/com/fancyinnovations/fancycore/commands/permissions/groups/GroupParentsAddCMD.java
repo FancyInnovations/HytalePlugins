@@ -3,21 +3,21 @@ package com.fancyinnovations.fancycore.commands.permissions.groups;
 import com.fancyinnovations.fancycore.api.permissions.Group;
 import com.fancyinnovations.fancycore.api.player.FancyPlayer;
 import com.fancyinnovations.fancycore.api.player.FancyPlayerService;
+import com.fancyinnovations.fancycore.main.FancyCorePlugin;
 import com.hypixel.hytale.server.core.Message;
 import com.hypixel.hytale.server.core.command.system.CommandContext;
 import com.hypixel.hytale.server.core.command.system.arguments.system.RequiredArg;
 import com.hypixel.hytale.server.core.command.system.basecommands.CommandBase;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.UUID;
-
-public class GroupMembersListCMD extends CommandBase {
+public class GroupParentsAddCMD extends CommandBase {
 
     protected final RequiredArg<Group> groupArg = this.withRequiredArg(GroupArg.NAME, GroupArg.DESCRIPTION, GroupArg.TYPE);
+    protected final RequiredArg<Group> parentArg = this.withRequiredArg("parent", GroupArg.DESCRIPTION, GroupArg.TYPE);
 
-    protected GroupMembersListCMD() {
-        super("list", "Lists members of a player group");
-        requirePermission("fancycore.commands.groups.members.list");
+    protected GroupParentsAddCMD() {
+        super("add", "Adds a parent group to a group");
+        requirePermission("fancycore.commands.groups.parents.add");
     }
 
     @Override
@@ -34,20 +34,12 @@ public class GroupMembersListCMD extends CommandBase {
         }
 
         Group group = groupArg.get(ctx);
+        Group parent = parentArg.get(ctx);
 
-        fp.sendMessage("Members of group " + group.getName() + ":");
-        if (group.getMembers().isEmpty()) {
-            fp.sendMessage("  No members found.");
-            return;
-        }
+        group.addParent(parent.getName());
 
-        for (UUID memberUUID : group.getMembers()) {
-            FancyPlayer memberFP = FancyPlayerService.get().getByUUID(memberUUID);
-            if (memberFP != null) {
-                fp.sendMessage("  - " + memberFP.getData().getUsername() + " (UUID: " + memberUUID + ")");
-            } else {
-                fp.sendMessage("  - Unknown Player (UUID: " + memberUUID + ")");
-            }
-        }
+        FancyCorePlugin.get().getPermissionStorage().storeGroup(group);
+
+        fp.sendMessage("Added parent group " + parent.getName() + " to group " + group.getName() + ".");
     }
 }

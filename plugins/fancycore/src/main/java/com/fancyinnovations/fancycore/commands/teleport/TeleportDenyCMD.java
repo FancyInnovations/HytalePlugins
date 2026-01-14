@@ -19,8 +19,7 @@ public class TeleportDenyCMD extends CommandBase {
     public TeleportDenyCMD() {
         super("tpdeny", "Denies a pending teleport request from another player");
         addAliases("tpd", "teleportdeny");
-        // TODO: Permission check
-        // requirePermission("fancycore.commands.tpdeny");
+         requirePermission("fancycore.commands.tpdeny");
     }
 
     @Override

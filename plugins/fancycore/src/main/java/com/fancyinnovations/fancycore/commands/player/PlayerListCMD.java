@@ -13,6 +13,7 @@ public class PlayerListCMD extends CommandBase {
     public PlayerListCMD() {
         super("playerlist", "Displays a list of all online players");
         addAliases("online", "list");
+        requirePermission("fancycore.commands.playerlist");
     }
 
     @Override

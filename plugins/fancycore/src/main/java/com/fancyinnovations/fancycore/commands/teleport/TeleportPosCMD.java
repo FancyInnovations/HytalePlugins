@@ -30,8 +30,7 @@ public class TeleportPosCMD extends CommandBase {
     public TeleportPosCMD() {
         super("tppos", "Teleports you to the specified coordinates");
         addAliases("teleportpos");
-        // TODO: Permission check
-        // requirePermission("fancycore.commands.tppos");
+         requirePermission("fancycore.commands.tppos");
     }
 
     @Override

@@ -38,9 +38,16 @@ public class GroupInfoCMD extends CommandBase {
 
         fp.sendMessage("Group Info:");
         fp.sendMessage("- Name: " + group.getName());
-        fp.sendMessage("- Parent: " + (group.getParent() != null ? group.getParent() : "None"));
         fp.sendMessage("- Prefix: " + (group.getPrefix() != null ? group.getPrefix() : "None"));
         fp.sendMessage("- Suffix: " + (group.getSuffix() != null ? group.getSuffix() : "None"));
+        fp.sendMessage("- Parents: ");
+        if (group.getParents().isEmpty()) {
+            fp.sendMessage("  No parent groups.");
+        } else {
+            for (String parent : group.getParents()) {
+                fp.sendMessage("  - " + parent);
+            }
+        }
 
         for (Permission permission : group.getPermissions()) {
             fp.sendMessage("  - Permission: " + permission.getPermission() + "  (Enabled: " + permission.isEnabled() + ")");

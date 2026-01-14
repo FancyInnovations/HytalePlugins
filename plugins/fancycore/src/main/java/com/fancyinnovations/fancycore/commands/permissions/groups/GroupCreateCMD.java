@@ -13,6 +13,7 @@ import com.hypixel.hytale.server.core.command.system.basecommands.CommandBase;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 
 public class GroupCreateCMD extends CommandBase {
 
@@ -36,12 +37,6 @@ public class GroupCreateCMD extends CommandBase {
             return;
         }
 
-        // TODO: Permission check
-//        if (!fp.checkPermission("fancycore.commands.groups.create")) {
-//            fp.sendMessage(Message.raw("You do not have permission to create groups."));
-//            return;
-//        }
-
         String name = groupNameArg.get(ctx);
 
         if (PermissionService.get().getGroup(name) != null) {
@@ -51,11 +46,11 @@ public class GroupCreateCMD extends CommandBase {
 
         Group group = new GroupImpl(
                 name,
-                null,
+                new HashSet<>(),
                 "",
                 "",
                 new ArrayList<>(),
-                new ArrayList<>()
+                new HashSet<>()
         );
 
         PermissionService.get().addGroup(group);

@@ -1,4 +1,4 @@
-package com.fancyinnovations.fancycore.commands.permissions;
+package com.fancyinnovations.fancycore.commands.permissions.player;
 
 import com.fancyinnovations.fancycore.api.player.FancyPlayer;
 import com.fancyinnovations.fancycore.api.player.FancyPlayerService;
@@ -11,33 +11,37 @@ import com.hypixel.hytale.server.core.command.system.arguments.types.ArgTypes;
 import com.hypixel.hytale.server.core.command.system.basecommands.CommandBase;
 import org.jetbrains.annotations.NotNull;
 
-public class CheckPermissionCMD extends CommandBase {
+public class PermissionsCheckCMD extends CommandBase {
 
     protected final RequiredArg<String> permissionArg = this.withRequiredArg("permission", "the permission to test", ArgTypes.STRING);
     protected final OptionalArg<FancyPlayer> targetArg = this.withOptionalArg("target", "the target player", FancyPlayerArg.TYPE);
 
-    public CheckPermissionCMD() {
-        super("checkpermission", "Checks if you/someone has a permission");
+    public PermissionsCheckCMD() {
+        super("check", "Checks if you/someone has a permission");
+        addAliases("test");
+
         requirePermission("fancycore.commands.checkpermission");
     }
 
     @Override
     protected void executeSync(@NotNull CommandContext ctx) {
-        if (!ctx.isPlayer()) {
-            ctx.sendMessage(Message.raw("This command can only be executed by a player."));
+        if (!targetArg.provided(ctx) && !ctx.isPlayer()) {
+            ctx.sendMessage(Message.raw("You must specify a target player when executing this command from the console."));
             return;
         }
 
-        FancyPlayer fp = targetArg.provided(ctx) ? targetArg.get(ctx) : FancyPlayerService.get().getByUUID(ctx.sender().getUuid());
-        if (fp == null) {
-            ctx.sendMessage(Message.raw("FancyPlayer not found."));
-            return;
-        }
+        FancyPlayer fp = FancyPlayerService.get().getByUUID(ctx.sender().getUuid());
+
+        FancyPlayer target = targetArg.provided(ctx) ? targetArg.get(ctx) : fp;
 
         String permission = permissionArg.get(ctx);
 
+        boolean success = target.checkPermission(permission);
 
-        boolean success = fp.checkPermission(permission);
-        fp.sendMessage("Permission check for '" + permission + "': " + success);
+        if (ctx.isPlayer()) {
+            fp.sendMessage("Player " + target.getData().getUsername() + (success ? " has " : " does not have ") + "the permission " + permission + ".");
+        } else {
+            ctx.sendMessage(Message.raw("Player " + target.getData().getUsername() + (success ? " has " : " does not have ") + "the permission " + permission + "."));
+        }
     }
 }

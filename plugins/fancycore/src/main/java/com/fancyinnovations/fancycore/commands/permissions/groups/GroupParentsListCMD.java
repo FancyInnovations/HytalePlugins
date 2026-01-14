@@ -9,15 +9,13 @@ import com.hypixel.hytale.server.core.command.system.arguments.system.RequiredAr
 import com.hypixel.hytale.server.core.command.system.basecommands.CommandBase;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.UUID;
-
-public class GroupMembersListCMD extends CommandBase {
+public class GroupParentsListCMD extends CommandBase {
 
     protected final RequiredArg<Group> groupArg = this.withRequiredArg(GroupArg.NAME, GroupArg.DESCRIPTION, GroupArg.TYPE);
 
-    protected GroupMembersListCMD() {
-        super("list", "Lists members of a player group");
-        requirePermission("fancycore.commands.groups.members.list");
+    protected GroupParentsListCMD() {
+        super("list", "Lists all parent groups of a group");
+        requirePermission("fancycore.commands.groups.parents.list");
     }
 
     @Override
@@ -35,19 +33,9 @@ public class GroupMembersListCMD extends CommandBase {
 
         Group group = groupArg.get(ctx);
 
-        fp.sendMessage("Members of group " + group.getName() + ":");
-        if (group.getMembers().isEmpty()) {
-            fp.sendMessage("  No members found.");
-            return;
-        }
-
-        for (UUID memberUUID : group.getMembers()) {
-            FancyPlayer memberFP = FancyPlayerService.get().getByUUID(memberUUID);
-            if (memberFP != null) {
-                fp.sendMessage("  - " + memberFP.getData().getUsername() + " (UUID: " + memberUUID + ")");
-            } else {
-                fp.sendMessage("  - Unknown Player (UUID: " + memberUUID + ")");
-            }
+        fp.sendMessage("Parent groups of " + group.getName() + ": ");
+        for (String parent : group.getParents()) {
+            fp.sendMessage(" - " + parent);
         }
     }
 }

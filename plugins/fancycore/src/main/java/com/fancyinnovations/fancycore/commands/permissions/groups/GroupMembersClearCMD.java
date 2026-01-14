@@ -2,6 +2,7 @@ package com.fancyinnovations.fancycore.commands.permissions.groups;
 
 import com.fancyinnovations.fancycore.api.permissions.Group;
 import com.fancyinnovations.fancycore.api.player.FancyPlayer;
+import com.fancyinnovations.fancycore.api.player.FancyPlayerData;
 import com.fancyinnovations.fancycore.api.player.FancyPlayerService;
 import com.fancyinnovations.fancycore.main.FancyCorePlugin;
 import com.hypixel.hytale.server.core.Message;
@@ -9,8 +10,6 @@ import com.hypixel.hytale.server.core.command.system.CommandContext;
 import com.hypixel.hytale.server.core.command.system.arguments.system.RequiredArg;
 import com.hypixel.hytale.server.core.command.system.basecommands.CommandBase;
 import org.jetbrains.annotations.NotNull;
-
-import java.util.ArrayList;
 
 public class GroupMembersClearCMD extends CommandBase {
 
@@ -34,15 +33,12 @@ public class GroupMembersClearCMD extends CommandBase {
             return;
         }
 
-        // TODO: Permission check
-//        if (!fp.checkPermission("fancycore.commands.chatroom.delete")) {
-//            fp.sendMessage(Message.raw("You do not have permission to delete a chat room."));
-//            return;
-//        }
-
         Group group = groupArg.get(ctx);
 
-        group.setMembers(new ArrayList<>());
+        group.clearMembers();
+        for (FancyPlayerData player : FancyCorePlugin.get().getPlayerStorage().loadAllPlayers()) {
+            player.removeGroup(group.getName());
+        }
 
         FancyCorePlugin.get().getPermissionStorage().storeGroup(group);
 

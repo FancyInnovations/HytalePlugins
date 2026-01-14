@@ -17,8 +17,7 @@ public class TeleportRequestCMD extends CommandBase {
     public TeleportRequestCMD() {
         super("tprequest", "Sends a teleport request to another player to teleport to their location");
         addAliases("tpr", "teleportrequest");
-        // TODO: Permission check
-        // requirePermission("fancycore.commands.tprequest");
+        requirePermission("fancycore.commands.tprequest");
     }
 
     @Override

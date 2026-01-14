@@ -3,21 +3,20 @@ package com.fancyinnovations.fancycore.commands.permissions.groups;
 import com.fancyinnovations.fancycore.api.permissions.Group;
 import com.fancyinnovations.fancycore.api.player.FancyPlayer;
 import com.fancyinnovations.fancycore.api.player.FancyPlayerService;
+import com.fancyinnovations.fancycore.main.FancyCorePlugin;
 import com.hypixel.hytale.server.core.Message;
 import com.hypixel.hytale.server.core.command.system.CommandContext;
 import com.hypixel.hytale.server.core.command.system.arguments.system.RequiredArg;
 import com.hypixel.hytale.server.core.command.system.basecommands.CommandBase;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.UUID;
-
-public class GroupMembersListCMD extends CommandBase {
+public class GroupParentsClearCMD extends CommandBase {
 
     protected final RequiredArg<Group> groupArg = this.withRequiredArg(GroupArg.NAME, GroupArg.DESCRIPTION, GroupArg.TYPE);
 
-    protected GroupMembersListCMD() {
-        super("list", "Lists members of a player group");
-        requirePermission("fancycore.commands.groups.members.list");
+    protected GroupParentsClearCMD() {
+        super("clear", "Clears all parent groups from a group");
+        requirePermission("fancycore.commands.groups.parents.clear");
     }
 
     @Override
@@ -35,19 +34,10 @@ public class GroupMembersListCMD extends CommandBase {
 
         Group group = groupArg.get(ctx);
 
-        fp.sendMessage("Members of group " + group.getName() + ":");
-        if (group.getMembers().isEmpty()) {
-            fp.sendMessage("  No members found.");
-            return;
-        }
+        group.clearParents();
 
-        for (UUID memberUUID : group.getMembers()) {
-            FancyPlayer memberFP = FancyPlayerService.get().getByUUID(memberUUID);
-            if (memberFP != null) {
-                fp.sendMessage("  - " + memberFP.getData().getUsername() + " (UUID: " + memberUUID + ")");
-            } else {
-                fp.sendMessage("  - Unknown Player (UUID: " + memberUUID + ")");
-            }
-        }
+        FancyCorePlugin.get().getPermissionStorage().storeGroup(group);
+
+        fp.sendMessage("Cleared all parent groups from group " + group.getName() + ".");
     }
 }

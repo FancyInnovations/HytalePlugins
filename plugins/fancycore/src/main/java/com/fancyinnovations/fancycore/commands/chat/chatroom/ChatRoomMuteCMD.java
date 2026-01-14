@@ -32,12 +32,6 @@ public class ChatRoomMuteCMD extends CommandBase {
             return;
         }
 
-        // TODO: Permission check
-//        if (!fp.checkPermission("fancycore.commands.chatroom.mute")) {
-//            fp.sendMessage(Message.raw("You do not have permission to mute chat."));
-//            return;
-//        }
-
         ChatRoom chatRoom = chatRoomNameArg.provided(ctx) ? chatRoomNameArg.get(ctx) : fp.getCurrentChatRoom();
 
         if (chatRoom.isMuted()) {

@@ -34,12 +34,6 @@ public class GroupPermissionsRemoveCMD extends CommandBase {
             return;
         }
 
-        // TODO: Permission check
-//        if (!fp.checkPermission("fancycore.commands.chatroom.delete")) {
-//            fp.sendMessage(Message.raw("You do not have permission to delete a chat room."));
-//            return;
-//        }
-
         Group group = groupArg.get(ctx);
         String permission = permissionArg.get(ctx);
 

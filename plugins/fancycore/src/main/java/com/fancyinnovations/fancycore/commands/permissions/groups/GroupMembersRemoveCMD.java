@@ -34,12 +34,6 @@ public class GroupMembersRemoveCMD extends CommandBase {
             return;
         }
 
-        // TODO: Permission check
-//        if (!fp.checkPermission("fancycore.commands.chatroom.delete")) {
-//            fp.sendMessage(Message.raw("You do not have permission to delete a chat room."));
-//            return;
-//        }
-
         Group group = groupArg.get(ctx);
         FancyPlayer target = targetArg.get(ctx);
 
@@ -48,7 +42,8 @@ public class GroupMembersRemoveCMD extends CommandBase {
             return;
         }
 
-        group.getMembers().remove(target.getData().getUUID());
+        group.removeMember(target.getData().getUUID());
+        fp.getData().removeGroup(group.getName());
 
         FancyCorePlugin.get().getPermissionStorage().storeGroup(group);
 

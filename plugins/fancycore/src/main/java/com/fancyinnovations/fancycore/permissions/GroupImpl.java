@@ -5,26 +5,27 @@ import com.fancyinnovations.fancycore.api.permissions.Group;
 import com.fancyinnovations.fancycore.api.permissions.Permission;
 
 import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 
 public class GroupImpl implements Group {
 
     private final String name;
-    private String parent;
+    private final Set<String> parents;
+    private final Set<UUID> members;
     private String prefix;
     private String suffix;
     private List<Permission> permissions;
-    private List<UUID> members;
 
     public GroupImpl(
             String name,
-            String parent,
+            Set<String> parents,
             String prefix,
             String suffix,
             List<Permission> permissions,
-            List<UUID> members) {
+            Set<UUID> members) {
         this.name = name;
-        this.parent = parent;
+        this.parents = parents;
         this.prefix = prefix;
         this.suffix = suffix;
         this.permissions = permissions;
@@ -39,10 +40,13 @@ public class GroupImpl implements Group {
             }
         }
 
-        if (parent != null) {
+        for (String parent : parents) {
             Group group = FancyCore.get().getPermissionService().getGroup(parent);
             if (group != null) {
-                return group.checkPermission(permission);
+                // TODO return false if explicitly denied in parent group
+                if (group.checkPermission(permission)) {
+                    return true;
+                }
             }
         }
 
@@ -55,13 +59,23 @@ public class GroupImpl implements Group {
     }
 
     @Override
-    public String getParent() {
-        return parent;
+    public List<String> getParents() {
+        return List.of();
     }
 
     @Override
-    public void setParent(String parent) {
-        this.parent = parent;
+    public void addParent(String parent) {
+        this.parents.add(parent);
+    }
+
+    @Override
+    public void removeParent(String parent) {
+        this.parents.remove(parent);
+    }
+
+    @Override
+    public void clearParents() {
+        this.parents.clear();
     }
 
     @Override
@@ -107,12 +121,28 @@ public class GroupImpl implements Group {
     }
 
     @Override
-    public List<UUID> getMembers() {
-        return members;
+    public void removePermission(String permission) {
+        this.permissions.removeIf(perm -> perm.getPermission().equalsIgnoreCase(permission));
     }
 
     @Override
-    public void setMembers(List<UUID> members) {
-        this.members = members;
+    public List<UUID> getMembers() {
+        return List.copyOf(members);
     }
+
+    @Override
+    public void addMember(UUID memberUUID) {
+        this.members.add(memberUUID);
+    }
+
+    @Override
+    public void removeMember(UUID memberUUID) {
+        this.members.remove(memberUUID);
+    }
+
+    @Override
+    public void clearMembers() {
+        this.members.clear();
+    }
+
 }

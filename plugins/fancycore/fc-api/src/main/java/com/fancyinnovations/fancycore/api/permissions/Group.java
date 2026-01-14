@@ -7,9 +7,13 @@ public interface Group {
 
     String getName();
 
-    String getParent();
+    List<String> getParents();
 
-    void setParent(String parent);
+    void addParent(String parent);
+
+    void removeParent(String parent);
+
+    void clearParents();
 
     String getPrefix();
 
@@ -25,9 +29,15 @@ public interface Group {
 
     void setPermission(String permission, boolean enabled);
 
+    void removePermission(String permission);
+
     List<UUID> getMembers();
 
-    void setMembers(List<UUID> members);
+    void addMember(UUID memberUUID);
+
+    void removeMember(UUID memberUUID);
+
+    void clearMembers();
 
     boolean checkPermission(String permission);
 }

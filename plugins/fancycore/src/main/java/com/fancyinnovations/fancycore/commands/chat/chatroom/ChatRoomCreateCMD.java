@@ -33,12 +33,6 @@ public class ChatRoomCreateCMD extends CommandBase {
             return;
         }
 
-        // TODO: Permission check
-//        if (!fp.checkPermission("fancycore.commands.chatroom.create")) {
-//            fp.sendMessage(Message.raw("You do not have permission to create chat rooms."));
-//            return;
-//        }
-
         String name = chatRoomNameArg.get(ctx);
 
         if (ChatService.get().getChatRoom(name) != null) {

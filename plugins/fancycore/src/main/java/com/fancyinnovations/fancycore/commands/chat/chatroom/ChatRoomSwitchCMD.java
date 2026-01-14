@@ -30,12 +30,6 @@ public class ChatRoomSwitchCMD extends CommandBase {
             return;
         }
 
-        // TODO: Permission check
-//        if (!fp.checkPermission("fancycore.chatroom."+chatRoom.getName())) {
-//            fp.sendMessage(Message.raw("You do not have permission to watch chat room " + chatRoom.getName() + "."));
-//            return;
-//        }
-
         ChatRoom chatRoom = chatRoomNameArg.get(ctx);
 
         if (!chatRoom.getWatchers().contains(fp)) {

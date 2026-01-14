@@ -15,6 +15,7 @@ public class UnignoreCMD extends CommandBase {
 
     public UnignoreCMD() {
         super("unignore", "Unignore a player to start receiving their messages again.");
+        requirePermission("fancycore.commands.uningnore");
     }
 
     @Override

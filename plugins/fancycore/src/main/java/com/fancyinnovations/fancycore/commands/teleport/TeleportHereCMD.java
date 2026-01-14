@@ -24,8 +24,7 @@ public class TeleportHereCMD extends CommandBase {
     public TeleportHereCMD() {
         super("tphere", "Teleports the specified player to your location");
         addAliases("teleporthere");
-        // TODO: Permission check
-        // requirePermission("fancycore.commands.tphere");
+        requirePermission("fancycore.commands.tphere");
     }
 
     @Override

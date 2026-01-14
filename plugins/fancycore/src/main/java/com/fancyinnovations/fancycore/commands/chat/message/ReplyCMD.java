@@ -19,6 +19,7 @@ public class ReplyCMD extends CommandBase {
 
     public ReplyCMD() {
         super("reply", "Reply to the last player who sent you a private message");
+        requirePermission("fancycore.commands.reply");
         addAliases("r");
     }
 

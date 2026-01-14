@@ -24,8 +24,7 @@ public class TeleportDeathBackCMD extends CommandBase {
     public TeleportDeathBackCMD() {
         super("deathback", "Teleports you to the location where you last died");
         addAliases("deathtp", "deathteleport");
-        // TODO: Permission check
-        // requirePermission("fancycore.commands.deathback");
+        requirePermission("fancycore.commands.deathback");
     }
 
     @Override

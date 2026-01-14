@@ -9,6 +9,7 @@ import de.oliver.fancyanalytics.logger.properties.ThrowableProperty;
 import de.oliver.jdb.JDB;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -30,7 +31,8 @@ public class FancyPlayerJsonStorage implements FancyPlayerStorage {
 
         JsonFancyPlayer jsonFancyPlayer = JsonFancyPlayer.from(fpImpl);
         try {
-            jdb.set(fpImpl.getUUID().toString(), jsonFancyPlayer, "/by-username/" + fpImpl.getUsername());
+//            jdb.set(fpImpl.getUUID().toString(), jsonFancyPlayer, "/by-username/" + fpImpl.getUsername());
+            jdb.set(fpImpl.getUUID().toString(), jsonFancyPlayer);
         } catch (IOException e) {
             FancyCorePlugin.get().getFancyLogger().error(
                     "Failed to save FancyPlayer",
@@ -77,10 +79,11 @@ public class FancyPlayerJsonStorage implements FancyPlayerStorage {
     public List<FancyPlayerData> loadAllPlayers() {
         try {
             List<JsonFancyPlayer> all = jdb.getAll("", JsonFancyPlayer.class);
-            return all.stream()
-                    .map(JsonFancyPlayer::toFancyPlayer)
-                    .map(fpImpl -> (FancyPlayerData) fpImpl)
-                    .toList();
+            List<FancyPlayerData> data = new ArrayList<>();
+            for (JsonFancyPlayer jsonFancyPlayer : all) {
+                data.add(jsonFancyPlayer.toFancyPlayer());
+            }
+            return data;
         } catch (IOException e) {
             FancyCorePlugin.get().getFancyLogger().error(
                     "Failed to load all FancyPlayers",
