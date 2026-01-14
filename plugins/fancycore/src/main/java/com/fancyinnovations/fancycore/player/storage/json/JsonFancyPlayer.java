@@ -18,6 +18,8 @@ public record JsonFancyPlayer(
         @SerializedName("groups") List<String> groups,
         String nickname,
         @SerializedName("chat_color") String chatColor,
+        @SerializedName("ignored_players") List<String> ignoredPlayers,
+        @SerializedName("private_messages_enabled") boolean privateMessagesEnabled,
         Map<String, Double> balances,
         @SerializedName("first_login_time") long firstLoginTime,
         @SerializedName("play_time") long playTime,
@@ -33,6 +35,10 @@ public record JsonFancyPlayer(
             permissions.add(JsonPermission.from(perm));
         }
 
+        List<String> ignoredPlayers = player.getIgnoredPlayers().stream()
+                .map(UUID::toString)
+                .toList();
+
         Map<String, Double> balances = new HashMap<>();
         for (var entry : player.getBalances().entrySet()) {
             balances.put(entry.getKey().name(), entry.getValue());
@@ -45,6 +51,8 @@ public record JsonFancyPlayer(
                 player.getGroups(),
                 player.getNickname(),
                 Integer.toHexString(player.getChatColor().getRGB()),
+                ignoredPlayers,
+                player.isPrivateMessagesEnabled(),
                 balances,
                 player.getFirstLoginTime(),
                 player.getPlayTime(),
@@ -59,6 +67,15 @@ public record JsonFancyPlayer(
         List<Permission> perms = new ArrayList<>();
         for (JsonPermission jsonPerm : permissions) {
             perms.add(jsonPerm.toPermission());
+        }
+
+        List<UUID> ignoredPlayerUUIDs = new ArrayList<>();
+        for (String ignoredPlayer : ignoredPlayers) {
+            try {
+                ignoredPlayerUUIDs.add(UUID.fromString(ignoredPlayer));
+            } catch (IllegalArgumentException e) {
+                FancyCore.get().getFancyLogger().warn("Invalid UUID '" + ignoredPlayer + "' in ignored players for player " + username);
+            }
         }
 
         Map<Currency, Double> balances = new HashMap<>();
@@ -79,6 +96,8 @@ public record JsonFancyPlayer(
                 groups,
                 nickname,
                 new Color((int) Long.parseLong(chatColor, 16), true),
+                ignoredPlayerUUIDs,
+                privateMessagesEnabled,
                 balances,
                 firstLoginTime,
                 playTime,

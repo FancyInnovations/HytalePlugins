@@ -49,6 +49,11 @@ public class MessageCMD extends CommandBase {
             return;
         }
 
+        if (receiver.getData().getIgnoredPlayers().contains(sender.getData().getUUID())) {
+            ctx.sendMessage(Message.raw("You cannot send a private message to " + receiver.getData().getUsername() + " because they are ignoring you."));
+            return;
+        }
+
         String message = String.join(" ", messageArg.get(ctx));
 
         if (!new PrivateMessageSentEvent(sender, receiver, message).fire()) {

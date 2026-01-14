@@ -48,6 +48,16 @@ public interface FancyPlayerData {
 
     void setChatColor(Color chatColor);
 
+    List<UUID> getIgnoredPlayers();
+
+    void addIgnoredPlayer(UUID playerUUID);
+
+    void removeIgnoredPlayer(UUID playerUUID);
+
+    boolean isPrivateMessagesEnabled();
+
+    void setPrivateMessagesEnabled(boolean enabled);
+
     double getBalance(Currency currency);
 
     Map<Currency, Double> getBalances();

@@ -19,8 +19,10 @@ import com.fancyinnovations.fancycore.api.player.FancyPlayerStorage;
 import com.fancyinnovations.fancycore.chat.service.ChatServiceImpl;
 import com.fancyinnovations.fancycore.chat.storage.json.ChatJsonStorage;
 import com.fancyinnovations.fancycore.commands.chat.chatroom.ChatRoomCMD;
+import com.fancyinnovations.fancycore.commands.chat.message.IgnoreCMD;
 import com.fancyinnovations.fancycore.commands.chat.message.MessageCMD;
 import com.fancyinnovations.fancycore.commands.chat.message.ReplyCMD;
+import com.fancyinnovations.fancycore.commands.chat.message.UnignoreCMD;
 import com.fancyinnovations.fancycore.commands.fancycore.FancyCoreCMD;
 import com.fancyinnovations.fancycore.config.FancyCoreConfigImpl;
 import com.fancyinnovations.fancycore.economy.service.CurrencyServiceImpl;
@@ -234,6 +236,8 @@ public class FancyCorePlugin extends JavaPlugin implements FancyCore {
         CommandManager.get().register(new ChatRoomCMD());
         CommandManager.get().register(new MessageCMD());
         CommandManager.get().register(new ReplyCMD());
+        CommandManager.get().register(new IgnoreCMD());
+        CommandManager.get().register(new UnignoreCMD());
     }
 
     public void registerListeners() {

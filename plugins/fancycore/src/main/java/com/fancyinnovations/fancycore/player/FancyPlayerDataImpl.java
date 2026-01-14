@@ -24,6 +24,8 @@ public class FancyPlayerDataImpl implements FancyPlayerData {
     private String username;
     private String nickname;
     private Color chatColor;
+    private List<UUID> ignoredPlayers;
+    private boolean enabledPrivateMessages;
     private Map<Currency, Double> balances;
     private long firstLoginTime; // timestamp
     private long playTime; // in milliseconds
@@ -39,6 +41,8 @@ public class FancyPlayerDataImpl implements FancyPlayerData {
         this.groups = new ArrayList<>();
         this.nickname = username; // default nickname is the username
         this.chatColor = Color.WHITE;
+        this.ignoredPlayers = new ArrayList<>();
+        this.enabledPrivateMessages = true;
         this.balances = new ConcurrentHashMap<>();
         this.firstLoginTime = System.currentTimeMillis();
         this.playTime = 0L;
@@ -54,6 +58,8 @@ public class FancyPlayerDataImpl implements FancyPlayerData {
             List<String> groups,
             String nickname,
             Color chatColor,
+            List<UUID> ignoredPlayers,
+            boolean enabledPrivateMessages,
             Map<Currency, Double> balances,
             long firstLoginTime,
             long playTime,
@@ -65,6 +71,8 @@ public class FancyPlayerDataImpl implements FancyPlayerData {
         this.groups = groups;
         this.nickname = nickname;
         this.chatColor = chatColor;
+        this.ignoredPlayers = ignoredPlayers;
+        this.enabledPrivateMessages = enabledPrivateMessages;
         this.balances = balances;
         this.firstLoginTime = firstLoginTime;
         this.playTime = playTime;
@@ -168,6 +176,37 @@ public class FancyPlayerDataImpl implements FancyPlayerData {
     @Override
     public void setChatColor(Color chatColor) {
         this.chatColor = chatColor;
+        this.isDirty = true;
+    }
+
+    @Override
+    public List<UUID> getIgnoredPlayers() {
+        return ignoredPlayers;
+    }
+
+    @Override
+    public void addIgnoredPlayer(UUID playerUUID) {
+        if (!this.ignoredPlayers.contains(playerUUID)) {
+            this.ignoredPlayers.add(playerUUID);
+            this.isDirty = true;
+        }
+    }
+
+    @Override
+    public void removeIgnoredPlayer(UUID playerUUID) {
+        if (this.ignoredPlayers.remove(playerUUID)) {
+            this.isDirty = true;
+        }
+    }
+
+    @Override
+    public boolean isPrivateMessagesEnabled() {
+        return enabledPrivateMessages;
+    }
+
+    @Override
+    public void setPrivateMessagesEnabled(boolean enabled) {
+        this.enabledPrivateMessages = enabled;
         this.isDirty = true;
     }
 
