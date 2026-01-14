@@ -59,14 +59,17 @@ import de.oliver.fancyanalytics.logger.LogLevel;
 import de.oliver.fancyanalytics.logger.appender.Appender;
 import de.oliver.fancyanalytics.logger.appender.ConsoleAppender;
 import de.oliver.fancyanalytics.logger.appender.JsonAppender;
+import de.oliver.fancyanalytics.logger.properties.ThrowableProperty;
 
 import javax.annotation.Nonnull;
 import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
+import java.util.function.Function;
 
 public class FancyCorePlugin extends JavaPlugin implements FancyCore {
 
@@ -272,13 +275,16 @@ public class FancyCorePlugin extends JavaPlugin implements FancyCore {
         eventRegistry.registerGlobal(AddPlayerToWorldEvent.class, PlayerJoinListener::onAddPlayerToWorld);
         eventRegistry.registerGlobal(PlayerDisconnectEvent.class, PlayerLeaveListener::onPlayerLeave);
 
-        // TODO fix this stupid async event handling
-        eventRegistry.registerAsyncGlobal(PlayerChatEvent.class, future ->
+        Function<CompletableFuture<PlayerChatEvent>, CompletableFuture<PlayerChatEvent>> handler = future ->
                 future.thenApply(event -> {
-                    PlayerChatListener.onPlayerChat(event);
+                    try {
+                        PlayerChatListener.onPlayerChat(event);
+                    } catch (Exception e) {
+                        fancyLogger.error("Error handling player chat event", ThrowableProperty.of(e));
+                    }
                     return event;
-                })
-        );
+                });
+        eventRegistry.registerAsyncGlobal(PlayerChatEvent.class, handler);
     }
 
     @Override
