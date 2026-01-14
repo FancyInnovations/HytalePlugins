@@ -97,6 +97,14 @@ public class TeleportCMD extends CommandBase {
         if (targetWorld.equals(destinationWorld)) {
             // Execute teleportation on the world thread
             targetWorld.execute(() -> {
+                // Save previous location for /back command (only if target is a player teleporting themselves)
+                if (!isTwoArg) {
+                    FancyPlayer targetFp = FancyPlayerService.get().getByUUID(targetPlayerRef.getUuid());
+                    if (targetFp != null) {
+                        TeleportLocationHelper.savePreviousLocation(targetFp, targetRef, targetStore, targetWorld);
+                    }
+                }
+
                 // Get destination position and rotation
                 TransformComponent destinationTransformComponent = (TransformComponent) destinationStore.getComponent(destinationRef, TransformComponent.getComponentType());
                 if (destinationTransformComponent == null) {
@@ -153,6 +161,14 @@ public class TeleportCMD extends CommandBase {
 
                 // Now execute teleportation on the target world thread
                 targetWorld.execute(() -> {
+                    // Save previous location for /back command (only if target is a player teleporting themselves)
+                    if (!isTwoArg) {
+                        FancyPlayer targetFp = FancyPlayerService.get().getByUUID(targetPlayerRef.getUuid());
+                        if (targetFp != null) {
+                            TeleportLocationHelper.savePreviousLocation(targetFp, targetRef, targetStore, targetWorld);
+                        }
+                    }
+
                     // Create teleport component
                     Teleport teleport = new Teleport(destinationWorld, destinationTransform);
 
