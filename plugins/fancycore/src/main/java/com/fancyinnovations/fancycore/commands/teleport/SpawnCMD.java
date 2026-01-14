@@ -20,8 +20,7 @@ public class SpawnCMD extends CommandBase {
 
     public SpawnCMD() {
         super("spawn", "Teleports you to the server's spawn point");
-        // TODO: Permission check
-        // requirePermission("fancycore.commands.spawn");
+        requirePermission("fancycore.commands.spawn");
     }
 
     @Override

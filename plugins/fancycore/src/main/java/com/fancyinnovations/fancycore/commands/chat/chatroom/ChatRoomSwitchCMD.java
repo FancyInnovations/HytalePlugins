@@ -15,6 +15,7 @@ public class ChatRoomSwitchCMD extends CommandBase {
 
     protected ChatRoomSwitchCMD() {
         super("switch", "Switch to a chat room. You will be sending messages to this chat room");
+        requirePermission("fancycore.commands.chatroom.switch");
     }
 
     @Override

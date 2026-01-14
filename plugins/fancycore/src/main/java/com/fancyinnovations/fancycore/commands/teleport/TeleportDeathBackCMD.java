@@ -22,9 +22,9 @@ import java.util.List;
 public class TeleportDeathBackCMD extends CommandBase {
 
     public TeleportDeathBackCMD() {
-        super("deathback", "Teleports you to the location where you last died");
-        addAliases("deathtp", "deathteleport");
-        requirePermission("fancycore.commands.deathback");
+        super("teleportdeathback", "Teleports you to the location where you last died");
+        addAliases("deathback", "deathtp", "deathteleport");
+        requirePermission("fancycore.commands.teleportdeathback");
     }
 
     @Override

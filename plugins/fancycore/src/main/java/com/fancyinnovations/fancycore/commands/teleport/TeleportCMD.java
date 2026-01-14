@@ -24,9 +24,9 @@ public class TeleportCMD extends CommandBase {
     protected final OptionalArg<PlayerRef> destinationArg = this.withOptionalArg("", "The destination player", TeleportArg.TYPE);
 
     public TeleportCMD() {
-        super("tp", "Teleports you or the specified player to another player's location");
-        addAliases("teleport");
-        requirePermission("fancycore.commands.tp");
+        super("teleport", "Teleports you or the specified player to another player's location");
+        addAliases("tp");
+        requirePermission("fancycore.commands.teleport");
     }
 
     @Override

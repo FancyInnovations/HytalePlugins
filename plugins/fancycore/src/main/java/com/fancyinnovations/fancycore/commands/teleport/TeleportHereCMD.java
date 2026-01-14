@@ -22,9 +22,9 @@ public class TeleportHereCMD extends CommandBase {
     protected final RequiredArg<PlayerRef> targetArg = this.withRequiredArg("", "The player to teleport", TeleportArg.TYPE);
 
     public TeleportHereCMD() {
-        super("tphere", "Teleports the specified player to your location");
-        addAliases("teleporthere");
-        requirePermission("fancycore.commands.tphere");
+        super("teleporthere", "Teleports the specified player to your location");
+        addAliases("tphere");
+        requirePermission("fancycore.commands.teleporthere");
     }
 
     @Override

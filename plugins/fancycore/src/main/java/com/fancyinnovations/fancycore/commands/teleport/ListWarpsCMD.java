@@ -14,8 +14,7 @@ public class ListWarpsCMD extends CommandBase {
     public ListWarpsCMD() {
         super("listwarps", "Lists all available warp points on the server");
         addAliases("warps");
-        // TODO: Permission check
-        // requirePermission("fancycore.commands.listwarps");
+        requirePermission("fancycore.commands.listwarps");
     }
 
     @Override

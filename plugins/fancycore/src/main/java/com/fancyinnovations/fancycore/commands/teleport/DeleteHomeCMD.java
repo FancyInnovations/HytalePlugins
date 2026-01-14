@@ -16,8 +16,8 @@ public class DeleteHomeCMD extends CommandBase {
 
     public DeleteHomeCMD() {
         super("deletehome", "Deletes your home point with the specified name");
-        // TODO: Permission check
-        // requirePermission("fancycore.commands.deletehome");
+        addAliases("delhome");
+        requirePermission("fancycore.commands.deletehome");
     }
 
     @Override

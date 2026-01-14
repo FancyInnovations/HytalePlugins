@@ -12,8 +12,8 @@ public class DeleteWarpCMD extends CommandBase {
 
     public DeleteWarpCMD() {
         super("deletewarp", "Deletes the warp point with the specified name");
-        // TODO: Permission check
-        // requirePermission("fancycore.commands.deletewarp");
+        addAliases("delwarp");
+        requirePermission("fancycore.commands.deletewarp");
     }
 
     @Override

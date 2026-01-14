@@ -25,9 +25,9 @@ public class TeleportAcceptCMD extends CommandBase {
     protected final OptionalArg<PlayerRef> senderArg = this.withOptionalArg("", "The player who sent the request", TeleportArg.TYPE);
 
     public TeleportAcceptCMD() {
-        super("tpaccept", "Accepts a pending teleport request from another player");
-        addAliases("tpa", "teleportaccept");
-         requirePermission("fancycore.commands.tpaccept");
+        super("teleportaccept", "Accepts a pending teleport request from another player");
+        addAliases("tpa", "tpaccept");
+         requirePermission("fancycore.commands.teleportaccept");
     }
 
     @Override

@@ -16,6 +16,7 @@ public class ChatRoomUnwatchCMD extends CommandBase {
 
     protected ChatRoomUnwatchCMD() {
         super("unwatch", "Stop watching a chat room. You will no longer receive messages from this chat room");
+        requirePermission("fancycore.commands.chatroom.unwatch");
     }
 
     @Override

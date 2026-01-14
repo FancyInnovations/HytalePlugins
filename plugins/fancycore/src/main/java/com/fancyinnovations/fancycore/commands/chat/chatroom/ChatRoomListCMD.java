@@ -13,6 +13,7 @@ public class ChatRoomListCMD extends CommandBase {
 
     protected ChatRoomListCMD() {
         super("list", "List all chat rooms you have permission to access");
+        requirePermission("fancycore.commands.chatroom.list");
     }
 
     @Override

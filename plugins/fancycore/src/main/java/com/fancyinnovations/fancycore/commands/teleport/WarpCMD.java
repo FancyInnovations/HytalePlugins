@@ -26,9 +26,7 @@ public class WarpCMD extends CommandBase {
 
     public WarpCMD() {
         super("warp", "Teleports you to the warp point with the specified name");
-        // TODO: Permission check
-        // requirePermission("fancycore.commands.warp");
-        // Note: Per-warp permission should be checked as: fancycore.commands.warp.<name>
+         requirePermission("fancycore.commands.warp");
     }
 
     @Override

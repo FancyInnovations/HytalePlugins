@@ -22,7 +22,7 @@ public class TeleportBackCMD extends CommandBase {
 
     public TeleportBackCMD() {
         super("back", "Teleports you back to your previous location before your last teleport");
-         requirePermission("fancycore.commands.back");
+        requirePermission("fancycore.commands.back");
     }
 
     @Override

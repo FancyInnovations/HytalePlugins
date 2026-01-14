@@ -15,9 +15,9 @@ public class TeleportRequestCMD extends CommandBase {
     protected final RequiredArg<PlayerRef> targetArg = this.withRequiredArg("", "The player to request teleportation to", TeleportArg.TYPE);
 
     public TeleportRequestCMD() {
-        super("tprequest", "Sends a teleport request to another player to teleport to their location");
-        addAliases("tpr", "teleportrequest");
-        requirePermission("fancycore.commands.tprequest");
+        super("teleportrequest", "Sends a teleport request to another player to teleport to their location");
+        addAliases("tpr", "tprequest");
+        requirePermission("fancycore.commands.teleportrequest");
     }
 
     @Override

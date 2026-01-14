@@ -14,8 +14,7 @@ public class SetSpawnCMD extends CommandBase {
 
     public SetSpawnCMD() {
         super("setspawn", "Sets the server's spawn point to your current location");
-        // TODO: Permission check
-        // requirePermission("fancycore.commands.setspawn");
+        requirePermission("fancycore.commands.setspawn");
     }
 
     @Override

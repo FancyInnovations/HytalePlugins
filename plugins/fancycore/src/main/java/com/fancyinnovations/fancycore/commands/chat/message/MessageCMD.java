@@ -21,7 +21,7 @@ public class MessageCMD extends CommandBase {
 
     public MessageCMD() {
         super("message", "Send a private message to another player");
-        addAliases("msg", "dm");
+        addAliases("msg", "dm", "tell", "whisper");
         requirePermission("fancycore.commands.message");
         setAllowsExtraArguments(true);
     }

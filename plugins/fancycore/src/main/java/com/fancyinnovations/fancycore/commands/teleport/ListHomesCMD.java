@@ -15,8 +15,7 @@ public class ListHomesCMD extends CommandBase {
 
     public ListHomesCMD() {
         super("listhomes", "Lists all your home points");
-        // TODO: Permission check
-        // requirePermission("fancycore.commands.listhomes");
+        requirePermission("fancycore.commands.listhomes");
     }
 
     @Override

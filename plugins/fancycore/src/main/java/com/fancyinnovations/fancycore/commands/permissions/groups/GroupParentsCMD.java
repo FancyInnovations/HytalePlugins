@@ -6,6 +6,7 @@ public class GroupParentsCMD extends AbstractCommandCollection {
 
     public GroupParentsCMD() {
         super("parents", "Manages parents of player groups");
+        requirePermission("fancycore.commands.groups.parents");
 
         addSubCommand(new GroupParentsListCMD());
         addSubCommand(new GroupParentsClearCMD());

@@ -17,9 +17,9 @@ public class TeleportDenyCMD extends CommandBase {
     protected final OptionalArg<PlayerRef> senderArg = this.withOptionalArg("", "The player who sent the request", TeleportArg.TYPE);
 
     public TeleportDenyCMD() {
-        super("tpdeny", "Denies a pending teleport request from another player");
-        addAliases("tpd", "teleportdeny");
-         requirePermission("fancycore.commands.tpdeny");
+        super("teleportdeny", "Denies a pending teleport request from another player");
+        addAliases("tpd", "tpdeny");
+        requirePermission("fancycore.commands.teleportdeny");
     }
 
     @Override

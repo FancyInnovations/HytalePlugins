@@ -23,8 +23,7 @@ public class SetHomeCMD extends CommandBase {
 
     public SetHomeCMD() {
         super("sethome", "Sets your home point to your current location");
-        // TODO: Permission check
-        // requirePermission("fancycore.commands.sethome");
+        requirePermission("fancycore.commands.sethome");
     }
 
     @Override

@@ -21,9 +21,9 @@ import java.util.Collection;
 public class TeleportAllCMD extends CommandBase {
 
     public TeleportAllCMD() {
-        super("tpall", "Teleports all players on the server to your location");
-        addAliases("teleportall");
-         requirePermission("fancycore.commands.tpall");
+        super("teleportall", "Teleports all players on the server to your location");
+        addAliases("tpall");
+        requirePermission("fancycore.commands.teleportall");
     }
 
     @Override

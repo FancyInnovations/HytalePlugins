@@ -28,9 +28,9 @@ public class TeleportPosCMD extends CommandBase {
     protected final OptionalArg<World> worldArg = this.withOptionalArg("", "World name", ArgTypes.WORLD);
 
     public TeleportPosCMD() {
-        super("tppos", "Teleports you to the specified coordinates");
-        addAliases("teleportpos");
-         requirePermission("fancycore.commands.tppos");
+        super("teleportposition", "Teleports you to the specified coordinates");
+        addAliases("tppos", "teleportpos");
+        requirePermission("fancycore.commands.teleportposition");
     }
 
     @Override

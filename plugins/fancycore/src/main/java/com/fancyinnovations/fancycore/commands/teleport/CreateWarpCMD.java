@@ -20,8 +20,7 @@ public class CreateWarpCMD extends CommandBase {
 
     public CreateWarpCMD() {
         super("createwarp", "Creates a warp point at your current location with the specified name");
-        // TODO: Permission check
-        // requirePermission("fancycore.commands.createwarp");
+         requirePermission("fancycore.commands.createwarp");
     }
 
     @Override

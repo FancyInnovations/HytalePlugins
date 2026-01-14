@@ -20,7 +20,7 @@ public class PermissionsCheckCMD extends CommandBase {
         super("check", "Checks if you/someone has a permission");
         addAliases("test");
 
-        requirePermission("fancycore.commands.checkpermission");
+        requirePermission("fancycore.commands.permissions.check");
     }
 
     @Override

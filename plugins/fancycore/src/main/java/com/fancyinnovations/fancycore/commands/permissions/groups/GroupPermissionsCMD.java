@@ -6,6 +6,7 @@ public class GroupPermissionsCMD extends AbstractCommandCollection {
 
     public GroupPermissionsCMD() {
         super("permissions", "Manages permissions for player groups");
+        requirePermission("fancycore.commands.groups.permissions");
 
         addSubCommand(new GroupPermissionsListCMD());
         addSubCommand(new GroupPermissionsSetCMD());

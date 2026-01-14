@@ -18,6 +18,7 @@ public class ChatRoomInfoCMD extends CommandBase {
 
     protected ChatRoomInfoCMD() {
         super("info", "Get information about a chat room");
+        requirePermission("fancycore.commands.chatroom.info");
     }
 
     @Override

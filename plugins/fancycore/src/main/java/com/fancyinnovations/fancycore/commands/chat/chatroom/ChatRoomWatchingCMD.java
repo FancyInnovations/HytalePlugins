@@ -15,6 +15,7 @@ public class ChatRoomWatchingCMD extends CommandBase {
 
     protected ChatRoomWatchingCMD() {
         super("watching", "Show information about the chat rooms you are currently watching");
+        requirePermission("fancycore.commands.chatroom.watching");
     }
 
     @Override
