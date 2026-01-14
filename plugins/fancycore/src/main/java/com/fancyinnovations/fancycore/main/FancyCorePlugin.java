@@ -21,16 +21,9 @@ import com.fancyinnovations.fancycore.chat.storage.json.ChatJsonStorage;
 import com.fancyinnovations.fancycore.commands.chat.chatroom.ChatRoomCMD;
 import com.fancyinnovations.fancycore.commands.chat.message.*;
 import com.fancyinnovations.fancycore.commands.fancycore.FancyCoreCMD;
+import com.fancyinnovations.fancycore.commands.permissions.GroupCMD;
 import com.fancyinnovations.fancycore.commands.player.PlayerListCMD;
-import com.fancyinnovations.fancycore.commands.teleport.TeleportAllCMD;
-import com.fancyinnovations.fancycore.commands.teleport.TeleportCMD;
-import com.fancyinnovations.fancycore.commands.teleport.TeleportHereCMD;
-import com.fancyinnovations.fancycore.commands.teleport.TeleportPosCMD;
-import com.fancyinnovations.fancycore.commands.teleport.TeleportRequestCMD;
-import com.fancyinnovations.fancycore.commands.teleport.TeleportAcceptCMD;
-import com.fancyinnovations.fancycore.commands.teleport.TeleportDenyCMD;
-import com.fancyinnovations.fancycore.commands.teleport.TeleportBackCMD;
-import com.fancyinnovations.fancycore.commands.teleport.TeleportDeathBackCMD;
+import com.fancyinnovations.fancycore.commands.teleport.*;
 import com.fancyinnovations.fancycore.config.FancyCoreConfigImpl;
 import com.fancyinnovations.fancycore.economy.service.CurrencyServiceImpl;
 import com.fancyinnovations.fancycore.economy.storage.json.CurrencyJsonStorage;
@@ -176,7 +169,7 @@ public class FancyCorePlugin extends JavaPlugin implements FancyCore {
         currencyService = new CurrencyServiceImpl();
 
         permissionStorage = new PermissionJsonStorage();
-        permissionService = new PermissionServiceImpl();
+        permissionService = new PermissionServiceImpl(permissionStorage);
 
         chatStorage = new ChatJsonStorage();
         chatService = new ChatServiceImpl();
@@ -265,6 +258,9 @@ public class FancyCorePlugin extends JavaPlugin implements FancyCore {
 
         // player
         CommandManager.get().register(new PlayerListCMD());
+
+        // permission
+        CommandManager.get().register(new GroupCMD());
     }
 
     public void registerListeners() {

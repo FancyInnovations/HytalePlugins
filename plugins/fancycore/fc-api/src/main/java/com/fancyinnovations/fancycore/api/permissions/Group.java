@@ -23,6 +23,8 @@ public interface Group {
 
     void setPermissions(List<Permission> permissions);
 
+    void setPermission(String permission, boolean enabled);
+
     List<UUID> getMembers();
 
     void setMembers(List<UUID> members);

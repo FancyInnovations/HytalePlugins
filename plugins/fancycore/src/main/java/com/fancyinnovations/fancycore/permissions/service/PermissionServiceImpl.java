@@ -1,6 +1,5 @@
 package com.fancyinnovations.fancycore.permissions.service;
 
-import com.fancyinnovations.fancycore.api.FancyCore;
 import com.fancyinnovations.fancycore.api.permissions.Group;
 import com.fancyinnovations.fancycore.api.permissions.PermissionService;
 import com.fancyinnovations.fancycore.api.permissions.PermissionStorage;
@@ -12,17 +11,18 @@ import java.util.UUID;
 
 public class PermissionServiceImpl implements PermissionService {
 
-    private static final PermissionStorage STORAGE = FancyCore.get().getPermissionStorage();
 
+    private final PermissionStorage storage;
     private final PermissionStorage cache;
 
-    public PermissionServiceImpl() {
+    public PermissionServiceImpl(PermissionStorage storage) {
+        this.storage = storage;
         this.cache = new PermissionFakeStorage();
         load();
     }
 
     private void load() {
-        for (Group g : STORAGE.getAllGroups()) {
+        for (Group g : storage.getAllGroups()) {
             cache.storeGroup(g);
         }
     }
@@ -39,13 +39,13 @@ public class PermissionServiceImpl implements PermissionService {
 
     @Override
     public void addGroup(Group group) {
-        STORAGE.storeGroup(group);
+        storage.storeGroup(group);
         cache.storeGroup(group);
     }
 
     @Override
     public void removeGroup(String name) {
-        STORAGE.deleteGroup(name);
+        storage.deleteGroup(name);
         cache.deleteGroup(name);
     }
 

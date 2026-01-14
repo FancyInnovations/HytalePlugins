@@ -95,6 +95,18 @@ public class GroupImpl implements Group {
     }
 
     @Override
+    public void setPermission(String permission, boolean enabled) {
+        for (Permission p : permissions) {
+            if (p.getPermission().equalsIgnoreCase(permission)) {
+                p.setEnabled(enabled);
+                return;
+            }
+        }
+        // If permission not found, add a new one
+        permissions.add(new PermissionImpl(permission, enabled));
+    }
+
+    @Override
     public List<UUID> getMembers() {
         return members;
     }

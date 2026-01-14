@@ -20,7 +20,7 @@ public class PermissionJsonStorage implements PermissionStorage {
     @Override
     public void storeGroup(Group group) {
         try {
-            db.set(group.getName(), group);
+            db.set(group.getName(), JsonGroup.from(group));
         } catch (Exception e) {
             FancyCorePlugin.get().getFancyLogger().error(
                     "Failed to store Group",
@@ -32,7 +32,7 @@ public class PermissionJsonStorage implements PermissionStorage {
     @Override
     public Group getGroup(String name) {
         try {
-            return db.get(name, Group.class);
+            return db.get(name, JsonGroup.class).toGroup();
         } catch (Exception e) {
             FancyCorePlugin.get().getFancyLogger().error(
                     "Failed to load Group",
@@ -51,7 +51,9 @@ public class PermissionJsonStorage implements PermissionStorage {
     @Override
     public List<Group> getAllGroups() {
         try {
-            return db.getAll("", Group.class);
+            return db.getAll("", JsonGroup.class).stream()
+                    .map(JsonGroup::toGroup)
+                    .toList();
         } catch (Exception e) {
             FancyCorePlugin.get().getFancyLogger().error(
                     "Failed to load all Groups",
