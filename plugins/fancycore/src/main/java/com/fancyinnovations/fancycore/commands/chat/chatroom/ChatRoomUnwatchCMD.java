@@ -35,17 +35,17 @@ public class ChatRoomUnwatchCMD extends CommandBase {
 
         String defaultChatroom = FancyCorePlugin.get().getConfig().getDefaultChatroom();
         if (chatRoom.getName().equalsIgnoreCase(defaultChatroom)) {
-            ctx.sendMessage(Message.raw("You cannot unwatch the default chat room."));
+            fp.sendMessage("You cannot unwatch the default chat room.");
             return;
         }
 
         if (!chatRoom.getWatchers().contains(fp)) {
-            ctx.sendMessage(Message.raw("You are not watching chat room " + chatRoom.getName() + "."));
+            fp.sendMessage("You are not watching chat room " + chatRoom.getName() + ".");
             return;
         }
 
         chatRoom.stopWatching(fp);
 
-        ctx.sendMessage(Message.raw("You have stopped watching chat room " + chatRoom.getName() + "."));
+        fp.sendMessage("You have stopped watching chat room " + chatRoom.getName() + ".");
     }
 }

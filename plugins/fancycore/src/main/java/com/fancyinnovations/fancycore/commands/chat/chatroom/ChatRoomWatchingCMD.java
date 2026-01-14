@@ -34,14 +34,14 @@ public class ChatRoomWatchingCMD extends CommandBase {
                 .filter(chatRoom -> chatRoom.getWatchers().contains(fp))
                 .toList();
 
-        ctx.sendMessage(Message.raw("You are currently watching " + watchingRooms.size() + " chat room(s):"));
+        fp.sendMessage("You are currently watching " + watchingRooms.size() + " chat room(s):");
         for (ChatRoom cr : watchingRooms) {
-            ctx.sendMessage(Message.raw("- " + cr.getName() + ":"));
+            fp.sendMessage("- " + cr.getName() + ":");
         }
 
         ChatRoom currentChatRoom = fp.getCurrentChatRoom();
         if (currentChatRoom != null) {
-            ctx.sendMessage(Message.raw("Your current active chat room is: " + currentChatRoom.getName()));
+            fp.sendMessage("Your current active chat room is: " + currentChatRoom.getName());
         }
     }
 }

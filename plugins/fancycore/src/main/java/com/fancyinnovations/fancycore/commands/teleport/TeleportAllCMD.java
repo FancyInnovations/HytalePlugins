@@ -1,5 +1,7 @@
 package com.fancyinnovations.fancycore.commands.teleport;
 
+import com.fancyinnovations.fancycore.api.player.FancyPlayer;
+import com.fancyinnovations.fancycore.api.player.FancyPlayerService;
 import com.hypixel.hytale.component.Ref;
 import com.hypixel.hytale.component.Store;
 import com.hypixel.hytale.math.vector.Transform;
@@ -32,6 +34,12 @@ public class TeleportAllCMD extends CommandBase {
             return;
         }
 
+        FancyPlayer fp = FancyPlayerService.get().getByUUID(ctx.sender().getUuid());
+        if (fp == null) {
+            ctx.sendMessage(Message.raw("FancyPlayer not found."));
+            return;
+        }
+
         // Get sender's location
         Ref<EntityStore> senderRef = ctx.senderAsPlayerRef();
         if (senderRef == null || !senderRef.isValid()) {
@@ -50,13 +58,13 @@ public class TeleportAllCMD extends CommandBase {
             // Get sender's transform and rotation (must be on world thread)
             TransformComponent senderTransformComponent = (TransformComponent) senderStore.getComponent(senderRef, TransformComponent.getComponentType());
             if (senderTransformComponent == null) {
-                ctx.sendMessage(Message.raw("Failed to get your transform."));
+                fp.sendMessage("Failed to get your transform.");
                 return;
             }
 
             HeadRotation senderHeadRotationComponent = (HeadRotation) senderStore.getComponent(senderRef, HeadRotation.getComponentType());
             if (senderHeadRotationComponent == null) {
-                ctx.sendMessage(Message.raw("Failed to get your head rotation."));
+                fp.sendMessage("Failed to get your head rotation.");
                 return;
             }
 
@@ -95,7 +103,7 @@ public class TeleportAllCMD extends CommandBase {
             }
 
             // Send success message
-            ctx.sendMessage(Message.raw("Teleported " + count + " player(s) to your location."));
+            fp.sendMessage("Teleported " + count + " player(s) to your location.");
         });
     }
 }

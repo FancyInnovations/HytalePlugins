@@ -55,15 +55,20 @@ public class TeleportCMD extends CommandBase {
                 return;
             }
 
+            if (!ctx.isPlayer()) {
+                ctx.sendMessage(Message.raw("This command can only be executed by a player."));
+                return;
+            }
+
             FancyPlayer fp = FancyPlayerService.get().getByUUID(ctx.sender().getUuid());
             if (fp == null) {
-                ctx.sendMessage(Message.raw("FancyPlayer not found."));
+                fp.sendMessage("FancyPlayer not found.");
                 return;
             }
 
             PlayerRef senderPlayerRef = fp.getPlayer();
             if (senderPlayerRef == null) {
-                ctx.sendMessage(Message.raw("You are not online."));
+                fp.sendMessage("You are not online.");
                 return;
             }
 
@@ -71,7 +76,7 @@ public class TeleportCMD extends CommandBase {
             targetPlayerRef = senderPlayerRef;
             targetRef = targetPlayerRef.getReference();
             if (targetRef == null || !targetRef.isValid()) {
-                ctx.sendMessage(Message.raw("You are not in a world."));
+                fp.sendMessage("You are not in a world.");
                 return;
             }
             destinationPlayerRef = targetArg.get(ctx);

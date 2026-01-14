@@ -1,5 +1,7 @@
 package com.fancyinnovations.fancycore.commands.teleport;
 
+import com.fancyinnovations.fancycore.api.player.FancyPlayer;
+import com.fancyinnovations.fancycore.api.player.FancyPlayerService;
 import com.hypixel.hytale.component.Ref;
 import com.hypixel.hytale.component.Store;
 import com.hypixel.hytale.math.vector.Transform;
@@ -33,10 +35,16 @@ public class TeleportHereCMD extends CommandBase {
             return;
         }
 
+        FancyPlayer fp = FancyPlayerService.get().getByUUID(ctx.sender().getUuid());
+        if (fp == null) {
+            ctx.sendMessage(Message.raw("FancyPlayer not found."));
+            return;
+        }
+
         // Get sender's location
         Ref<EntityStore> senderRef = ctx.senderAsPlayerRef();
         if (senderRef == null || !senderRef.isValid()) {
-            ctx.sendMessage(Message.raw("You are not in a world."));
+            fp.sendMessage("You are not in a world.");
             return;
         }
 
@@ -47,7 +55,7 @@ public class TeleportHereCMD extends CommandBase {
         PlayerRef targetPlayerRef = targetArg.get(ctx);
         Ref<EntityStore> targetRef = targetPlayerRef.getReference();
         if (targetRef == null || !targetRef.isValid()) {
-            ctx.sendMessage(Message.raw("Target player is not in a world."));
+            fp.sendMessage("Target player is not in a world.");
             return;
         }
 
@@ -59,13 +67,13 @@ public class TeleportHereCMD extends CommandBase {
             // Get sender's transform and rotation
             TransformComponent senderTransformComponent = (TransformComponent) senderStore.getComponent(senderRef, TransformComponent.getComponentType());
             if (senderTransformComponent == null) {
-                ctx.sendMessage(Message.raw("Failed to get your transform."));
+                fp.sendMessage("Failed to get your transform.");
                 return;
             }
 
             HeadRotation senderHeadRotationComponent = (HeadRotation) senderStore.getComponent(senderRef, HeadRotation.getComponentType());
             if (senderHeadRotationComponent == null) {
-                ctx.sendMessage(Message.raw("Failed to get your head rotation."));
+                fp.sendMessage("Failed to get your head rotation.");
                 return;
             }
 
@@ -84,7 +92,7 @@ public class TeleportHereCMD extends CommandBase {
                 targetStore.addComponent(targetRef, Teleport.getComponentType(), teleport);
 
                 // Send success message
-                ctx.sendMessage(Message.raw("Teleported " + targetPlayerRef.getUsername() + " to your location."));
+                fp.sendMessage("Teleported " + targetPlayerRef.getUsername() + " to your location.");
             });
         });
     }

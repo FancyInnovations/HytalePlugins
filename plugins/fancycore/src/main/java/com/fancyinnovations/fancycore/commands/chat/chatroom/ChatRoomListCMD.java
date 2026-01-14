@@ -28,14 +28,14 @@ public class ChatRoomListCMD extends CommandBase {
             return;
         }
 
-        ctx.sendMessage(Message.raw("Chat Rooms: "));
+        fp.sendMessage("Chat Rooms: ");
         for (ChatRoom cr : ChatService.get().getAllChatRooms()) {
             // TODO: Permission check
 //            if (!fp.checkPermission("fancycore.chatroom."+cr.getName())) {
 //                continue;
 //            }
 
-            ctx.sendMessage(Message.raw("- " + cr.getName() + " (" + cr.getWatchers().size() + " watchers)"));
+            fp.sendMessage("- " + cr.getName() + " (" + cr.getWatchers().size() + " watchers)");
         }
     }
 }

@@ -38,7 +38,7 @@ public class ChatRoomCooldownCMD extends CommandBase {
 
         // TODO: Permission check
 //        if (!fp.checkPermission("fancycore.commands.chatroom.cooldown")) {
-//            ctx.sendMessage(Message.raw("You do not have permission to change the cooldown."));
+//            fp.sendMessage(Message.raw("You do not have permission to change the cooldown."));
 //            return;
 //        }
 
@@ -48,6 +48,6 @@ public class ChatRoomCooldownCMD extends CommandBase {
         chatRoom.setCooldown(cooldownMs);
         FancyCorePlugin.get().getChatStorage().setChatRoom(chatRoom);
 
-        ctx.sendMessage(Message.raw("Set cooldown of chat room " + chatRoom.getName() + " to " + TimeUtils.formatTime(cooldownMs)));
+        fp.sendMessage("Set cooldown of chat room " + chatRoom.getName() + " to " + TimeUtils.formatTime(cooldownMs));
     }
 }

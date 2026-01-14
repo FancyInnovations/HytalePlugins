@@ -35,7 +35,7 @@ public class ChatRoomDeleteCMD extends CommandBase {
 
         // TODO: Permission check
 //        if (!fp.checkPermission("fancycore.commands.chatroom.delete")) {
-//            ctx.sendMessage(Message.raw("You do not have permission to delete a chat room."));
+//            fp.sendMessage(Message.raw("You do not have permission to delete a chat room."));
 //            return;
 //        }
 
@@ -43,7 +43,7 @@ public class ChatRoomDeleteCMD extends CommandBase {
 
         ChatRoom defaultChatRoom = ChatService.get().getChatRoom(FancyCorePlugin.get().getConfig().getDefaultChatroom());
         if (defaultChatRoom.getName().equals(chatRoom.getName())) {
-            ctx.sendMessage(Message.raw("You cannot delete the default chat room."));
+            fp.sendMessage("You cannot delete the default chat room.");
             return;
         }
 
@@ -55,6 +55,6 @@ public class ChatRoomDeleteCMD extends CommandBase {
 
         ChatService.get().deleteChatRoom(chatRoom.getName());
 
-        ctx.sendMessage(Message.raw("Chat room " + chatRoom.getName() + " has been deleted."));
+        fp.sendMessage("Chat room " + chatRoom.getName() + " has been deleted.");
     }
 }

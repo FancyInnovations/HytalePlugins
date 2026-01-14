@@ -46,7 +46,7 @@ public class FancyCoreConfigImpl implements FancyCoreConfig {
                 EVENT_DISCORD_NOTIFICATIONS,
                 "Enable Discord notifications for events.",
                 false,
-                new String[] {"PlayerPunishedEvent", "PlayerReportedEvent"},
+                new String[] {"PlayerJoinedEvent", "PlayerLeftEvent", "PlayerSentMessageEvent"},
                 false,
                 String[].class
         ));
@@ -98,7 +98,7 @@ public class FancyCoreConfigImpl implements FancyCoreConfig {
                         JOIN_MESSAGE_PATH,
                         "The message displayed when a player joins the server.",
                         false,
-                        "%player_name% has joined the game.",
+                        "&e%player_name% has joined the game.",
                         false,
                         String.class
                 )
@@ -109,7 +109,7 @@ public class FancyCoreConfigImpl implements FancyCoreConfig {
                         FIRST_JOIN_MESSAGE_PATH,
                         "The message displayed when a player joins the server for the first time.",
                         false,
-                        "Welcome %player_name% to the server for the first time!",
+                        "&eWelcome %player_name% to the server for the first time!",
                         false,
                         String.class
                 )
@@ -120,7 +120,7 @@ public class FancyCoreConfigImpl implements FancyCoreConfig {
                         LEAVE_MESSAGE_PATH,
                         "The message displayed when a player leaves the server.",
                         false,
-                        "%player_name% has left the game.",
+                        "&e%player_name% has left the game.",
                         false,
                         String.class
                 )

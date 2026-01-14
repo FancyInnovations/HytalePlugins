@@ -34,17 +34,17 @@ public class ChatRoomWatchCMD extends CommandBase {
 
         // TODO: Permission check
 //        if (!fp.checkPermission("fancycore.chatroom."+chatRoom.getName())) {
-//            ctx.sendMessage(Message.raw("You do not have permission to watch chat room " + chatRoom.getName() + "."));
+//            fp.sendMessage(Message.raw("You do not have permission to watch chat room " + chatRoom.getName() + "."));
 //            return;
 //        }
 
         if (chatRoom.getWatchers().contains(fp)) {
-            ctx.sendMessage(Message.raw("You are already watching chat room " + chatRoom.getName() + "."));
+            fp.sendMessage("You are already watching chat room " + chatRoom.getName() + ".");
             return;
         }
 
         chatRoom.startWatching(fp);
 
-        ctx.sendMessage(Message.raw("You are now watching chat room " + chatRoom.getName() + "."));
+        fp.sendMessage("You are now watching chat room " + chatRoom.getName() + ".");
     }
 }

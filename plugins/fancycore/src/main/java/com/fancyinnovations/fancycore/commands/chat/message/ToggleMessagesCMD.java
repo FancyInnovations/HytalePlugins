@@ -31,6 +31,6 @@ public class ToggleMessagesCMD extends CommandBase {
         fp.getData().setPrivateMessagesEnabled(!fp.getData().isPrivateMessagesEnabled());
 
         String status = fp.getData().isPrivateMessagesEnabled() ? "enabled" : "disabled";
-        ctx.sendMessage(Message.raw("Private messages have been " + status + "."));
+        fp.sendMessage("Private messages have been " + status + ".");
     }
 }

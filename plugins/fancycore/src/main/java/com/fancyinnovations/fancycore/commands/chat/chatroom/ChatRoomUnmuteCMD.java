@@ -34,20 +34,20 @@ public class ChatRoomUnmuteCMD extends CommandBase {
 
         // TODO: Permission check
 //        if (!fp.checkPermission("fancycore.commands.chatroom.unmute")) {
-//            ctx.sendMessage(Message.raw("You do not have permission to unmute chat."));
+//            fp.sendMessage(Message.raw("You do not have permission to unmute chat."));
 //            return;
 //        }
 
         ChatRoom chatRoom = chatRoomNameArg.provided(ctx) ? chatRoomNameArg.get(ctx) : fp.getCurrentChatRoom();
 
         if (!chatRoom.isMuted()) {
-            ctx.sendMessage(Message.raw("Chat for chat room " + chatRoom.getName() + " is not muted."));
+            fp.sendMessage("Chat for chat room " + chatRoom.getName() + " is not muted.");
             return;
         }
 
         chatRoom.setMuted(false);
         FancyCorePlugin.get().getChatStorage().setChatRoom(chatRoom);
 
-        ctx.sendMessage(Message.raw("Chat for chat room " + chatRoom.getName() + " has been unmuted."));
+        fp.sendMessage("Chat for chat room " + chatRoom.getName() + " has been unmuted.");
     }
 }

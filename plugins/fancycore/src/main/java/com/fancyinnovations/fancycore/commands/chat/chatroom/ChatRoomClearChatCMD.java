@@ -34,7 +34,7 @@ public class ChatRoomClearChatCMD extends CommandBase {
 
         // TODO: Permission check
 //        if (!fp.checkPermission("fancycore.commands.chatroom.clearchat")) {
-//            ctx.sendMessage(Message.raw("You do not have permission to clear chat."));
+//            fp.sendMessage(Message.raw("You do not have permission to clear chat."));
 //            return;
 //        }
 
@@ -42,6 +42,6 @@ public class ChatRoomClearChatCMD extends CommandBase {
 
         chatRoom.clearChat();
 
-        ctx.sendMessage(Message.raw("Chat for chat room " + chatRoom.getName() + " has been cleared."));
+        fp.sendMessage("&4&lChat for chat room " + chatRoom.getName() + " has been cleared.");
     }
 }

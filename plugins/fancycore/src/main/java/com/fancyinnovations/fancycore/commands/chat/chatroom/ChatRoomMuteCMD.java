@@ -34,20 +34,20 @@ public class ChatRoomMuteCMD extends CommandBase {
 
         // TODO: Permission check
 //        if (!fp.checkPermission("fancycore.commands.chatroom.mute")) {
-//            ctx.sendMessage(Message.raw("You do not have permission to mute chat."));
+//            fp.sendMessage(Message.raw("You do not have permission to mute chat."));
 //            return;
 //        }
 
         ChatRoom chatRoom = chatRoomNameArg.provided(ctx) ? chatRoomNameArg.get(ctx) : fp.getCurrentChatRoom();
 
         if (chatRoom.isMuted()) {
-            ctx.sendMessage(Message.raw("Chat for chat room " + chatRoom.getName() + " is already muted."));
+            fp.sendMessage("Chat for chat room " + chatRoom.getName() + " is already muted.");
             return;
         }
 
         chatRoom.setMuted(true);
         FancyCorePlugin.get().getChatStorage().setChatRoom(chatRoom);
 
-        ctx.sendMessage(Message.raw("Chat for chat room " + chatRoom.getName() + " has been muted."));
+        fp.sendMessage("Chat for chat room " + chatRoom.getName() + " has been muted.");
     }
 }

@@ -39,10 +39,10 @@ public class ChatRoomInfoCMD extends CommandBase {
                 .map(fancyPlayer -> fancyPlayer.getData().getNickname())
                 .toList();
 
-        ctx.sendMessage(Message.raw("Chat Room Info:"));
-        ctx.sendMessage(Message.raw("- Name: " + chatRoom.getName()));
-        ctx.sendMessage(Message.raw("- IsMuted: " + chatRoom.isMuted()));
-        ctx.sendMessage(Message.raw("- Cooldown: " + TimeUtils.formatTime(chatRoom.getCooldown())));
-        ctx.sendMessage(Message.raw("- Watchers: " + chatRoom.getWatchers().size() + " (" + String.join(", ", nicknames) + ")"));
+        fp.sendMessage("Chat Room Info:");
+        fp.sendMessage("- Name: " + chatRoom.getName());
+        fp.sendMessage("- IsMuted: " + chatRoom.isMuted());
+        fp.sendMessage("- Cooldown: " + TimeUtils.formatTime(chatRoom.getCooldown()));
+        fp.sendMessage("- Watchers: " + chatRoom.getWatchers().size() + " (" + String.join(", ", nicknames) + ")");
     }
 }

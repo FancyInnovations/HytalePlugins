@@ -33,12 +33,12 @@ public class IgnoreCMD extends CommandBase {
 
         FancyPlayer target = targetArg.get(ctx);
         if (target.getData().getUUID().equals(fp.getData().getUUID())) {
-            ctx.sendMessage(Message.raw("You cannot ignore yourself."));
+            fp.sendMessage("You cannot ignore yourself.");
             return;
         }
 
         fp.getData().addIgnoredPlayer(target.getData().getUUID());
 
-        ctx.sendMessage(Message.raw("You are now ignoring " + target.getData().getUsername() + "."));
+        fp.sendMessage("You are now ignoring " + target.getData().getUsername() + ".");
     }
 }

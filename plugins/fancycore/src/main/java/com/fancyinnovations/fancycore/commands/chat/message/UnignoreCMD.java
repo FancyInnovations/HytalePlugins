@@ -34,12 +34,12 @@ public class UnignoreCMD extends CommandBase {
         FancyPlayer target = targetArg.get(ctx);
 
         if (!fp.getData().getIgnoredPlayers().contains(target.getData().getUUID())) {
-            ctx.sendMessage(Message.raw("You are not ignoring " + target.getData().getUsername() + "."));
+            fp.sendMessage("You are not ignoring " + target.getData().getUsername() + ".");
             return;
         }
 
         fp.getData().removeIgnoredPlayer(target.getData().getUUID());
 
-        ctx.sendMessage(Message.raw("You have unignored " + target.getData().getUsername() + "."));
+        fp.sendMessage("You have unignored " + target.getData().getUsername() + ".");
     }
 }

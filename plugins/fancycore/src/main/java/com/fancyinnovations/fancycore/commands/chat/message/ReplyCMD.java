@@ -38,21 +38,21 @@ public class ReplyCMD extends CommandBase {
 
         FancyPlayer receiver = sender.getReplyTo();
         if (receiver == null) {
-            ctx.sendMessage(Message.raw("You have no one to reply to."));
+            sender.sendMessage("You have no one to reply to.");
             return;
         }
         if (!receiver.isOnline()) {
-            ctx.sendMessage(Message.raw("The player " + receiver.getData().getUsername() + " is not online."));
+            sender.sendMessage("The player " + receiver.getData().getUsername() + " is not online.");
             return;
         }
 
         if (!receiver.getData().isPrivateMessagesEnabled()) {
-            ctx.sendMessage(Message.raw("The player " + receiver.getData().getUsername() + " is not accepting private messages."));
+            sender.sendMessage("The player " + receiver.getData().getUsername() + " is not accepting private messages.");
             return;
         }
 
         if (receiver.getData().getIgnoredPlayers().contains(sender.getData().getUUID())) {
-            ctx.sendMessage(Message.raw("You cannot send a private message to " + receiver.getData().getUsername() + " because they are ignoring you."));
+            sender.sendMessage("You cannot send a private message to " + receiver.getData().getUsername() + " because they are ignoring you.");
             return;
         }
 

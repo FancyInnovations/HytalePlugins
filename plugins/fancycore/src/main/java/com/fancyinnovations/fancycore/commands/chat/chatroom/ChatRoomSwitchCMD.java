@@ -32,7 +32,7 @@ public class ChatRoomSwitchCMD extends CommandBase {
 
         // TODO: Permission check
 //        if (!fp.checkPermission("fancycore.chatroom."+chatRoom.getName())) {
-//            ctx.sendMessage(Message.raw("You do not have permission to watch chat room " + chatRoom.getName() + "."));
+//            fp.sendMessage(Message.raw("You do not have permission to watch chat room " + chatRoom.getName() + "."));
 //            return;
 //        }
 
@@ -43,6 +43,6 @@ public class ChatRoomSwitchCMD extends CommandBase {
         }
 
         fp.switchChatRoom(chatRoom);
-        ctx.sendMessage(Message.raw("You have switched to chat room " + chatRoom.getName() + "."));
+        fp.sendMessage("You have switched to chat room " + chatRoom.getName() + ".");
     }
 }

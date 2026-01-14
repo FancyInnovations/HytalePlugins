@@ -9,7 +9,7 @@ import com.fancyinnovations.fancycore.api.permissions.Group;
 import com.fancyinnovations.fancycore.api.permissions.Permission;
 import com.fancyinnovations.fancycore.api.player.FancyPlayer;
 import com.fancyinnovations.fancycore.api.player.FancyPlayerData;
-import com.hypixel.hytale.server.core.Message;
+import com.fancyinnovations.fancycore.utils.ColorUtils;
 import com.hypixel.hytale.server.core.universe.PlayerRef;
 import org.jetbrains.annotations.Nullable;
 
@@ -134,7 +134,7 @@ public class FancyPlayerImpl implements FancyPlayer {
             return;
         }
 
-        player.sendMessage(Message.raw(message));
+        player.sendMessage(ColorUtils.colour(message));
     }
 
     @Override
