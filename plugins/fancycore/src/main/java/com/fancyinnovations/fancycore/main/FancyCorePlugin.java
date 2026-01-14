@@ -43,9 +43,7 @@ import com.fancyinnovations.versionchecker.VersionChecker;
 import com.google.gson.Gson;
 import com.hypixel.hytale.event.EventRegistry;
 import com.hypixel.hytale.server.core.command.system.CommandManager;
-import com.hypixel.hytale.server.core.event.events.player.PlayerChatEvent;
-import com.hypixel.hytale.server.core.event.events.player.PlayerConnectEvent;
-import com.hypixel.hytale.server.core.event.events.player.PlayerDisconnectEvent;
+import com.hypixel.hytale.server.core.event.events.player.*;
 import com.hypixel.hytale.server.core.plugin.JavaPlugin;
 import com.hypixel.hytale.server.core.plugin.JavaPluginInit;
 import de.oliver.fancyanalytics.logger.ExtendedFancyLogger;
@@ -228,11 +226,13 @@ public class FancyCorePlugin extends JavaPlugin implements FancyCore {
 
     public void registerListeners() {
         EventRegistry eventRegistry = this.getEventRegistry();
-        eventRegistry.register(PlayerConnectEvent.class, PlayerJoinListener::onPlayerJoin);
-        eventRegistry.register(PlayerDisconnectEvent.class, PlayerLeaveListener::onPlayerLeave);
+        eventRegistry.registerGlobal(PlayerConnectEvent.class, PlayerJoinListener::onPlayerConnect);
+        eventRegistry.registerGlobal(PlayerReadyEvent.class, PlayerJoinListener::onPlayerReady);
+        eventRegistry.registerGlobal(AddPlayerToWorldEvent.class, PlayerJoinListener::onAddPlayerToWorld);
+        eventRegistry.registerGlobal(PlayerDisconnectEvent.class, PlayerLeaveListener::onPlayerLeave);
 
         // TODO fix this stupid async event handling
-        eventRegistry.registerAsyncUnhandled(PlayerChatEvent.class, future ->
+        eventRegistry.registerAsyncGlobal(PlayerChatEvent.class, future ->
                 future.thenApply(event -> {
                     PlayerChatListener.onPlayerChat(event);
                     return event;

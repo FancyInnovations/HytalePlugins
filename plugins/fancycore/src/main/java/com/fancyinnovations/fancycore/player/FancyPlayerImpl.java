@@ -126,6 +126,10 @@ public class FancyPlayerImpl implements FancyPlayer {
 
     @Override
     public void sendMessage(String message) {
+        if (!isOnline()) {
+            return;
+        }
+
         player.sendMessage(Message.raw(message));
     }
 
