@@ -85,6 +85,12 @@ public class TeleportHereCMD extends CommandBase {
 
             // Now execute teleportation on the target world thread
             targetWorld.execute(() -> {
+                // Save previous location for /back command
+                FancyPlayer targetFp = FancyPlayerService.get().getByUUID(targetPlayerRef.getUuid());
+                if (targetFp != null) {
+                    TeleportLocationHelper.savePreviousLocation(targetFp, targetRef, targetStore, targetWorld);
+                }
+
                 // Create teleport component
                 Teleport teleport = new Teleport(senderWorld, destinationTransform);
 

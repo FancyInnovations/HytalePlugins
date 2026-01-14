@@ -25,6 +25,11 @@ import com.fancyinnovations.fancycore.commands.teleport.TeleportAllCMD;
 import com.fancyinnovations.fancycore.commands.teleport.TeleportCMD;
 import com.fancyinnovations.fancycore.commands.teleport.TeleportHereCMD;
 import com.fancyinnovations.fancycore.commands.teleport.TeleportPosCMD;
+import com.fancyinnovations.fancycore.commands.teleport.TeleportRequestCMD;
+import com.fancyinnovations.fancycore.commands.teleport.TeleportAcceptCMD;
+import com.fancyinnovations.fancycore.commands.teleport.TeleportDenyCMD;
+import com.fancyinnovations.fancycore.commands.teleport.TeleportBackCMD;
+import com.fancyinnovations.fancycore.commands.teleport.TeleportDeathBackCMD;
 import com.fancyinnovations.fancycore.config.FancyCoreConfigImpl;
 import com.fancyinnovations.fancycore.economy.service.CurrencyServiceImpl;
 import com.fancyinnovations.fancycore.economy.storage.json.CurrencyJsonStorage;
@@ -43,6 +48,7 @@ import com.fancyinnovations.fancycore.player.service.CleanUpPlayerCacheRunnable;
 import com.fancyinnovations.fancycore.player.service.FancyPlayerServiceImpl;
 import com.fancyinnovations.fancycore.player.storage.SavePlayersRunnable;
 import com.fancyinnovations.fancycore.player.storage.json.FancyPlayerJsonStorage;
+import com.fancyinnovations.fancycore.teleport.service.TeleportRequestServiceImpl;
 import com.fancyinnovations.fancycore.translations.TranslationService;
 import com.fancyinnovations.versionchecker.FancySpacesVersionFetcher;
 import com.fancyinnovations.versionchecker.VersionChecker;
@@ -102,6 +108,8 @@ public class FancyCorePlugin extends JavaPlugin implements FancyCore {
 
     private ChatStorage chatStorage;
     private ChatService chatService;
+
+    private com.fancyinnovations.fancycore.api.teleport.TeleportRequestService teleportRequestService;
 
     public FancyCorePlugin(@Nonnull JavaPluginInit init) {
         super(init);
@@ -171,6 +179,8 @@ public class FancyCorePlugin extends JavaPlugin implements FancyCore {
 
         chatStorage = new ChatJsonStorage();
         chatService = new ChatServiceImpl();
+
+        teleportRequestService = new TeleportRequestServiceImpl();
 
         SeedDefaultData.seed();
 
@@ -246,6 +256,11 @@ public class FancyCorePlugin extends JavaPlugin implements FancyCore {
         CommandManager.get().register(new TeleportHereCMD());
         CommandManager.get().register(new TeleportAllCMD());
         CommandManager.get().register(new TeleportPosCMD());
+        CommandManager.get().register(new TeleportRequestCMD());
+        CommandManager.get().register(new TeleportAcceptCMD());
+        CommandManager.get().register(new TeleportDenyCMD());
+        CommandManager.get().register(new TeleportBackCMD());
+        CommandManager.get().register(new TeleportDeathBackCMD());
     }
 
     public void registerListeners() {
@@ -349,5 +364,10 @@ public class FancyCorePlugin extends JavaPlugin implements FancyCore {
     @Override
     public ChatService getChatService() {
         return chatService;
+    }
+
+    @Override
+    public com.fancyinnovations.fancycore.api.teleport.TeleportRequestService getTeleportRequestService() {
+        return teleportRequestService;
     }
 }

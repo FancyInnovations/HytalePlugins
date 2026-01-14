@@ -69,6 +69,12 @@ public class TeleportPosCMD extends CommandBase {
         World currentWorld = ((EntityStore) senderRef.getStore().getExternalData()).getWorld();
         World targetWorld = worldArg.provided(ctx) ? worldArg.get(ctx) : currentWorld;
 
+        // Save previous location for /back command (on current world thread)
+        currentWorld.execute(() -> {
+            Store<EntityStore> senderStore = senderRef.getStore();
+            TeleportLocationHelper.savePreviousLocation(fp, senderRef, senderStore, currentWorld);
+        });
+
         targetWorld.execute(() -> {
             Store<EntityStore> senderStore = senderRef.getStore();
 
