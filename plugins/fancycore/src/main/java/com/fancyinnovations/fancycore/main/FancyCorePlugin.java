@@ -24,6 +24,7 @@ import com.fancyinnovations.fancycore.commands.fancycore.FancyCoreCMD;
 import com.fancyinnovations.fancycore.commands.permissions.groups.GroupCMD;
 import com.fancyinnovations.fancycore.commands.permissions.player.PermissionsCMD;
 import com.fancyinnovations.fancycore.commands.player.PlayerListCMD;
+import com.fancyinnovations.fancycore.commands.kits.*;
 import com.fancyinnovations.fancycore.commands.teleport.*;
 import com.fancyinnovations.fancycore.config.FancyCoreConfigImpl;
 import com.fancyinnovations.fancycore.economy.service.CurrencyServiceImpl;
@@ -44,6 +45,7 @@ import com.fancyinnovations.fancycore.player.service.CleanUpPlayerCacheRunnable;
 import com.fancyinnovations.fancycore.player.service.FancyPlayerServiceImpl;
 import com.fancyinnovations.fancycore.player.storage.SavePlayersRunnable;
 import com.fancyinnovations.fancycore.player.storage.json.FancyPlayerJsonStorage;
+import com.fancyinnovations.fancycore.kits.storage.KitStorage;
 import com.fancyinnovations.fancycore.teleport.service.TeleportRequestServiceImpl;
 import com.fancyinnovations.fancycore.teleport.storage.SpawnLocationStorage;
 import com.fancyinnovations.fancycore.teleport.storage.WarpStorage;
@@ -116,6 +118,7 @@ public class FancyCorePlugin extends JavaPlugin implements FancyCore {
     private com.fancyinnovations.fancycore.api.teleport.TeleportRequestService teleportRequestService;
     private SpawnLocationStorage spawnLocationStorage;
     private WarpStorage warpStorage;
+    private KitStorage kitStorage;
 
     public FancyCorePlugin(@Nonnull JavaPluginInit init) {
         super(init);
@@ -189,6 +192,7 @@ public class FancyCorePlugin extends JavaPlugin implements FancyCore {
         teleportRequestService = new TeleportRequestServiceImpl();
         spawnLocationStorage = new SpawnLocationStorage();
         warpStorage = new WarpStorage();
+        kitStorage = new KitStorage();
 
         SeedDefaultData.seed();
 
@@ -293,6 +297,12 @@ public class FancyCorePlugin extends JavaPlugin implements FancyCore {
         // permission
         CommandManager.get().register(new PermissionsCMD());
         CommandManager.get().register(new GroupCMD());
+
+        // kits
+        CommandManager.get().register(new CreateKitCMD());
+        CommandManager.get().register(new DeleteKitCMD());
+        CommandManager.get().register(new KitCMD());
+        CommandManager.get().register(new ListKitsCMD());
     }
 
     public void registerListeners() {
@@ -412,5 +422,9 @@ public class FancyCorePlugin extends JavaPlugin implements FancyCore {
 
     public WarpStorage getWarpStorage() {
         return warpStorage;
+    }
+
+    public KitStorage getKitStorage() {
+        return kitStorage;
     }
 }
