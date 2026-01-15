@@ -16,20 +16,27 @@ import com.fancyinnovations.fancycore.api.permissions.PermissionStorage;
 import com.fancyinnovations.fancycore.api.placeholders.PlaceholderService;
 import com.fancyinnovations.fancycore.api.player.FancyPlayerService;
 import com.fancyinnovations.fancycore.api.player.FancyPlayerStorage;
+import com.fancyinnovations.fancycore.api.teleport.SpawnService;
+import com.fancyinnovations.fancycore.api.teleport.SpawnStorage;
+import com.fancyinnovations.fancycore.api.teleport.TeleportRequestService;
 import com.fancyinnovations.fancycore.chat.service.ChatServiceImpl;
 import com.fancyinnovations.fancycore.chat.storage.json.ChatJsonStorage;
 import com.fancyinnovations.fancycore.commands.chat.chatroom.ChatRoomCMD;
 import com.fancyinnovations.fancycore.commands.chat.message.*;
 import com.fancyinnovations.fancycore.commands.fancycore.FancyCoreCMD;
+import com.fancyinnovations.fancycore.commands.kits.CreateKitCMD;
+import com.fancyinnovations.fancycore.commands.kits.DeleteKitCMD;
+import com.fancyinnovations.fancycore.commands.kits.KitCMD;
+import com.fancyinnovations.fancycore.commands.kits.ListKitsCMD;
 import com.fancyinnovations.fancycore.commands.permissions.groups.GroupCMD;
 import com.fancyinnovations.fancycore.commands.permissions.player.PermissionsCMD;
 import com.fancyinnovations.fancycore.commands.player.PlayerListCMD;
-import com.fancyinnovations.fancycore.commands.kits.*;
 import com.fancyinnovations.fancycore.commands.teleport.*;
 import com.fancyinnovations.fancycore.config.FancyCoreConfigImpl;
 import com.fancyinnovations.fancycore.economy.service.CurrencyServiceImpl;
 import com.fancyinnovations.fancycore.economy.storage.json.CurrencyJsonStorage;
 import com.fancyinnovations.fancycore.events.EventServiceImpl;
+import com.fancyinnovations.fancycore.kits.storage.KitStorage;
 import com.fancyinnovations.fancycore.listeners.PlayerChatListener;
 import com.fancyinnovations.fancycore.listeners.PlayerJoinListener;
 import com.fancyinnovations.fancycore.listeners.PlayerLeaveListener;
@@ -45,10 +52,10 @@ import com.fancyinnovations.fancycore.player.service.CleanUpPlayerCacheRunnable;
 import com.fancyinnovations.fancycore.player.service.FancyPlayerServiceImpl;
 import com.fancyinnovations.fancycore.player.storage.SavePlayersRunnable;
 import com.fancyinnovations.fancycore.player.storage.json.FancyPlayerJsonStorage;
-import com.fancyinnovations.fancycore.kits.storage.KitStorage;
+import com.fancyinnovations.fancycore.teleport.service.SpawnServiceImpl;
 import com.fancyinnovations.fancycore.teleport.service.TeleportRequestServiceImpl;
-import com.fancyinnovations.fancycore.teleport.storage.SpawnLocationStorage;
 import com.fancyinnovations.fancycore.teleport.storage.WarpStorage;
+import com.fancyinnovations.fancycore.teleport.storage.json.SpawnJsonStorage;
 import com.fancyinnovations.fancycore.translations.TranslationService;
 import com.fancyinnovations.versionchecker.FancySpacesVersionFetcher;
 import com.fancyinnovations.versionchecker.VersionChecker;
@@ -115,8 +122,10 @@ public class FancyCorePlugin extends JavaPlugin implements FancyCore {
     private ChatStorage chatStorage;
     private ChatService chatService;
 
-    private com.fancyinnovations.fancycore.api.teleport.TeleportRequestService teleportRequestService;
-    private SpawnLocationStorage spawnLocationStorage;
+    private TeleportRequestService teleportRequestService;
+    private SpawnStorage spawnStorage;
+    private SpawnService spawnService;
+
     private WarpStorage warpStorage;
     private KitStorage kitStorage;
 
@@ -190,7 +199,9 @@ public class FancyCorePlugin extends JavaPlugin implements FancyCore {
         chatService = new ChatServiceImpl();
 
         teleportRequestService = new TeleportRequestServiceImpl();
-        spawnLocationStorage = new SpawnLocationStorage();
+        spawnStorage = new SpawnJsonStorage();
+        spawnService = new SpawnServiceImpl(spawnStorage);
+
         warpStorage = new WarpStorage();
         kitStorage = new KitStorage();
 
@@ -412,12 +423,18 @@ public class FancyCorePlugin extends JavaPlugin implements FancyCore {
     }
 
     @Override
-    public com.fancyinnovations.fancycore.api.teleport.TeleportRequestService getTeleportRequestService() {
+    public TeleportRequestService getTeleportRequestService() {
         return teleportRequestService;
     }
 
-    public SpawnLocationStorage getSpawnLocationStorage() {
-        return spawnLocationStorage;
+    @Override
+    public SpawnService getSpawnService() {
+        return spawnService;
+    }
+
+    @Override
+    public SpawnStorage getSpawnStorage() {
+        return spawnStorage;
     }
 
     public WarpStorage getWarpStorage() {

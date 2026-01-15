@@ -12,6 +12,8 @@ import com.fancyinnovations.fancycore.api.permissions.PermissionStorage;
 import com.fancyinnovations.fancycore.api.placeholders.PlaceholderService;
 import com.fancyinnovations.fancycore.api.player.FancyPlayerService;
 import com.fancyinnovations.fancycore.api.player.FancyPlayerStorage;
+import com.fancyinnovations.fancycore.api.teleport.SpawnService;
+import com.fancyinnovations.fancycore.api.teleport.SpawnStorage;
 import com.fancyinnovations.fancycore.api.teleport.TeleportRequestService;
 import de.oliver.fancyanalytics.logger.ExtendedFancyLogger;
 import org.jetbrains.annotations.ApiStatus;
@@ -60,6 +62,11 @@ public interface FancyCore {
     ChatService getChatService();
 
     TeleportRequestService getTeleportRequestService();
+
+    SpawnService getSpawnService();
+
+    @ApiStatus.Internal
+    SpawnStorage getSpawnStorage();
 
 
     @ApiStatus.Internal

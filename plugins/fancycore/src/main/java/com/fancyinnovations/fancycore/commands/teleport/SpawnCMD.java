@@ -1,13 +1,11 @@
 package com.fancyinnovations.fancycore.commands.teleport;
+
 import com.fancyinnovations.fancycore.api.player.FancyPlayer;
 import com.fancyinnovations.fancycore.api.player.FancyPlayerService;
-import com.fancyinnovations.fancycore.main.FancyCorePlugin;
-import com.fancyinnovations.fancycore.teleport.storage.SpawnLocationStorage;
+import com.fancyinnovations.fancycore.api.teleport.SpawnLocation;
+import com.fancyinnovations.fancycore.api.teleport.SpawnService;
 import com.hypixel.hytale.component.Ref;
 import com.hypixel.hytale.component.Store;
-import com.hypixel.hytale.math.vector.Transform;
-import com.hypixel.hytale.math.vector.Vector3d;
-import com.hypixel.hytale.math.vector.Vector3f;
 import com.hypixel.hytale.server.core.Message;
 import com.hypixel.hytale.server.core.command.system.CommandContext;
 import com.hypixel.hytale.server.core.command.system.basecommands.CommandBase;
@@ -54,25 +52,16 @@ public class SpawnCMD extends CommandBase {
         World currentWorld = ((EntityStore) senderStore.getExternalData()).getWorld();
 
         // Get spawn location from storage
-        SpawnLocationStorage spawnStorage = FancyCorePlugin.get().getSpawnLocationStorage();
-        java.util.Map<String, Object> spawnData = spawnStorage.getSpawnLocation();
-
-        if (spawnData == null) {
+        SpawnLocation spawnLocation = SpawnService.get().getSpawnLocation();
+        if (spawnLocation == null) {
             ctx.sendMessage(Message.raw("Spawn location has not been set. Use /setspawn to set it."));
             return;
         }
 
-        String spawnWorldName = (String) spawnData.get("world");
-        Double spawnX = ((Number) spawnData.get("x")).doubleValue();
-        Double spawnY = ((Number) spawnData.get("y")).doubleValue();
-        Double spawnZ = ((Number) spawnData.get("z")).doubleValue();
-        Double spawnYaw = ((Number) spawnData.get("yaw")).doubleValue();
-        Double spawnPitch = ((Number) spawnData.get("pitch")).doubleValue();
-
         // Get target world
-        World targetWorld = Universe.get().getWorld(spawnWorldName);
+        World targetWorld = Universe.get().getWorld(spawnLocation.worldName());
         if (targetWorld == null) {
-            ctx.sendMessage(Message.raw("The spawn world \"" + spawnWorldName + "\" is no longer loaded."));
+            ctx.sendMessage(Message.raw("The spawn world \"" + spawnLocation.worldName() + "\" does not exists."));
             return;
         }
 
@@ -83,14 +72,8 @@ public class SpawnCMD extends CommandBase {
 
         // Execute teleportation on the target world thread
         targetWorld.execute(() -> {
-            // Create transform from spawn location
-            Transform destinationTransform = new Transform(
-                    new Vector3d(spawnX, spawnY, spawnZ),
-                    new Vector3f((float) spawnPitch.doubleValue(), (float) spawnYaw.doubleValue(), 0.0f)
-            );
-
             // Create teleport component
-            Teleport teleport = new Teleport(targetWorld, destinationTransform);
+            Teleport teleport = new Teleport(targetWorld, spawnLocation.toTransform());
 
             // Add teleport component to sender
             senderStore.addComponent(senderRef, Teleport.getComponentType(), teleport);
