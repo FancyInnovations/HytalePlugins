@@ -19,6 +19,8 @@ public class FancyCoreConfigImpl implements FancyCoreConfig {
     public static final String LEAVE_MESSAGE_PATH = "settings.leave_message";
     public static final String SHOULD_JOIN_AT_SPAWN_PATH = "settings.join_at_spawn";
 
+    public static final String DISABLE_PERMISSION_PROVIDER_PATH = "experimental_features.disable_permission_provider";
+
     private static final String CONFIG_FILE_PATH = "mods/FancyCore/config.json";
     private ConfigJSON config;
 
@@ -138,6 +140,17 @@ public class FancyCoreConfigImpl implements FancyCoreConfig {
                 )
         );
 
+        config.addField(
+                new ConfigField<>(
+                        DISABLE_PERMISSION_PROVIDER_PATH,
+                        "If true, FancyCore will not register its built-in permission provider.",
+                        false,
+                        false,
+                        false,
+                        Boolean.class
+                )
+        );
+
         config.reload();
     }
 
@@ -199,5 +212,10 @@ public class FancyCoreConfigImpl implements FancyCoreConfig {
     @Override
     public boolean shouldJoinAtSpawn() {
         return config.get(SHOULD_JOIN_AT_SPAWN_PATH);
+    }
+
+    @Override
+    public boolean disablePermissionProvider() {
+        return config.get(DISABLE_PERMISSION_PROVIDER_PATH);
     }
 }

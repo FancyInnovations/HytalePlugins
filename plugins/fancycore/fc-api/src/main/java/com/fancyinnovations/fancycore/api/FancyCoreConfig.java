@@ -2,6 +2,7 @@ package com.fancyinnovations.fancycore.api;
 
 public interface FancyCoreConfig {
 
+    // Settings
     String getLogLevel();
 
     String getEventDiscordWebhookUrl();
@@ -23,6 +24,9 @@ public interface FancyCoreConfig {
     String getLeaveMessage();
 
     boolean shouldJoinAtSpawn();
+
+    // Experimental features
+    boolean disablePermissionProvider();
 
     void reload();
 

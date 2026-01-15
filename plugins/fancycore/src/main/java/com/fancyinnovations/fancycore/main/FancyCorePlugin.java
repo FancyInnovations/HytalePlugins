@@ -251,10 +251,12 @@ public class FancyCorePlugin extends JavaPlugin implements FancyCore {
         registerListeners();
 
         // register permission provider
-        for (PermissionProvider permissionProvider : new ArrayList<>(PermissionsModule.get().getProviders())) {
-            PermissionsModule.get().removeProvider(permissionProvider);
+        if (!fancyCoreConfig.disablePermissionProvider()) {
+            for (PermissionProvider permissionProvider : new ArrayList<>(PermissionsModule.get().getProviders())) {
+                PermissionsModule.get().removeProvider(permissionProvider);
+            }
+            PermissionsModule.get().addProvider(new FancyCorePermissionProvider());
         }
-        PermissionsModule.get().addProvider(new FancyCorePermissionProvider());
 
         new ServerStartedEvent().fire();
 
