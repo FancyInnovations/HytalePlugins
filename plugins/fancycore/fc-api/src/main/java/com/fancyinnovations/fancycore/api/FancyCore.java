@@ -5,6 +5,8 @@ import com.fancyinnovations.fancycore.api.chat.ChatStorage;
 import com.fancyinnovations.fancycore.api.economy.CurrencyService;
 import com.fancyinnovations.fancycore.api.economy.CurrencyStorage;
 import com.fancyinnovations.fancycore.api.events.service.EventService;
+import com.fancyinnovations.fancycore.api.inventory.BackpacksService;
+import com.fancyinnovations.fancycore.api.inventory.BackpacksStorage;
 import com.fancyinnovations.fancycore.api.inventory.KitsService;
 import com.fancyinnovations.fancycore.api.inventory.KitsStorage;
 import com.fancyinnovations.fancycore.api.moderation.PunishmentService;
@@ -69,6 +71,10 @@ public interface FancyCore {
     @ApiStatus.Internal
     KitsStorage getKitsStorage();
     KitsService getKitsService();
+
+    @ApiStatus.Internal
+    BackpacksStorage getBackpacksStorage();
+    BackpacksService getBackpacksService();
 
     @ApiStatus.Internal
     class InstanceHolder {

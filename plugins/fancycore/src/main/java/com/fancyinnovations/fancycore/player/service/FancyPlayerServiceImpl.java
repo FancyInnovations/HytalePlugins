@@ -7,6 +7,9 @@ import com.fancyinnovations.fancycore.api.player.FancyPlayerStorage;
 import com.fancyinnovations.fancycore.main.FancyCorePlugin;
 import com.fancyinnovations.fancycore.player.FancyPlayerImpl;
 import com.fancyinnovations.fancycore.player.storage.json.JsonFancyPlayer;
+import com.hypixel.hytale.server.core.NameMatching;
+import com.hypixel.hytale.server.core.universe.PlayerRef;
+import com.hypixel.hytale.server.core.universe.Universe;
 import org.jetbrains.annotations.ApiStatus;
 
 import java.util.*;
@@ -26,22 +29,83 @@ public class FancyPlayerServiceImpl implements FancyPlayerService {
 
     @Override
     public FancyPlayer getByUUID(UUID uuid) {
-        if (cache.containsKey(uuid)) {
-            return cache.get(uuid);
+        // First, check if player is in onlinePlayers set (these have correct PlayerRef)
+        for (FancyPlayer onlinePlayer : onlinePlayers) {
+            if (onlinePlayer.getData().getUUID().equals(uuid)) {
+                return onlinePlayer;
+            }
         }
 
-        return tryToGetFromStorage(uuid);
+        // Check cache
+        FancyPlayer cached = cache.get(uuid);
+        if (cached != null) {
+            // If cached player doesn't have PlayerRef, check if they're actually online
+            if (cached.getPlayer() == null) {
+                PlayerRef playerRef = Universe.get().getPlayer(uuid);
+                if (playerRef != null && playerRef.isValid()) {
+                    cached.setPlayer(playerRef);
+                    // Also add to onlinePlayers if not already there
+                    if (!onlinePlayers.contains(cached)) {
+                        onlinePlayers.add(cached);
+                    }
+                }
+            }
+            return cached;
+        }
+
+        // Try to get from storage
+        FancyPlayer fromStorage = tryToGetFromStorage(uuid);
+        if (fromStorage != null) {
+            // Check if player is actually online and update PlayerRef
+            PlayerRef playerRef = Universe.get().getPlayer(uuid);
+            if (playerRef != null && playerRef.isValid()) {
+                fromStorage.setPlayer(playerRef);
+                onlinePlayers.add(fromStorage);
+            }
+        }
+
+        return fromStorage;
     }
 
     @Override
     public FancyPlayer getByUsername(String username) {
+        // First, check if player is in onlinePlayers set (these have correct PlayerRef)
+        for (FancyPlayer onlinePlayer : onlinePlayers) {
+            if (onlinePlayer.getData().getUsername().equalsIgnoreCase(username)) {
+                return onlinePlayer;
+            }
+        }
+
+        // Check cache
         for (FancyPlayer fp : cache.values()) {
             if (fp.getData().getUsername().equalsIgnoreCase(username)) {
+                // If cached player doesn't have PlayerRef, check if they're actually online
+                if (fp.getPlayer() == null) {
+                    PlayerRef playerRef = Universe.get().getPlayerByUsername(username, NameMatching.EXACT);
+                    if (playerRef != null && playerRef.isValid()) {
+                        fp.setPlayer(playerRef);
+                        // Also add to onlinePlayers if not already there
+                        if (!onlinePlayers.contains(fp)) {
+                            onlinePlayers.add(fp);
+                        }
+                    }
+                }
                 return fp;
             }
         }
 
-        return tryToGetFromStorage(username);
+        // Try to get from storage
+        FancyPlayer fromStorage = tryToGetFromStorage(username);
+        if (fromStorage != null) {
+            // Check if player is actually online and update PlayerRef
+            PlayerRef playerRef = Universe.get().getPlayerByUsername(username, NameMatching.EXACT);
+            if (playerRef != null && playerRef.isValid()) {
+                fromStorage.setPlayer(playerRef);
+                onlinePlayers.add(fromStorage);
+            }
+        }
+
+        return fromStorage;
     }
 
     @Override

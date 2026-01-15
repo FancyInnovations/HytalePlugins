@@ -9,6 +9,8 @@ import com.fancyinnovations.fancycore.api.economy.CurrencyStorage;
 import com.fancyinnovations.fancycore.api.events.server.ServerStartedEvent;
 import com.fancyinnovations.fancycore.api.events.server.ServerStoppedEvent;
 import com.fancyinnovations.fancycore.api.events.service.EventService;
+import com.fancyinnovations.fancycore.api.inventory.BackpacksService;
+import com.fancyinnovations.fancycore.api.inventory.BackpacksStorage;
 import com.fancyinnovations.fancycore.api.inventory.KitsService;
 import com.fancyinnovations.fancycore.api.inventory.KitsStorage;
 import com.fancyinnovations.fancycore.api.moderation.PunishmentService;
@@ -25,10 +27,7 @@ import com.fancyinnovations.fancycore.commands.chat.ChatColorCMD;
 import com.fancyinnovations.fancycore.commands.chat.chatroom.ChatRoomCMD;
 import com.fancyinnovations.fancycore.commands.chat.message.*;
 import com.fancyinnovations.fancycore.commands.fancycore.FancyCoreCMD;
-import com.fancyinnovations.fancycore.commands.inventory.CreateKitCMD;
-import com.fancyinnovations.fancycore.commands.inventory.DeleteKitCMD;
-import com.fancyinnovations.fancycore.commands.inventory.KitCMD;
-import com.fancyinnovations.fancycore.commands.inventory.ListKitsCMD;
+import com.fancyinnovations.fancycore.commands.inventory.*;
 import com.fancyinnovations.fancycore.commands.permissions.groups.GroupCMD;
 import com.fancyinnovations.fancycore.commands.permissions.player.PermissionsCMD;
 import com.fancyinnovations.fancycore.commands.player.PlayerListCMD;
@@ -37,7 +36,9 @@ import com.fancyinnovations.fancycore.config.FancyCoreConfigImpl;
 import com.fancyinnovations.fancycore.economy.service.CurrencyServiceImpl;
 import com.fancyinnovations.fancycore.economy.storage.json.CurrencyJsonStorage;
 import com.fancyinnovations.fancycore.events.EventServiceImpl;
+import com.fancyinnovations.fancycore.inventory.service.BackpacksServiceImpl;
 import com.fancyinnovations.fancycore.inventory.service.KitsServiceImpl;
+import com.fancyinnovations.fancycore.inventory.storage.json.BackpacksJsonStorage;
 import com.fancyinnovations.fancycore.inventory.storage.json.KitsJsonStorage;
 import com.fancyinnovations.fancycore.listeners.PlayerChatListener;
 import com.fancyinnovations.fancycore.listeners.PlayerJoinListener;
@@ -134,6 +135,9 @@ public class FancyCorePlugin extends JavaPlugin implements FancyCore {
     private KitsStorage kitsStorage;
     private KitsService kitsService;
 
+    private BackpacksStorage backpacksStorage;
+    private BackpacksService backpacksService;
+
     public FancyCorePlugin(@Nonnull JavaPluginInit init) {
         super(init);
         INSTANCE = this;
@@ -211,6 +215,9 @@ public class FancyCorePlugin extends JavaPlugin implements FancyCore {
 
         kitsStorage = new KitsJsonStorage();
         kitsService = new KitsServiceImpl(kitsStorage);
+
+        backpacksStorage = new BackpacksJsonStorage();
+        backpacksService = new BackpacksServiceImpl(backpacksStorage);
 
         SeedDefaultData.seed();
 
@@ -325,6 +332,16 @@ public class FancyCorePlugin extends JavaPlugin implements FancyCore {
         CommandManager.get().register(new DeleteKitCMD());
         CommandManager.get().register(new KitCMD());
         CommandManager.get().register(new ListKitsCMD());
+
+        // utilities
+        CommandManager.get().register(new ClearInventoryCMD());
+        CommandManager.get().register(new OpenInventoryCMD());
+
+        // backpacks
+        CommandManager.get().register(new BackpackCMD());
+        CommandManager.get().register(new CreateBackpackCMD());
+        CommandManager.get().register(new DeleteBackpackCMD());
+        CommandManager.get().register(new ListBackpacksCMD());
     }
 
     public void registerListeners() {
@@ -466,6 +483,16 @@ public class FancyCorePlugin extends JavaPlugin implements FancyCore {
     @Override
     public KitsService getKitsService() {
         return kitsService;
+    }
+
+    @Override
+    public BackpacksStorage getBackpacksStorage() {
+        return backpacksStorage;
+    }
+
+    @Override
+    public BackpacksService getBackpacksService() {
+        return backpacksService;
     }
 
 }
