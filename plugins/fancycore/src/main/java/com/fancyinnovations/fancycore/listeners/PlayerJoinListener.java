@@ -5,14 +5,23 @@ import com.fancyinnovations.fancycore.api.events.player.PlayerJoinedEvent;
 import com.fancyinnovations.fancycore.api.moderation.Punishment;
 import com.fancyinnovations.fancycore.api.placeholders.PlaceholderService;
 import com.fancyinnovations.fancycore.api.player.FancyPlayer;
+import com.fancyinnovations.fancycore.api.teleport.Location;
+import com.fancyinnovations.fancycore.api.teleport.SpawnService;
 import com.fancyinnovations.fancycore.main.FancyCorePlugin;
 import com.fancyinnovations.fancycore.player.FancyPlayerDataImpl;
 import com.fancyinnovations.fancycore.player.FancyPlayerImpl;
 import com.fancyinnovations.fancycore.player.service.FancyPlayerServiceImpl;
+import com.hypixel.hytale.component.Ref;
+import com.hypixel.hytale.component.Store;
+import com.hypixel.hytale.math.vector.Transform;
+import com.hypixel.hytale.math.vector.Vector3f;
 import com.hypixel.hytale.server.core.entity.UUIDComponent;
 import com.hypixel.hytale.server.core.event.events.player.AddPlayerToWorldEvent;
 import com.hypixel.hytale.server.core.event.events.player.PlayerConnectEvent;
 import com.hypixel.hytale.server.core.event.events.player.PlayerReadyEvent;
+import com.hypixel.hytale.server.core.modules.entity.component.TransformComponent;
+import com.hypixel.hytale.server.core.modules.entity.teleport.Teleport;
+import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
 
 public class PlayerJoinListener {
 
@@ -57,15 +66,32 @@ public class PlayerJoinListener {
         }
 
         playerService.addOnlinePlayer(fp);
-
         new PlayerJoinedEvent(fp, firstJoin).fire();
     }
 
     public static void onPlayerReady(PlayerReadyEvent event) {
-        UUIDComponent uuidComponent = event.getPlayerRef().getStore().getComponent(event.getPlayerRef(), UUIDComponent.getComponentType());
+        Ref<EntityStore> ref = event.getPlayerRef();
+        Store<EntityStore> store = event.getPlayerRef().getStore();
+
+        UUIDComponent uuidComponent = ref.getStore().getComponent(ref, UUIDComponent.getComponentType());
         FancyPlayerImpl fp = (FancyPlayerImpl) playerService.getByUUID(uuidComponent.getUuid());
         if (fp == null) {
             return;
+        }
+
+        if (FancyCorePlugin.get().getConfig().shouldJoinAtSpawn()) {
+            Location spawnLocation = SpawnService.get().getSpawnLocation();
+            if (spawnLocation != null) {
+                Transform spawn = SpawnService.get().getSpawnLocation().toTransform();
+                TransformComponent transformComponent = store.getComponent(ref, TransformComponent.getComponentType());
+
+                Vector3f previousBodyRotation = transformComponent.getRotation().clone();
+                Vector3f spawnRotation = spawn.getRotation().clone();
+                spawn.setRotation(new Vector3f(previousBodyRotation.getPitch(), spawnRotation.getYaw(), previousBodyRotation.getRoll()));
+
+                Teleport teleport = new Teleport(event.getPlayer().getWorld(), spawn).withHeadRotation(spawnRotation);
+                store.addComponent(ref, Teleport.getComponentType(), teleport);
+            }
         }
 
         String joinMsg = PlaceholderService.get().parse(fp, FancyCore.get().getConfig().getJoinMessage());

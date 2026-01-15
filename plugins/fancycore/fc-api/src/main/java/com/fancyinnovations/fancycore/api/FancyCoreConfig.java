@@ -22,14 +22,7 @@ public interface FancyCoreConfig {
 
     String getLeaveMessage();
 
-    // Spawn location
-    String getSpawnWorld();
-    Double getSpawnX();
-    Double getSpawnY();
-    Double getSpawnZ();
-    Double getSpawnYaw();
-    Double getSpawnPitch();
-    void setSpawnLocation(String world, double x, double y, double z, double yaw, double pitch);
+    boolean shouldJoinAtSpawn();
 
     void reload();
 
