@@ -120,6 +120,26 @@ public class GroupImpl implements Group {
     }
 
     @Override
+    public List<Permission> getAllPermissions() {
+        Set<String> seenPermissions = new HashSet<>();
+        List<Permission> allPermissions = new ArrayList<>(permissions);
+
+        for (String parentName : parents) {
+            Group parentGroup = FancyCore.get().getPermissionService().getGroup(parentName);
+            if (parentGroup != null) {
+                for (Permission perm : parentGroup.getAllPermissions()) {
+                    if (!seenPermissions.contains(perm.getPermission())) {
+                        allPermissions.add(perm);
+                        seenPermissions.add(perm.getPermission());
+                    }
+                }
+            }
+        }
+
+        return allPermissions;
+    }
+
+    @Override
     public void setPermission(String permission, boolean enabled) {
         for (Permission p : permissions) {
             if (p.getPermission().equalsIgnoreCase(permission)) {

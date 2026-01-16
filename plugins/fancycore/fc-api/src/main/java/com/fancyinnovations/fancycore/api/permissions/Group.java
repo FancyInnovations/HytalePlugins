@@ -27,9 +27,21 @@ public interface Group {
 
     void setSuffix(String suffix);
 
+    /**
+     * Gets the permissions directly assigned to this group.
+     *
+     * @return List of permissions
+     */
     List<Permission> getPermissions();
 
     void setPermissions(List<Permission> permissions);
+
+    /**
+     * Gets all permissions including inherited ones from parent groups.
+     *
+     * @return List of all permissions
+     */
+    List<Permission> getAllPermissions();
 
     void setPermission(String permission, boolean enabled);
 

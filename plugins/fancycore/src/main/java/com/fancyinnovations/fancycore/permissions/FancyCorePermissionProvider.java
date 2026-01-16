@@ -58,6 +58,19 @@ public class FancyCorePermissionProvider implements PermissionProvider {
             }
         }
 
+        for (String group : fp.getData().getGroups()) {
+            Group g = PermissionService.get().getGroup(group);
+            if (g == null) {
+                continue;
+            }
+
+            for (Permission permission : g.getAllPermissions()) {
+                if (permission.isEnabled()) {
+                    userPermissions.add(permission.getPermission());
+                }
+            }
+        }
+
         return userPermissions;
     }
 
@@ -93,7 +106,7 @@ public class FancyCorePermissionProvider implements PermissionProvider {
         }
 
         Set<String> groupPermissions = new HashSet<>();
-        for (Permission permission : group.getPermissions()) {
+        for (Permission permission : group.getAllPermissions()) {
             if (permission.isEnabled()) {
                 groupPermissions.add(permission.getPermission());
             }
