@@ -30,6 +30,8 @@ public interface FancyCoreConfig {
 
     String getDefaultGroupName();
 
+    String getFirstJoinKitName();
+
     // Experimental features
 
     boolean disablePermissionProvider();

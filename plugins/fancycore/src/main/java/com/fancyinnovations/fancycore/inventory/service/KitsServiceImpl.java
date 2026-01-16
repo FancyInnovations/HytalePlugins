@@ -3,7 +3,12 @@ package com.fancyinnovations.fancycore.inventory.service;
 import com.fancyinnovations.fancycore.api.inventory.Kit;
 import com.fancyinnovations.fancycore.api.inventory.KitsService;
 import com.fancyinnovations.fancycore.api.inventory.KitsStorage;
+import com.fancyinnovations.fancycore.api.player.FancyPlayer;
+import com.hypixel.hytale.server.core.entity.entities.Player;
 import com.hypixel.hytale.server.core.inventory.ItemStack;
+import com.hypixel.hytale.server.core.inventory.container.ItemContainer;
+import com.hypixel.hytale.server.core.inventory.transaction.ItemStackTransaction;
+import com.hypixel.hytale.server.core.universe.Universe;
 
 import java.util.List;
 import java.util.Map;
@@ -40,6 +45,36 @@ public class KitsServiceImpl implements KitsService {
     }
 
     @Override
+    public void giveKitToPlayer(Kit kit, FancyPlayer fp) {
+        if (!fp.isOnline()) {
+            return;
+        }
+
+        Universe.get().getWorld(fp.getPlayer().getWorldUuid()).execute(() -> {
+            Player player = fp.getPlayer().getReference().getStore().getComponent(fp.getPlayer().getReference(), Player.getComponentType());
+            if (player == null) {
+                fp.sendMessage("You are not an player");
+                return;
+            }
+
+            ItemContainer hotbar = player.getInventory().getHotbar();
+            ItemContainer storage = player.getInventory().getStorage();
+
+
+            List<ItemStack> items = KitsService.get().getKitItems(kit);
+            for (ItemStack item : items) {
+                if (!tryToAddItemToContainer(item, hotbar)) {
+                    if (!tryToAddItemToContainer(item, storage)) {
+                        fp.sendMessage("Not enough space in inventory for: " + item.toString());
+                        // TODO: drop item on ground or add mail system
+                    }
+                }
+            }
+        });
+
+    }
+
+    @Override
     public List<Kit> getAllKits() {
         return List.copyOf(kitsCache.values());
     }
@@ -56,5 +91,18 @@ public class KitsServiceImpl implements KitsService {
         storage.deleteKit(kit);
         kitsCache.remove(kit.name());
         kitItemsCache.remove(kit.name());
+    }
+
+    private boolean tryToAddItemToContainer(ItemStack item, ItemContainer container) {
+        if (!container.canAddItemStack(item)) {
+            return false;
+        }
+
+        ItemStackTransaction itemStackTransaction = container.addItemStack(item);
+        if (!itemStackTransaction.succeeded()) {
+            return false;
+        }
+
+        return true;
     }
 }

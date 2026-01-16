@@ -12,17 +12,11 @@ import com.hypixel.hytale.server.core.command.system.CommandContext;
 import com.hypixel.hytale.server.core.command.system.arguments.system.OptionalArg;
 import com.hypixel.hytale.server.core.command.system.arguments.system.RequiredArg;
 import com.hypixel.hytale.server.core.command.system.basecommands.AbstractPlayerCommand;
-import com.hypixel.hytale.server.core.entity.entities.Player;
-import com.hypixel.hytale.server.core.inventory.ItemStack;
-import com.hypixel.hytale.server.core.inventory.container.ItemContainer;
-import com.hypixel.hytale.server.core.inventory.transaction.ItemStackTransaction;
 import com.hypixel.hytale.server.core.permissions.PermissionsModule;
 import com.hypixel.hytale.server.core.universe.PlayerRef;
 import com.hypixel.hytale.server.core.universe.world.World;
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
 import org.jetbrains.annotations.NotNull;
-
-import java.util.List;
 
 public class KitCMD extends AbstractPlayerCommand {
 
@@ -54,37 +48,8 @@ public class KitCMD extends AbstractPlayerCommand {
             return;
         }
 
-        Player player = ref.getStore().getComponent(ref, Player.getComponentType());
-        if (player == null) {
-            fp.sendMessage("You are not an player");
-            return;
-        }
-        ItemContainer hotbar = player.getInventory().getHotbar();
-        ItemContainer storage = player.getInventory().getStorage();
-
-
-        List<ItemStack> items = KitsService.get().getKitItems(kit);
-        for (ItemStack item : items) {
-            if (!tryToAddItemToContainer(item, hotbar)) {
-                if (!tryToAddItemToContainer(item, storage)) {
-                    fp.sendMessage("Not enough space in inventory for: " + item.toString());
-                }
-            }
-        }
+        KitsService.get().giveKitToPlayer(kit, fp);
 
         fp.sendMessage("You have received the kit: " + kit.name());
-    }
-
-    private boolean tryToAddItemToContainer(ItemStack item, ItemContainer container) {
-        if (!container.canAddItemStack(item)) {
-            return false;
-        }
-
-        ItemStackTransaction itemStackTransaction = container.addItemStack(item);
-        if (!itemStackTransaction.succeeded()) {
-            return false;
-        }
-
-        return true;
     }
 }

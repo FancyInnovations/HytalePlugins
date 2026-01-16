@@ -2,6 +2,8 @@ package com.fancyinnovations.fancycore.listeners;
 
 import com.fancyinnovations.fancycore.api.FancyCore;
 import com.fancyinnovations.fancycore.api.events.player.PlayerJoinedEvent;
+import com.fancyinnovations.fancycore.api.inventory.Kit;
+import com.fancyinnovations.fancycore.api.inventory.KitsService;
 import com.fancyinnovations.fancycore.api.moderation.Punishment;
 import com.fancyinnovations.fancycore.api.permissions.Group;
 import com.fancyinnovations.fancycore.api.permissions.PermissionService;
@@ -25,6 +27,8 @@ import com.hypixel.hytale.server.core.event.events.player.PlayerReadyEvent;
 import com.hypixel.hytale.server.core.modules.entity.component.TransformComponent;
 import com.hypixel.hytale.server.core.modules.entity.teleport.Teleport;
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
+
+import java.util.concurrent.TimeUnit;
 
 public class PlayerJoinListener {
 
@@ -75,6 +79,21 @@ public class PlayerJoinListener {
                 onlinePlayer.sendMessage(firstJoinMsg);
             }
             FancyCorePlugin.get().getPlayerStorage().savePlayer(fp.getData());
+
+            String firstJoinKitName = FancyCorePlugin.get().getConfig().getFirstJoinKitName();
+            if (firstJoinKitName != null && !firstJoinKitName.isEmpty()) {
+                Kit kit = KitsService.get().getKit(firstJoinKitName);
+                if (kit == null) {
+                    FancyCorePlugin.get().getFancyLogger().warn("First join kit '" + firstJoinKitName + "' not found! Cannot give to player " + fp.getData().getUsername());
+                } else {
+                    // TODO Fix this workaround for giving kit after player is fully loaded
+                    FancyPlayerImpl finalFp = fp;
+                    FancyCorePlugin.get().getThreadPool().schedule(
+                            () -> KitsService.get().giveKitToPlayer(kit, finalFp),
+                            1, TimeUnit.SECONDS
+                    );
+                }
+            }
 
             String joinMessage = PlaceholderService.get().parse(fp, FancyCorePlugin.get().getConfig().getFirstJoinMessage());
             fp.sendMessage(joinMessage);
