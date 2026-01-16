@@ -4,8 +4,11 @@ import com.fancyinnovations.fancycore.api.FancyCoreConfig;
 import com.fancyinnovations.fancycore.api.economy.Currency;
 import com.fancyinnovations.fancycore.api.economy.CurrencyService;
 import com.fancyinnovations.fancycore.api.economy.CurrencyStorage;
+import com.fancyinnovations.fancycore.commands.economy.currencytemplate.CurrencyTemplateCMD;
 import com.fancyinnovations.fancycore.main.FancyCorePlugin;
+import com.hypixel.hytale.server.core.command.system.CommandManager;
 
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -15,7 +18,6 @@ public class CurrencyServiceImpl implements CurrencyService {
     private static final FancyCoreConfig CONFIG = FancyCorePlugin.get().getConfig();
 
     private final Map<String, Currency> currencies;
-    private Currency primaryCurrency;
 
     public CurrencyServiceImpl() {
         this.currencies = new ConcurrentHashMap<>();
@@ -23,8 +25,16 @@ public class CurrencyServiceImpl implements CurrencyService {
     }
 
     private void load() {
+        String serverName = FancyCorePlugin.get().getConfig().getServerName();
+
         for (Currency currency : STORAGE.getAllCurrencies()) {
+            // Only load currencies for this server
+            if (!currency.server().equalsIgnoreCase("global") && !currency.server().equalsIgnoreCase(serverName)) {
+                continue;
+            }
+
             this.currencies.put(currency.name(), currency);
+            CommandManager.get().register(new CurrencyTemplateCMD(currency));
         }
     }
 
@@ -34,15 +44,24 @@ public class CurrencyServiceImpl implements CurrencyService {
     }
 
     @Override
+    public List<Currency> getAllCurrencies() {
+        return List.copyOf(this.currencies.values());
+    }
+
+    @Override
     public void registerCurrency(Currency currency) {
         this.currencies.put(currency.name(), currency);
         STORAGE.setCurrency(currency);
+
+        CommandManager.get().register(new CurrencyTemplateCMD(currency));
     }
 
     @Override
     public void unregisterCurrency(String name) {
         this.currencies.remove(name);
         STORAGE.removeCurrency(name);
+
+        CommandManager.get().getCommandRegistration().remove(name.toLowerCase());
     }
 
     @Override

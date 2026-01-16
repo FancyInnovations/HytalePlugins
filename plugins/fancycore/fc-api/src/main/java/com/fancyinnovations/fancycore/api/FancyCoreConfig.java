@@ -3,6 +3,9 @@ package com.fancyinnovations.fancycore.api;
 public interface FancyCoreConfig {
 
     // Settings
+
+    String getServerName();
+
     String getLogLevel();
 
     String getEventDiscordWebhookUrl();
@@ -28,6 +31,7 @@ public interface FancyCoreConfig {
     String getDefaultGroupName();
 
     // Experimental features
+
     boolean disablePermissionProvider();
 
     void reload();

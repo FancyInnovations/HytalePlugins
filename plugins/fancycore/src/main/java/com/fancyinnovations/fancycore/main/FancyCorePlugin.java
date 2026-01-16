@@ -177,7 +177,9 @@ public class FancyCorePlugin extends JavaPlugin implements FancyCore {
     protected void setup() {
         fancyLogger.info("Setting up FancyCore...");
 
+        // load config
         fancyCoreConfig = new FancyCoreConfigImpl();
+        ((FancyCoreConfigImpl) fancyCoreConfig).init();
 
         versionFetcher = new FancySpacesVersionFetcher("fc");
         versionChecker = new VersionChecker(fancyLogger, "FancyCore", versionFetcher);
@@ -228,8 +230,6 @@ public class FancyCorePlugin extends JavaPlugin implements FancyCore {
     public void start() {
         fancyLogger.info("FancyCore is starting...");
 
-        // load config
-        ((FancyCoreConfigImpl) fancyCoreConfig).init();
 
         // set log level from config
         LogLevel logLevel;

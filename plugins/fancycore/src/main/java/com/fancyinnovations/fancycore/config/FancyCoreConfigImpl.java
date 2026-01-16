@@ -7,6 +7,7 @@ import com.fancyinnovations.fancycore.main.FancyCorePlugin;
 
 public class FancyCoreConfigImpl implements FancyCoreConfig {
 
+    public static final String SERVER_NAME_PATH = "settings.server_name";
     public static final String LOG_LEVEL_PATH = "settings.logging.level";
     public static final String EVENT_DISCORD_WEBHOOK_URL_PATH = "settings.events.discord_webhook_url";
     public static final String EVENT_DISCORD_NOTIFICATIONS = "settings.events.notifications_enabled";
@@ -27,6 +28,15 @@ public class FancyCoreConfigImpl implements FancyCoreConfig {
 
     public void init() {
         config = new ConfigJSON(FancyCorePlugin.get().getFancyLogger(), CONFIG_FILE_PATH);
+
+        config.addField(new ConfigField<>(
+                SERVER_NAME_PATH,
+                "The name of the server (needed if you use multiple servers with FancyCore).",
+                false,
+                "hytale-server",
+                false,
+                String.class
+        ));
 
         config.addField(new ConfigField<>(
                 LOG_LEVEL_PATH,
@@ -59,7 +69,7 @@ public class FancyCoreConfigImpl implements FancyCoreConfig {
                 PRIMARY_CURRENCY_NAME_PATH,
                 "The name of the primary currency used in the economy system.",
                 false,
-                "Dollar",
+                "Money",
                 false,
                 String.class
         ));
@@ -171,6 +181,11 @@ public class FancyCoreConfigImpl implements FancyCoreConfig {
     @Override
     public void reload() {
         config.reload();
+    }
+
+    @Override
+    public String getServerName() {
+        return config.get(SERVER_NAME_PATH);
     }
 
     @Override

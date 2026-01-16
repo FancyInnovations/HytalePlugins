@@ -2,6 +2,8 @@ package com.fancyinnovations.fancycore.commands.arguments;
 
 import com.fancyinnovations.fancycore.api.chat.ChatRoom;
 import com.fancyinnovations.fancycore.api.chat.ChatService;
+import com.fancyinnovations.fancycore.api.economy.Currency;
+import com.fancyinnovations.fancycore.api.economy.CurrencyService;
 import com.fancyinnovations.fancycore.api.inventory.Kit;
 import com.fancyinnovations.fancycore.api.inventory.KitsService;
 import com.fancyinnovations.fancycore.api.permissions.Group;
@@ -32,7 +34,7 @@ public class FancyCoreArgs {
         }
     };
 
-    public static final SingleArgumentType<FancyPlayer> PLAYER = new SingleArgumentType<>("Player", "Player username or uuid", new String[]{"OliverHD", "Simon", UUID.randomUUID().toString()}) {
+    public static final SingleArgumentType<FancyPlayer> PLAYER = new SingleArgumentType<>("Player", "Username or UUID", new String[]{"OliverHD", "Simon", UUID.randomUUID().toString()}) {
         public @Nullable FancyPlayer parse(@Nonnull String input, @Nonnull ParseResult parseResult) {
             FancyPlayer fancyPlayer = FancyPlayerService.get().getByUsername(input);
             if (fancyPlayer == null) {
@@ -81,11 +83,24 @@ public class FancyCoreArgs {
         public @Nullable ChatRoom parse(@Nonnull String input, @Nonnull ParseResult parseResult) {
             ChatRoom chatRoom = ChatService.get().getChatRoom(input);
             if (chatRoom == null) {
-                parseResult.fail(Message.raw("Chat room \"" + input + "\" not found."));
+                parseResult.fail(Message.raw("ChatRoom '" + input + "' not found."));
                 return null;
             }
 
             return chatRoom;
+        }
+    };
+
+    public static final SingleArgumentType<Currency> CURRENCY = new SingleArgumentType<>("Currency", "The name of the currency", new String[]{"dollar", "coin"}) {
+
+        public @Nullable Currency parse(@Nonnull String input, @Nonnull ParseResult parseResult) {
+            Currency currency = CurrencyService.get().getCurrency(input);
+            if (currency == null) {
+                parseResult.fail(Message.raw("Currency '" + input + "' not found."));
+                return null;
+            }
+
+            return currency;
         }
     };
 

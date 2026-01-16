@@ -57,7 +57,7 @@ public class SeedDefaultData {
     );
 
     public static void seed() {
-        File configFile = new File("mods/FancyCore/config.json");
+        File configFile = new File("mods/FancyCore/data/");
         if (configFile.exists()) {
             return;
         }
@@ -65,7 +65,6 @@ public class SeedDefaultData {
 
         seedChatRooms();
         seedGroups();
-        seedEconomy();
         seedEconomy();
         seedKits();
     }
@@ -119,12 +118,21 @@ public class SeedDefaultData {
     }
 
     private static void seedEconomy() {
-        Currency primaryCurrency = new Currency(
-                "Dollar",
+        Currency moneyCurrency = new Currency(
+                "Money",
                 "$",
-                2
+                2,
+                "global"
         );
-        CurrencyService.get().registerCurrency(primaryCurrency);
+        CurrencyService.get().registerCurrency(moneyCurrency);
+
+        Currency coinsCurrency = new Currency(
+                "Coins",
+                "",
+                0,
+                "global"
+        );
+        CurrencyService.get().registerCurrency(coinsCurrency);
     }
 
     private static void seedKits() {
