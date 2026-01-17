@@ -2,20 +2,17 @@ package com.fancyinnovations.fancycore.moderation.service;
 
 import com.fancyinnovations.fancycore.api.events.player.PlayerPunishedEvent;
 import com.fancyinnovations.fancycore.api.events.player.PlayerReportedEvent;
-import com.fancyinnovations.fancycore.api.moderation.Punishment;
-import com.fancyinnovations.fancycore.api.moderation.PunishmentService;
-import com.fancyinnovations.fancycore.api.moderation.PunishmentStorage;
-import com.fancyinnovations.fancycore.api.moderation.PunishmentType;
+import com.fancyinnovations.fancycore.api.moderation.*;
 import com.fancyinnovations.fancycore.api.player.FancyPlayer;
 import com.fancyinnovations.fancycore.main.FancyCorePlugin;
 import com.fancyinnovations.fancycore.moderation.PlayerReportImpl;
 import com.fancyinnovations.fancycore.moderation.PunishmentImpl;
 import com.fancyinnovations.fancycore.translations.TranslationService;
+import com.fancyinnovations.fancycore.utils.IDGen;
 import com.fancyinnovations.fancycore.utils.TimeUtils;
 import com.hypixel.hytale.server.core.universe.Universe;
 
 import java.util.List;
-import java.util.UUID;
 
 public class PunishmentServiceImpl implements PunishmentService {
 
@@ -39,7 +36,7 @@ public class PunishmentServiceImpl implements PunishmentService {
     @Override
     public Punishment warnPlayer(FancyPlayer player, FancyPlayer staff, String reason) {
         Punishment punishment = new PunishmentImpl(
-                UUID.randomUUID(),
+                IDGen.generate(8),
                 player.getData().getUUID(),
                 PunishmentType.WARNING,
                 reason,
@@ -66,7 +63,7 @@ public class PunishmentServiceImpl implements PunishmentService {
         long expiresAt = durationMillis <= 0 ? -1 : System.currentTimeMillis() + durationMillis;
 
         Punishment punishment = new PunishmentImpl(
-                UUID.randomUUID(),
+                IDGen.generate(8),
                 player.getData().getUUID(),
                 PunishmentType.MUTE,
                 reason,
@@ -103,7 +100,7 @@ public class PunishmentServiceImpl implements PunishmentService {
     @Override
     public Punishment kickPlayer(FancyPlayer player, FancyPlayer staff, String reason) {
         Punishment punishment = new PunishmentImpl(
-                UUID.randomUUID(),
+                IDGen.generate(8),
                 player.getData().getUUID(),
                 PunishmentType.KICK,
                 reason,
@@ -134,7 +131,7 @@ public class PunishmentServiceImpl implements PunishmentService {
         long expiresAt = durationMillis <= 0 ? -1 : System.currentTimeMillis() + durationMillis;
 
         Punishment punishment = new PunishmentImpl(
-                UUID.randomUUID(),
+                IDGen.generate(8),
                 player.getData().getUUID(),
                 PunishmentType.BAN,
                 reason,
@@ -222,7 +219,7 @@ public class PunishmentServiceImpl implements PunishmentService {
     }
 
     @Override
-    public Punishment getPunishmentById(UUID id) {
+    public Punishment getPunishmentById(String id) {
         return storage.getPunishmentById(id);
     }
 
@@ -234,7 +231,7 @@ public class PunishmentServiceImpl implements PunishmentService {
     @Override
     public void reportPlayer(FancyPlayer reported, FancyPlayer staff, String reason) {
         PlayerReportImpl report = new PlayerReportImpl(
-                UUID.randomUUID(),
+                IDGen.generate(8),
                 reported,
                 staff,
                 reason
@@ -245,5 +242,21 @@ public class PunishmentServiceImpl implements PunishmentService {
         }
 
         storage.createReport(report);
+    }
+
+    @Override
+    public void resolveReport(PlayerReport report) {
+        ((PlayerReportImpl) report).resolve();
+        storage.createReport(report);
+    }
+
+    @Override
+    public PlayerReport getReportById(String id) {
+        return storage.getReportById(id);
+    }
+
+    @Override
+    public List<PlayerReport> getAllReports() {
+        return storage.getAllReports();
     }
 }

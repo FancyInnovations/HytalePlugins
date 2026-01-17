@@ -4,7 +4,6 @@ import com.fancyinnovations.fancycore.api.FancyCore;
 import com.fancyinnovations.fancycore.api.player.FancyPlayer;
 
 import java.util.List;
-import java.util.UUID;
 
 public interface PunishmentService {
 
@@ -34,10 +33,16 @@ public interface PunishmentService {
      */
     boolean unmute(FancyPlayer player);
 
-    Punishment getPunishmentById(UUID id);
+    Punishment getPunishmentById(String id);
 
     List<Punishment> getPunishmentsForPlayer(FancyPlayer player);
 
     void reportPlayer(FancyPlayer reported, FancyPlayer staff, String reason);
+
+    void resolveReport(PlayerReport report);
+
+    PlayerReport getReportById(String id);
+
+    List<PlayerReport> getAllReports();
 
 }

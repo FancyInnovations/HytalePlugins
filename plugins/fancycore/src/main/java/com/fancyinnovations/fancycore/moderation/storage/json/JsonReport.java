@@ -20,7 +20,7 @@ public record JsonReport(
 
     public static JsonReport from(PlayerReport report) {
         return new JsonReport(
-                report.id().toString(),
+                report.id(),
                 report.reportedAt(),
                 report.reportedPlayer().getData().getUUID().toString(),
                 report.reportingPlayer().getData().getUUID().toString(),
@@ -35,7 +35,7 @@ public record JsonReport(
         FancyPlayer reportingFP = FancyPlayerService.get().getByUUID(UUID.fromString(reportingPlayer));
 
         return new PlayerReportImpl(
-                UUID.fromString(id),
+                id,
                 reportedFP,
                 reportingFP,
                 reason

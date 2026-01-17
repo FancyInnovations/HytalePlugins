@@ -4,7 +4,7 @@ import java.util.UUID;
 
 public interface Punishment {
 
-    UUID id();
+    String id();
 
     UUID player();
 

@@ -3,11 +3,9 @@ package com.fancyinnovations.fancycore.moderation;
 import com.fancyinnovations.fancycore.api.moderation.PlayerReport;
 import com.fancyinnovations.fancycore.api.player.FancyPlayer;
 
-import java.util.UUID;
-
 public class PlayerReportImpl implements PlayerReport {
 
-    private final UUID id;
+    private final String id;
     private final long reportedAt;
     private final FancyPlayer reportedPlayer;
     private final FancyPlayer reportingPlayer;
@@ -15,7 +13,7 @@ public class PlayerReportImpl implements PlayerReport {
     private boolean resolved;
     private long resolvedAt;
 
-    public PlayerReportImpl(UUID id, FancyPlayer reportedPlayer, FancyPlayer reportingPlayer, String reason) {
+    public PlayerReportImpl(String id, FancyPlayer reportedPlayer, FancyPlayer reportingPlayer, String reason) {
         this.id = id;
         this.reportedAt = System.currentTimeMillis();
         this.reportedPlayer = reportedPlayer;
@@ -26,7 +24,7 @@ public class PlayerReportImpl implements PlayerReport {
     }
 
     @Override
-    public UUID id() {
+    public String id() {
         return id;
     }
 

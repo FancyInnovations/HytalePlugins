@@ -57,7 +57,7 @@ public class PunishmentJsonStorage implements PunishmentStorage {
     }
 
     @Override
-    public Punishment getPunishmentById(UUID id) {
+    public Punishment getPunishmentById(String id) {
         File dir = new File(PUNISHMENTS_DATA_DIR_PATH);
         File[] playerDirs = dir.listFiles(File::isDirectory);
         if (playerDirs == null) {
@@ -65,14 +65,14 @@ public class PunishmentJsonStorage implements PunishmentStorage {
         }
 
         for (File playerDir : playerDirs) {
-            File punishmentFile = new File(playerDir, id.toString() + ".json");
+            File punishmentFile = new File(playerDir, id + ".json");
             if (punishmentFile.exists()) {
                 try {
-                    return punishmentDB.get(playerDir.getName() + "/" + id.toString(), PunishmentImpl.class);
+                    return punishmentDB.get(playerDir.getName() + "/" + id, PunishmentImpl.class);
                 } catch (IOException e) {
                     FancyCorePlugin.get().getFancyLogger().error(
                             "Failed to load Punishment by ID",
-                            StringProperty.of("id", id.toString()),
+                            StringProperty.of("id", id),
                             ThrowableProperty.of(e)
                     );
                 }
@@ -128,5 +128,23 @@ public class PunishmentJsonStorage implements PunishmentStorage {
         }
 
         return List.of();
+    }
+
+    @Override
+    public PlayerReport getReportById(String id) {
+        try {
+            JsonReport jsonReport = reportDB.get(id, JsonReport.class);
+            if (jsonReport != null) {
+                return jsonReport.toPlayerReport();
+            }
+        } catch (IOException e) {
+            FancyCorePlugin.get().getFancyLogger().error(
+                    "Failed to load PlayerReport by ID",
+                    StringProperty.of("id", id),
+                    ThrowableProperty.of(e)
+            );
+        }
+
+        return null;
     }
 }

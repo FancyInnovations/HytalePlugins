@@ -6,6 +6,9 @@ import com.fancyinnovations.fancycore.api.economy.Currency;
 import com.fancyinnovations.fancycore.api.economy.CurrencyService;
 import com.fancyinnovations.fancycore.api.inventory.Kit;
 import com.fancyinnovations.fancycore.api.inventory.KitsService;
+import com.fancyinnovations.fancycore.api.moderation.PlayerReport;
+import com.fancyinnovations.fancycore.api.moderation.Punishment;
+import com.fancyinnovations.fancycore.api.moderation.PunishmentService;
 import com.fancyinnovations.fancycore.api.permissions.Group;
 import com.fancyinnovations.fancycore.api.permissions.PermissionService;
 import com.fancyinnovations.fancycore.api.player.FancyPlayer;
@@ -152,6 +155,32 @@ public class FancyCoreArgs {
             }
 
             return currency;
+        }
+    };
+
+    public static final SingleArgumentType<Punishment> PUNISHMENT = new SingleArgumentType<>("Punishment", "The id of the punishment", new String[]{"8oEyxRrk", "OvGMJBxB"}) {
+
+        public @Nullable Punishment parse(@Nonnull String input, @Nonnull ParseResult parseResult) {
+            Punishment punishment = PunishmentService.get().getPunishmentById(input);
+            if (punishment == null) {
+                parseResult.fail(Message.raw("Punishment '" + input + "' not found."));
+                return null;
+            }
+
+            return punishment;
+        }
+    };
+
+    public static final SingleArgumentType<PlayerReport> REPORT = new SingleArgumentType<>("Report", "The id of the report", new String[]{"8oEyxRrk", "OvGMJBxB"}) {
+
+        public @Nullable PlayerReport parse(@Nonnull String input, @Nonnull ParseResult parseResult) {
+            PlayerReport report = PunishmentService.get().getReportById(input);
+            if (report == null) {
+                parseResult.fail(Message.raw("Report '" + input + "' not found."));
+                return null;
+            }
+
+            return report;
         }
     };
 

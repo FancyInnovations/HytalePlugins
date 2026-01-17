@@ -15,7 +15,7 @@ public interface PunishmentStorage {
     List<Punishment> getPunishmentsForPlayer(UUID player);
 
     @ApiStatus.Internal
-    Punishment getPunishmentById(UUID id);
+    Punishment getPunishmentById(String id);
 
     @ApiStatus.Internal
     List<Punishment> getAllPunishments();
@@ -25,4 +25,7 @@ public interface PunishmentStorage {
 
     @ApiStatus.Internal
     List<PlayerReport> getAllReports();
+
+    @ApiStatus.Internal
+    PlayerReport getReportById(String id);
 }

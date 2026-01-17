@@ -7,7 +7,7 @@ import com.google.gson.annotations.SerializedName;
 import java.util.UUID;
 
 public record PunishmentImpl(
-        UUID id,
+        String id,
         UUID player,
         PunishmentType type,
         String reason,

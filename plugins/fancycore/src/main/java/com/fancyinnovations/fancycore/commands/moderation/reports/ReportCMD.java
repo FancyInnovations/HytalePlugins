@@ -1,4 +1,4 @@
-package com.fancyinnovations.fancycore.commands.moderation;
+package com.fancyinnovations.fancycore.commands.moderation.reports;
 
 import com.fancyinnovations.fancycore.api.moderation.PunishmentService;
 import com.fancyinnovations.fancycore.api.player.FancyPlayer;

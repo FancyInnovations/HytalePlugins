@@ -31,6 +31,9 @@ import com.fancyinnovations.fancycore.commands.economy.currency.CurrencyCMD;
 import com.fancyinnovations.fancycore.commands.fancycore.FancyCoreCMD;
 import com.fancyinnovations.fancycore.commands.inventory.*;
 import com.fancyinnovations.fancycore.commands.moderation.*;
+import com.fancyinnovations.fancycore.commands.moderation.punishments.PunishmentsCMD;
+import com.fancyinnovations.fancycore.commands.moderation.reports.ReportCMD;
+import com.fancyinnovations.fancycore.commands.moderation.reports.ReportsCMD;
 import com.fancyinnovations.fancycore.commands.permissions.groups.GroupCMD;
 import com.fancyinnovations.fancycore.commands.permissions.player.PermissionsCMD;
 import com.fancyinnovations.fancycore.commands.player.PlayerListCMD;
@@ -356,6 +359,7 @@ public class FancyCorePlugin extends JavaPlugin implements FancyCore {
 
         // moderation
         CommandManager.get().register(new ReportCMD());
+        CommandManager.get().register(new ReportsCMD());
         CommandManager.get().register(new WarnCMD());
         CommandManager.get().register(new KickCMD());
         CommandManager.get().register(new MuteCMD());
@@ -364,6 +368,7 @@ public class FancyCorePlugin extends JavaPlugin implements FancyCore {
         CommandManager.get().register(new BanCMD());
         CommandManager.get().register(new TempBanCMD());
         CommandManager.get().register(new UnbanCMD());
+        CommandManager.get().register(new PunishmentsCMD());
     }
 
     public void registerListeners() {
