@@ -15,7 +15,7 @@ import org.jetbrains.annotations.NotNull;
 public class CurrencyTemplateSetCMD extends CommandBase {
 
     protected final RequiredArg<FancyPlayer> targetArg = this.withRequiredArg("target", "Username or UUID", FancyCoreArgs.PLAYER);
-    protected final RequiredArg<Double> amountArg = this.withRequiredArg("target", "amount you want to set", ArgTypes.DOUBLE);
+    protected final RequiredArg<Double> amountArg = this.withRequiredArg("amount", "amount you want to set", ArgTypes.DOUBLE);
 
     protected final Currency currency;
 

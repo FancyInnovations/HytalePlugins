@@ -14,7 +14,6 @@ public class GroupCMD extends AbstractCommandCollection {
 
         addSubCommand(new GroupCreateCMD());
         addSubCommand(new GroupDeleteCMD());
-        addSubCommand(new GroupParentsAddCMD());
         addSubCommand(new GroupSetPrefixCMD());
         addSubCommand(new GroupSetSuffixCMD());
         addSubCommand(new GroupSetWeightCMD());

@@ -13,143 +13,151 @@
 ## Features
 
 With **FancyCore**, you get a wide variety of features that are essential for running a modern Hytale server.
-It includes **80+ commands** covering countless use cases for both small community servers and large server networks.
+It includes **100+ commands** covering countless use cases for both small community servers and large server networks.
 
 FancyCore is designed with ease of use, high performance, and extensibility in mind.
 
-### Core Feature Categories
+**Feature categories:**
+- Permissions System (groups, user permissions, etc.)
+- Economy System (multiple currencies, player balances, transactions)
+- Punishment System (kicks, bans, mutes, warnings, reports)
+- Chat System (chatrooms, private messaging, ignore system)
+- Inventory System (kits, backpacks, remote inventory access)
+- Teleportation System (warps, homes, spawn, teleport requests)
+- Player Utilities (player list with extra info, etc.)
+- Plugin Management (check for updates, view version info)
 
-- Flexible group and permission system
-- Robust economy system
-- Easy to use placeholders
-- Chat management
-- Powerful moderation tools
-- Teleportation features
-- World management
-- Player specific features
-- Inventory utilities
-- Server statistics
-- API for developers
 
-Learn more about each feature in the documentation: https://fancyinnovations.com/docs/hytale-plugins/fancycore/
+### Permissions System
 
-### Permissions
+Commands:
+- `/permissions set <target> <permission> [--enabled=?]`
+- `/permissions remove <target> <permission>`
+- `/permissions list <target>`
+- `/permissions check <permission> [--target=?]`
+- `/groups info <group>`
+- `/groups list`
+- `/groups info <group>`
+- `/groups create <group name>`
+- `/groups delete <group>`
+- `/groups setprefix <group> <prefix>`
+- `/groups setsuffix <group> <suffix>`
+- `/groups setweight <group> <weight>`
+- `/groups permissions list <group>`
+- `/groups permissions set <group> <permission> [--enabled=?]`
+- `/groups permissions remove <group> <permission>`
+- `/groups permissions clear <group>`
+- `/groups parents list <group>`
+- `/groups parents add <group> <parent>`
+- `/groups parents remove <group> <parent>`
+- `/groups parents clear <group>`
+- `/groups members list <group>`
+- `/groups members add <group> <target>`
+- `/groups members remove <group> <target>`
+- `/groups members clear <group>`
 
-FancyCore provides a powerful and flexible permission system suitable for any server size.
+### Economy System
 
-- Create unlimited groups with inheritance
-- Per-group and per-player permissions
-- Temporary permissions and groups
-- Prefixes, suffixes, and priorities
-- Fully configurable via commands and files
+Commands:
+- `/currency list`
+- `/currency info <currency>`
+- `/currency create <currency> [--symbol=?] [--serverbound=?]`
+- `/currency remove <currency>`
+- `/<currency> balance [--target=?]` (each currency gets its own command)
+- `/<currency> pay <target> <amount>`
+- `/<currency> add <target> <amount>`
+- `/<currency> remove <target> <amount>`
+- `/<currency> set <target> <amount>`
+- `/balance [--target=?]` (the primary currency will be used in the following commands)
+- `/pay <target> <amount>`
+- `/addmoney <target> <amount>`
+- `/removemoney <target> <amount>`
+- `/setmoney <target> <amount>`
 
-Perfect for managing staff hierarchies and player ranks.
+### Punishment System
 
-### Economy
+Commands:
+- `/kick <target> <reason>`
+- `/warn <target> <reason>`,
+- `/mute <target> <reason>`
+- `/tempmute <target> <duration> <reason>>`
+- `/unmute <target>`
+- `/ban <target> <reason>`
+- `/tempban <target> <duration> <reason>`
+- `/unban <target>`
+- `/punishments list <target>`
+- `/punishments listactive <target>`
+- `/punishments info <punishment id>`
+- `/report <target> <reason>`
+- `/reports list`
+- `/reports info <report id>`
+- `/reports resolve <report id>`
 
-A feature-rich economy system built directly into the core.
+### Chat System
 
-- Multiple currencies
-- Player balances with full command control
-- Admin and player economy commands
-- Optional integration with shops and other plugins
-- High-performance and safe data handling
+Commands:
+- `/chatroom info [--chatroom=?]`
+- `/chatroom list`
+- `/chatroom create <chatroom name>`
+- `/chatroom delete [--chatroom=?]` (defaults to the chatroom the player is currently in)
+- `/chatroom clearchat [--chatroom=?]`
+- `/chatroom mute [--chatroom=?]`
+- `/chatroom unmute [--chatroom=?]`
+- `/chatroom cooldown <cooldown> [--chatroom=?]`
+- `/chatroom watch <cdhatroom>`
+- `/chatroom watching`
+- `/chatroom switch <chatroom>`
+- `/message <target> <message>`
+- `/reply <message>`
+- `/ignore <target>`
+- `/unignore <target>`
+- `/togglemessages`
+- `/chatcolor set <color code>`
 
-Whether you run a survival server or a complex RPG economy, FancyCore has you covered.
+### Inventory System
 
-### Placeholders
+Commands:
+- `/kit <kit>`
+- `/createkit <kit name>`
+- `/deletekit <kit>`
+- `/listkits`
+- `/backpack <backpack> [--player=?]`
+- `/createbackpack <backpack name> <size>`
+- `/deletebackpack <backpack>`
+- `/listbackpacks`
+- `/openinventory <target>`
+- `/clearinventory [--target=?]`
 
-FancyCore includes a built-in placeholder system for maximum compatibility.
+### Teleportation System
 
-- Many placeholders from every feature category 
-- Easy integration with chat messages, UIs and more
-- Lightweight and fast
+Commands:
+- `/setspawn`
+- `/spawn`
+- `/setwarp <warp name>`
+- `/warp <warp name>`
+- `/deletewarp <warp name>`
+- `/listwarps`
+- `/sethome <home name>`
+- `/home <home name>`
+- `/deletehome <home name>`
+- `/listhomes`
+- `/teleport <target>`
+- `/teleporthere <target>`
+- `/teleporall`
+- `/teleportpos <x> <y> <z> [--world=?]`
+- `/teleportrequest <target>`
+- `/teleportaccept [--target=?]`
+- `/teleportdeny [--target=?]`
+- `/teleportback`
+- `/teleportdeathback [--target=?]`
 
-### Chat
+### Player Utilities
 
-Take full control over your server chat.
+Commands:
+- `/playerlist`
 
-- Customizable chat formats
-- Group-based prefixes and suffixes
-- Chat channels (global, staff, per rank, etc.)
-- Chat cooldowns and filters
-- Player nicknames
-- Messaging system
-- Placeholder support in chat messages
+### Plugin commands
 
-Keep your chat clean, organized, and immersive.
-
-### Moderation
-
-All the moderation tools you need in one plugin.
-
-- Kick, mute, warn, and ban commands
-- Player reports
-- Chat and command logs
-- Staff-only chat channels
-- Silent punishments
-- Full permission control
-- Clear and consistent punishment messages
-
-Designed to make moderation fast and effective.
-
-### Teleportation
-
-Comprehensive teleportation features for players and staff.
-
-- Spawn
-- Server Warps
-- Homes and multiple home support
-- Teleport requests (TPA)
-- Cooldowns and permission-based limits
-
-### Worlds
-
-Manage your worlds with ease.
-
-- Create worlds with different settings and environments
-- Teleport between worlds
-- Control player interactions per world
-- Ideal for hubs, minigames, and survival worlds
-
-### Player
-
-Quality-of-life features for everyday gameplay.
-
-- Player information commands
-- Inventory and gamemode utilities
-- AFK detection
-- Custom join and leave messages
-- Player-specific settings
-
-### Inventory
-
-Advanced inventory utilities for players and staff.
-
-- View and manage player inventories
-- Create configurable kits
-- Virtual player backpacks
-
-### Server
-
-- View server health and statistics
-- Manage plugins
-
-### API
-
-FancyCore is built to be extended.
-
-- Clean and well-documented API
-- Access permissions, economy, placeholders, and more
-- Designed for developers and plugin integrations
-- Future-proof and actively maintained
-
-## Get Involved
-
-FancyCore is actively developed and shaped by community feedback.
-
-- Join our Discord for updates, support, and previews
-- Report bugs and suggest features
-- Get early access to upcoming features
-
-Join our Discord: https://discord.gg/ZUgYCEJUEx
+Commands:
+- `/fancycore version`
+- `/fancycore update`
