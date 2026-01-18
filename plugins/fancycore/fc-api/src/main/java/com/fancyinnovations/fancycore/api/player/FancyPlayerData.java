@@ -1,6 +1,7 @@
 package com.fancyinnovations.fancycore.api.player;
 
 import com.fancyinnovations.fancycore.api.economy.Currency;
+import com.fancyinnovations.fancycore.api.permissions.Group;
 import com.fancyinnovations.fancycore.api.permissions.Permission;
 import org.jetbrains.annotations.ApiStatus;
 
@@ -34,6 +35,8 @@ public interface FancyPlayerData {
     List<String> getGroups();
 
     void setGroups(List<String> groups);
+
+    List<Group> getGroupSortedByWeight();
 
     void addGroup(String group);
 

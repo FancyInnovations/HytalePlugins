@@ -1,7 +1,9 @@
 package com.fancyinnovations.fancycore.player;
 
 import com.fancyinnovations.fancycore.api.economy.Currency;
+import com.fancyinnovations.fancycore.api.permissions.Group;
 import com.fancyinnovations.fancycore.api.permissions.Permission;
+import com.fancyinnovations.fancycore.api.permissions.PermissionService;
 import com.fancyinnovations.fancycore.api.player.FancyPlayerData;
 import com.fancyinnovations.fancycore.api.player.Home;
 import com.fancyinnovations.fancycore.main.FancyCorePlugin;
@@ -151,6 +153,20 @@ public class FancyPlayerDataImpl implements FancyPlayerData {
     public void setGroups(List<String> groups) {
         this.groups.clear();
         this.groups.addAll(groups);
+    }
+
+    @Override
+    public List<Group> getGroupSortedByWeight() {
+        List<Group> groupObjects = new ArrayList<>();
+        for (String groupName : groups) {
+            Group group = PermissionService.get().getGroup(groupName);
+            if (group != null) {
+                groupObjects.add(group);
+            }
+        }
+
+        groupObjects.sort((g1, g2) -> Integer.compare(g2.getWeight(), g1.getWeight())); // Descending order
+        return groupObjects;
     }
 
     @Override

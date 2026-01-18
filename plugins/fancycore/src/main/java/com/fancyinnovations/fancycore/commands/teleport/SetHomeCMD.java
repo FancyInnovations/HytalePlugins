@@ -1,5 +1,6 @@
 package com.fancyinnovations.fancycore.commands.teleport;
 
+import com.fancyinnovations.fancycore.api.permissions.Group;
 import com.fancyinnovations.fancycore.api.player.FancyPlayer;
 import com.fancyinnovations.fancycore.api.player.FancyPlayerService;
 import com.fancyinnovations.fancycore.api.player.Home;
@@ -65,6 +66,22 @@ public class SetHomeCMD extends AbstractWorldCommand {
         } else  {
             HeadRotation headRotationComponent = store.getComponent(playerRef, HeadRotation.getComponentType());
             rotation = headRotationComponent.getRotation();
+        }
+
+        int maxHomes = -1;
+        for (Group group : fp.getData().getGroupSortedByWeight()) {
+            Object val = group.getMetadataValueInherited("max_homes");
+            if (val != null) {
+                maxHomes = (int) ((double) val);
+                break;
+            }
+        }
+        if (maxHomes != -1) {
+            int currentHomes = fp.getData().getHomes().size();
+            if (currentHomes >= maxHomes) {
+                ctx.sendMessage(Message.raw("You have reached the maximum number of homes (" + maxHomes + ")."));
+                return;
+            }
         }
 
         String name = nameArg.get(ctx);

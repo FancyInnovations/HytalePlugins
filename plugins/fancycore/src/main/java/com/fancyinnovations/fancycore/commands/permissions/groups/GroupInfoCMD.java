@@ -11,6 +11,7 @@ import com.hypixel.hytale.server.core.command.system.arguments.system.RequiredAr
 import com.hypixel.hytale.server.core.command.system.basecommands.CommandBase;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.Map;
 import java.util.UUID;
 
 public class GroupInfoCMD extends CommandBase {
@@ -51,10 +52,17 @@ public class GroupInfoCMD extends CommandBase {
             }
         }
 
+        fp.sendMessage("- Permissions: ");
         for (Permission permission : group.getPermissions()) {
             fp.sendMessage("  - Permission: " + permission.getPermission() + "  (Enabled: " + permission.isEnabled() + ")");
         }
 
+        fp.sendMessage("- Metadata: ");
+        for (Map.Entry<String, Object> entry : group.getMetadata().entrySet()) {
+            fp.sendMessage("  - Metadata: " + entry.getKey() + " = " + entry.getValue().toString());
+        }
+
+        fp.sendMessage("- Members: ");
         for (UUID member : group.getMembers()) {
             FancyPlayer memberFP = FancyPlayerService.get().getByUUID(member);
             if (memberFP == null) {

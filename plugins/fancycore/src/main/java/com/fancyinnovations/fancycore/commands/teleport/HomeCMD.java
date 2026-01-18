@@ -44,9 +44,10 @@ public class HomeCMD extends AbstractPlayerCommand {
 
         Home home;
         if (nameArg.provided(ctx)) {
-            home = fp.getData().getHome(nameArg.getName());
+            String homeName = nameArg.get(ctx);
+            home = fp.getData().getHome(homeName);
             if (home == null) {
-                fp.sendMessage("Home with the name '" + nameArg.getName() + "' does not exist.");
+                fp.sendMessage("Home with the name '" + homeName + "' does not exist.");
                 return;
             }
         } else {
