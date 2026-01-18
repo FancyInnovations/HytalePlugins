@@ -50,7 +50,7 @@ public class SetHomeCMD extends AbstractWorldCommand {
             return;
         }
 
-        boolean isUnlimited = ctx.sender().hasPermission("*") || ctx.sender().hasPermission("fancycore.homes.bypass");
+        boolean isUnlimited = ctx.sender().hasPermission("fancycore.homes.bypass");
 
         int maxHomes;
         if (isUnlimited) {
