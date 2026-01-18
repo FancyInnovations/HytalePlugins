@@ -12,6 +12,7 @@ import com.hypixel.hytale.server.core.command.system.basecommands.AbstractPlayer
 import com.hypixel.hytale.server.core.entity.entities.Player;
 import com.hypixel.hytale.server.core.inventory.ItemStack;
 import com.hypixel.hytale.server.core.inventory.container.ItemContainer;
+import com.hypixel.hytale.server.core.permissions.PermissionsModule;
 import com.hypixel.hytale.server.core.universe.PlayerRef;
 import com.hypixel.hytale.server.core.universe.world.World;
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
@@ -41,6 +42,11 @@ public class ClearInventoryCMD extends AbstractPlayerCommand {
         }
 
         FancyPlayer target = targetArg.provided(ctx) ? targetArg.get(ctx) : fp;
+
+        if (target.getData().getUUID() != fp.getData().getUUID() && !PermissionsModule.get().hasPermission(fp.getData().getUUID(), "fancycore.commands.clearinventory.others")) {
+            fp.sendMessage("You do not have permission to clear other players' inventories.");
+            return;
+        }
         
         if (!target.isOnline()) {
             fp.sendMessage("The player " + target.getData().getUsername() + " is not online.");

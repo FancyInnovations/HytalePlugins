@@ -18,6 +18,7 @@ import com.hypixel.hytale.server.core.entity.entities.Player;
 import com.hypixel.hytale.server.core.entity.entities.player.windows.ContainerWindow;
 import com.hypixel.hytale.server.core.inventory.ItemStack;
 import com.hypixel.hytale.server.core.inventory.container.SimpleItemContainer;
+import com.hypixel.hytale.server.core.permissions.PermissionsModule;
 import com.hypixel.hytale.server.core.universe.PlayerRef;
 import com.hypixel.hytale.server.core.universe.world.World;
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
@@ -52,6 +53,11 @@ public class BackpackCMD extends AbstractPlayerCommand {
 
         String backpackName = nameArg.get(ctx);
         FancyPlayer target = targetArg.provided(ctx) ? targetArg.get(ctx) : fp;
+
+        if (target.getData().getUUID() != fp.getData().getUUID() && !PermissionsModule.get().hasPermission(fp.getData().getUUID(), "fancycore.commands.backpack.others")) {
+            fp.sendMessage("You do not have permission to open other players' backpacks.");
+            return;
+        }
 
         Backpack backpack = BackpacksService.get().getBackpack(target.getData().getUUID(), backpackName);
         if (backpack == null) {
