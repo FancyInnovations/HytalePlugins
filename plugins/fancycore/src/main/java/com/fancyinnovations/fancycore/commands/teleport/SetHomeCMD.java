@@ -4,6 +4,7 @@ import com.fancyinnovations.fancycore.api.player.FancyPlayer;
 import com.fancyinnovations.fancycore.api.player.FancyPlayerService;
 import com.fancyinnovations.fancycore.api.player.Home;
 import com.fancyinnovations.fancycore.api.teleport.Location;
+import com.fancyinnovations.fancycore.main.FancyCorePlugin;
 import com.fancyinnovations.fancycore.utils.NumberUtils;
 import com.hypixel.hytale.component.Ref;
 import com.hypixel.hytale.component.Store;
@@ -45,9 +46,24 @@ public class SetHomeCMD extends AbstractWorldCommand {
 
         FancyPlayer fp = FancyPlayerService.get().getByUUID(ctx.sender().getUuid());
         if (fp == null) {
-            fp.sendMessage("FancyPlayer not found.");
+            ctx.sendMessage(Message.raw("FancyPlayer not found."));
             return;
         }
+
+        boolean isUnlimited = ctx.sender().hasPermission("*") || ctx.sender().hasPermission("fancycore.homes.bypass");
+
+        int maxHomes;
+        if (isUnlimited) {
+            maxHomes = Integer.MAX_VALUE;
+        } else {
+            maxHomes = getMaxHomesForPlayer(ctx);
+        }
+
+        if (!isUnlimited && fp.getData().getHomes().size() >= maxHomes) {
+            fp.sendMessage("You have reached your limit of " + maxHomes + " home" + (maxHomes > 1 ? "s" : "") + "!");
+            return;
+        }
+
         Ref<EntityStore> playerRef = ctx.senderAsPlayerRef();
 
         Vector3d position;
@@ -62,7 +78,7 @@ public class SetHomeCMD extends AbstractWorldCommand {
         Vector3f rotation;
         if (this.rotationArg.provided(ctx)) {
             rotation = this.rotationArg.get(ctx);
-        } else  {
+        } else {
             HeadRotation headRotationComponent = store.getComponent(playerRef, HeadRotation.getComponentType());
             rotation = headRotationComponent.getRotation();
         }
@@ -81,8 +97,22 @@ public class SetHomeCMD extends AbstractWorldCommand {
                 rotation.getYaw(),
                 rotation.getPitch()
         );
+
         fp.getData().addHome(new Home(name, homeLocation));
 
-        fp.sendMessage("Home point " + name + " set to " + NumberUtils.formatNumber(homeLocation.x()) + ", " + NumberUtils.formatNumber(homeLocation.y()) + ", " + NumberUtils.formatNumber(homeLocation.z()) + " in world '" + homeLocation.worldName() + "'.");
+        fp.sendMessage("Home " + name + " set at " +
+                NumberUtils.formatNumber(homeLocation.x()) + ", " +
+                NumberUtils.formatNumber(homeLocation.y()) + ", " +
+                NumberUtils.formatNumber(homeLocation.z()) +
+                " (world: " + homeLocation.worldName() + ")");
+    }
+
+    private int getMaxHomesForPlayer(CommandContext ctx) {
+        for (int i = 100; i >= 1; i--) {
+            if (ctx.sender().hasPermission("fancycore.maxhomes." + i)) {
+                return i;
+            }
+        }
+        return FancyCorePlugin.get().getConfig().getDefaultMaxHomes(); // default value
     }
 }
