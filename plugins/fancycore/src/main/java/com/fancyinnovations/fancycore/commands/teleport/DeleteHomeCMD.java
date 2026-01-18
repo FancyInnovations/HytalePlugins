@@ -2,14 +2,13 @@ package com.fancyinnovations.fancycore.commands.teleport;
 
 import com.fancyinnovations.fancycore.api.player.FancyPlayer;
 import com.fancyinnovations.fancycore.api.player.FancyPlayerService;
+import com.fancyinnovations.fancycore.api.player.Home;
 import com.hypixel.hytale.server.core.Message;
 import com.hypixel.hytale.server.core.command.system.CommandContext;
 import com.hypixel.hytale.server.core.command.system.arguments.system.RequiredArg;
 import com.hypixel.hytale.server.core.command.system.arguments.types.ArgTypes;
 import com.hypixel.hytale.server.core.command.system.basecommands.CommandBase;
 import org.jetbrains.annotations.NotNull;
-
-import java.util.Map;
 
 public class DeleteHomeCMD extends CommandBase {
 
@@ -40,21 +39,13 @@ public class DeleteHomeCMD extends CommandBase {
             return;
         }
 
-        // Get homes map
-        Map<String, Object> customData = fp.getData().getCustomData();
-        @SuppressWarnings("unchecked")
-        Map<String, Map<String, Object>> homes = (Map<String, Map<String, Object>>) customData.get("homes");
-
-        if (homes == null || !homes.containsKey(homeName)) {
+        Home home = fp.getData().getHome(homeName);
+        if (home == null) {
             ctx.sendMessage(Message.raw("Home \"" + homeName + "\" does not exist."));
             return;
         }
 
-        // Delete home
-        homes.remove(homeName);
-        fp.getData().setCustomData("homes", homes);
-
-        // Send success message
-        ctx.sendMessage(Message.raw("Home \"" + homeName + "\" deleted."));
+        fp.getData().removeHome(homeName);
+        ctx.sendMessage(Message.raw("Home \"" + homeName + "\" deleted successfully."));
     }
 }
