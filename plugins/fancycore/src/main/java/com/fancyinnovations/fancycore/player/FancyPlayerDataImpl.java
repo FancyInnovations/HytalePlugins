@@ -32,6 +32,9 @@ public class FancyPlayerDataImpl implements FancyPlayerData {
     private boolean enabledPrivateMessages;
     private Map<Currency, Double> balances;
     private long firstLoginTime; // timestamp
+    private long lastLoginTime; // timestamp
+    private boolean isVanished;
+    private boolean isFlying;
     private long playTime; // in milliseconds
     private boolean isDirty;
 
@@ -49,6 +52,9 @@ public class FancyPlayerDataImpl implements FancyPlayerData {
         this.enabledPrivateMessages = true;
         this.balances = new ConcurrentHashMap<>();
         this.firstLoginTime = System.currentTimeMillis();
+        this.lastLoginTime = System.currentTimeMillis();
+        this.isVanished = false;
+        this.isFlying = false;
         this.playTime = 0L;
         this.homes = new ConcurrentHashMap<>();
         this.kitCooldowns = new ConcurrentHashMap<>();
@@ -68,6 +74,9 @@ public class FancyPlayerDataImpl implements FancyPlayerData {
             boolean enabledPrivateMessages,
             Map<Currency, Double> balances,
             long firstLoginTime,
+            long lastLoginTime,
+            boolean isVanished,
+            boolean isFlying,
             long playTime,
             List<Home> homes,
             Map<String, Long> kitCooldowns,
@@ -83,6 +92,9 @@ public class FancyPlayerDataImpl implements FancyPlayerData {
         this.enabledPrivateMessages = enabledPrivateMessages;
         this.balances = balances;
         this.firstLoginTime = firstLoginTime;
+        this.lastLoginTime = lastLoginTime;
+        this.isVanished = isVanished;
+        this.isFlying = isFlying;
         this.playTime = playTime;
         this.customData = customData;
         this.homes = new ConcurrentHashMap<>();
@@ -273,6 +285,40 @@ public class FancyPlayerDataImpl implements FancyPlayerData {
     @ApiStatus.Internal
     public void setFirstLoginTime(long firstLoginTime) {
         this.firstLoginTime = firstLoginTime;
+        this.isDirty = true;
+    }
+
+    @Override
+    public long getLastLoginTime() {
+        return lastLoginTime;
+    }
+
+    @Override
+    @ApiStatus.Internal
+    public void setLastLoginTime(long lastLoginTime) {
+        this.lastLoginTime = lastLoginTime;
+        this.isDirty = true;
+    }
+
+    @Override
+    public boolean isVanished() {
+        return isVanished;
+    }
+
+    @Override
+    public void setVanished(boolean vanished) {
+        this.isVanished = vanished;
+        this.isDirty = true;
+    }
+
+    @Override
+    public boolean isFlying() {
+        return isFlying;
+    }
+
+    @Override
+    public void setFlying(boolean flying) {
+        this.isFlying = flying;
         this.isDirty = true;
     }
 

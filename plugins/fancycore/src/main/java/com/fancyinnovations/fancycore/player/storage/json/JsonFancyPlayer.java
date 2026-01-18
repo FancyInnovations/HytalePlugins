@@ -21,6 +21,9 @@ public record JsonFancyPlayer(
         @SerializedName("private_messages_enabled") boolean privateMessagesEnabled,
         Map<String, Double> balances,
         @SerializedName("first_login_time") long firstLoginTime,
+        @SerializedName("last_login_time") long lastLoginTime,
+        @SerializedName("is_vanished") boolean isVanished,
+        @SerializedName("is_flying") boolean isFlying,
         @SerializedName("play_time") long playTime,
         List<Home> homes,
         @SerializedName("kit_cooldowns") Map<String, Long> kitCooldowns,
@@ -56,6 +59,9 @@ public record JsonFancyPlayer(
                 player.isPrivateMessagesEnabled(),
                 balances,
                 player.getFirstLoginTime(),
+                player.getLastLoginTime(),
+                player.isVanished(),
+                player.isFlying(),
                 player.getPlayTime(),
                 player.getHomes(),
                 player.getKitCooldowns(),
@@ -98,6 +104,9 @@ public record JsonFancyPlayer(
             }
         }
 
+        // For backwards compatibility: if lastLoginTime is 0 or not set, use firstLoginTime
+        long actualLastLoginTime = (lastLoginTime > 0) ? lastLoginTime : firstLoginTime;
+        
         return new FancyPlayerDataImpl(
                 UUID.fromString(uuid),
                 username,
@@ -109,6 +118,9 @@ public record JsonFancyPlayer(
                 privateMessagesEnabled,
                 balances,
                 firstLoginTime,
+                actualLastLoginTime,
+                isVanished,
+                isFlying,
                 playTime,
                 homes,
                 kitCooldowns,

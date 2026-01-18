@@ -26,7 +26,13 @@ import com.hypixel.hytale.server.core.event.events.player.PlayerReadyEvent;
 import com.hypixel.hytale.server.core.modules.entity.component.TransformComponent;
 import com.hypixel.hytale.server.core.modules.entity.teleport.Teleport;
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
+import com.hypixel.hytale.server.core.universe.PlayerRef;
+import com.hypixel.hytale.server.core.universe.Universe;
+import com.hypixel.hytale.server.core.universe.world.World;
+import com.hypixel.hytale.server.core.entity.entities.player.movement.MovementManager;
 
+import java.util.Collection;
+import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
 public class PlayerJoinListener {
@@ -64,6 +70,9 @@ public class PlayerJoinListener {
         fp.setPlayer(event.getPlayerRef());
 
         fp.getCurrentChatRoom(); // Ensure default chat room is set
+
+        // Update last login time
+        fp.getData().setLastLoginTime(System.currentTimeMillis());
 
         Punishment punishment = fp.isBanned();
         if (punishment != null) {
@@ -134,6 +143,56 @@ public class PlayerJoinListener {
 
         String joinMsg = PlaceholderService.get().parse(fp, FancyCore.get().getConfig().getJoinMessage());
         fp.sendMessage(joinMsg);
+
+        UUID joiningPlayerUuid = fp.getData().getUUID();
+        World playerWorld = event.getPlayer().getWorld();
+        PlayerRef joiningPlayerRef = fp.getPlayer();
+        
+        if (playerWorld != null && joiningPlayerRef != null) {
+            playerWorld.execute(() -> {
+                // Reapply vanish state if player was vanished - hide them from all other players
+                if (fp.getData().isVanished()) {
+                    for (World world : Universe.get().getWorlds().values()) {
+                        Collection<PlayerRef> players = world.getPlayerRefs();
+                        for (PlayerRef otherPlayerRef : players) {
+                            if (!otherPlayerRef.getUuid().equals(joiningPlayerUuid)) {
+                                otherPlayerRef.getHiddenPlayersManager().hidePlayer(joiningPlayerUuid);
+                            }
+                        }
+                    }
+                }
+                
+                // Hide all other vanished players from the newly joining player
+                // Iterate through all worlds to find vanished players
+                for (World world : Universe.get().getWorlds().values()) {
+                    Collection<PlayerRef> players = world.getPlayerRefs();
+                    for (PlayerRef otherPlayerRef : players) {
+                        if (!otherPlayerRef.getUuid().equals(joiningPlayerUuid)) {
+                            FancyPlayer otherFancyPlayer = playerService.getByUUID(otherPlayerRef.getUuid());
+                            if (otherFancyPlayer != null && otherFancyPlayer.getData().isVanished()) {
+                                joiningPlayerRef.getHiddenPlayersManager().hidePlayer(otherPlayerRef.getUuid());
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        // Reapply fly state if player had fly enabled
+        if (fp.getData().isFlying()) {
+            Ref<EntityStore> playerEntityRef = ref;
+            Store<EntityStore> playerEntityStore = store;
+            PlayerRef playerRef = fp.getPlayer();
+            if (playerWorld != null && playerEntityRef != null && playerEntityRef.isValid() && playerRef != null) {
+                playerWorld.execute(() -> {
+                    MovementManager movementManager = playerEntityStore.getComponent(playerEntityRef, MovementManager.getComponentType());
+                    if (movementManager != null) {
+                        movementManager.getSettings().canFly = true;
+                        movementManager.update(playerRef.getPacketHandler());
+                    }
+                });
+            }
+        }
     }
 
     public static void onAddPlayerToWorld(AddPlayerToWorldEvent event) {

@@ -72,6 +72,19 @@ public interface FancyPlayerData {
 
     long getFirstLoginTime();
 
+    long getLastLoginTime();
+
+    @ApiStatus.Internal
+    void setLastLoginTime(long lastLoginTime);
+
+    boolean isVanished();
+
+    void setVanished(boolean vanished);
+
+    boolean isFlying();
+
+    void setFlying(boolean flying);
+
     long getPlayTime();
 
     void addPlayTime(long playTime);

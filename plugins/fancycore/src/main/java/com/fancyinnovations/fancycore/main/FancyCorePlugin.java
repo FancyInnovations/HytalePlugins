@@ -37,8 +37,7 @@ import com.fancyinnovations.fancycore.commands.moderation.reports.ReportCMD;
 import com.fancyinnovations.fancycore.commands.moderation.reports.ReportsCMD;
 import com.fancyinnovations.fancycore.commands.permissions.groups.GroupCMD;
 import com.fancyinnovations.fancycore.commands.permissions.player.PermissionsCMD;
-import com.fancyinnovations.fancycore.commands.player.PlayerListCMD;
-import com.fancyinnovations.fancycore.commands.player.PlaytimeCMD;
+import com.fancyinnovations.fancycore.commands.player.*;
 import com.fancyinnovations.fancycore.commands.teleport.*;
 import com.fancyinnovations.fancycore.config.FancyCoreConfigImpl;
 import com.fancyinnovations.fancycore.economy.service.CurrencyServiceImpl;
@@ -332,6 +331,18 @@ public class FancyCorePlugin extends JavaPlugin implements FancyCore {
         // player
         CommandManager.get().register(new PlayerListCMD());
         CommandManager.get().register(new PlaytimeCMD());
+        CommandManager.get().register(new GameModeCMD());
+        CommandManager.get().register(new GMECMD());
+        CommandManager.get().register(new GMCCMD());
+        CommandManager.get().register(new FlyCMD());
+        CommandManager.get().register(new SpeedCMD());
+        CommandManager.get().register(new HealCMD());
+        CommandManager.get().register(new FeedCMD());
+        CommandManager.get().register(new GodCMD());
+        CommandManager.get().register(new VanishCMD());
+        CommandManager.get().register(new SeenCMD());
+        CommandManager.get().register(new NearCMD());
+        CommandManager.get().register(new PingCMD());
 
         // permission
         CommandManager.get().register(new PermissionsCMD());
