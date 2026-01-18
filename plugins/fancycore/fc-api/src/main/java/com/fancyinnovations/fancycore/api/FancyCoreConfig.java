@@ -32,6 +32,8 @@ public interface FancyCoreConfig {
 
     String getFirstJoinKitName();
 
+    int getDefaultMaxHomes();
+
     // Experimental features
 
     boolean disablePermissionProvider();
