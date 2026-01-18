@@ -107,4 +107,14 @@ public class KitsJsonStorage implements KitsStorage {
             itemsFile.delete();
         }
     }
+
+    @Override
+    public int countKits() {
+        File dir = new File(PUNISHMENTS_DATA_DIR_PATH);
+        File[] kitDirs = dir.listFiles(File::isDirectory);
+        if (kitDirs == null) {
+            return 0;
+        }
+        return kitDirs.length;
+    }
 }

@@ -19,4 +19,7 @@ public interface PermissionStorage {
     @ApiStatus.Internal
     List<Group> getAllGroups();
 
+    @ApiStatus.Internal
+    int countGroups();
+
 }

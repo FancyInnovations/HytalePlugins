@@ -32,6 +32,8 @@ public interface FancyCoreConfig {
 
     String getFirstJoinKitName();
 
+    boolean isAnalyticsDisabled();
+
     // Experimental features
 
     boolean disablePermissionProvider();

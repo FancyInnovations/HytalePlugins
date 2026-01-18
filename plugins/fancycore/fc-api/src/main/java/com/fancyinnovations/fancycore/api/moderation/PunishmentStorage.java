@@ -28,4 +28,10 @@ public interface PunishmentStorage {
 
     @ApiStatus.Internal
     PlayerReport getReportById(String id);
+
+    @ApiStatus.Internal
+    int countTotalPunishments();
+
+    @ApiStatus.Internal
+    int countTotalReports();
 }

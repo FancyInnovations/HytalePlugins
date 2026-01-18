@@ -31,16 +31,28 @@ public class PluginMetrics {
     }
 
     public void register() {
-        this.metrics.add(new MetricSupplier<Double>("total_amount_players", this::totalAmountPlayers));
-        this.metrics.add(new MetricSupplier<Double>("online_players", this::onlinePlayers));
-        this.metrics.add(new MetricSupplier<String>("server_size_category", this::serverSizeCategory));
         this.metrics.add(new MetricSupplier<String>("fancycore_version", this::pluginVersion));
         this.metrics.add(new MetricSupplier<String>("server_version", this::serverVersion));
+        this.metrics.add(new MetricSupplier<String>("disabled_permission_provider", this::disabledPermissionProvider));
+
+        this.metrics.add(new MetricSupplier<Double>("online_players", this::onlinePlayers));
+        this.metrics.add(new MetricSupplier<String>("server_size_category", this::serverSizeCategory));
+
+        this.metrics.add(new MetricSupplier<Double>("total_amount_players", this::totalAmountPlayers));
+        this.metrics.add(new MetricSupplier<Double>("total_amount_punishments", this::totalAmountPunishments));
+        this.metrics.add(new MetricSupplier<Double>("total_amount_reports", this::totalAmountReports));
+        this.metrics.add(new MetricSupplier<Double>("total_amount_groups", this::totalAmountGroups));
+        this.metrics.add(new MetricSupplier<Double>("total_amount_kits", this::totalAmountKits));
+        this.metrics.add(new MetricSupplier<Double>("total_amount_backpacks", this::totalAmountBackpacks));
 
         EXECUTOR.scheduleAtFixedRate(this::send, 5, 30, TimeUnit.SECONDS);
     }
 
     public void send() {
+        if (FancyCorePlugin.get().getConfig().isAnalyticsDisabled()) {
+            return;
+        }
+
         de.oliver.fancyanalytics.sdk.records.Record r = new de.oliver.fancyanalytics.sdk.records.Record(senderId, projectId, System.currentTimeMillis(), new HashMap<>());
         for (MetricSupplier<?> metric : metrics) {
             r.withEntry(metric.name(), metric.valueSupplier().get());
@@ -79,6 +91,30 @@ public class PluginMetrics {
 
     private String pluginVersion() {
         return FancyCorePlugin.get().getManifest().getVersion().toString();
+    }
+
+    private String disabledPermissionProvider() {
+        return String.valueOf(FancyCorePlugin.get().getConfig().disablePermissionProvider());
+    }
+
+    private double totalAmountPunishments() {
+        return plugin.getPunishmentStorage().countTotalPunishments();
+    }
+
+    private double totalAmountReports() {
+        return plugin.getPunishmentStorage().countTotalReports();
+    }
+
+    private double totalAmountGroups() {
+        return plugin.getPermissionStorage().countGroups();
+    }
+
+    private double totalAmountKits() {
+        return plugin.getKitsStorage().countKits();
+    }
+
+    private double totalAmountBackpacks() {
+        return plugin.getBackpacksStorage().countBackpacks();
     }
 
     /**

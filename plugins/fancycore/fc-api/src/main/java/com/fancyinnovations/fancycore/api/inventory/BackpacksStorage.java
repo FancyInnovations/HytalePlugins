@@ -27,4 +27,7 @@ public interface BackpacksStorage {
     @ApiStatus.Internal
     void deleteBackpack(UUID ownerUUID, String name);
 
+    @ApiStatus.Internal
+    int countBackpacks();
+
 }

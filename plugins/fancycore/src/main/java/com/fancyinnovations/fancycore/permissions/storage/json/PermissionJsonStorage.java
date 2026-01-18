@@ -6,6 +6,7 @@ import com.fancyinnovations.fancycore.main.FancyCorePlugin;
 import de.oliver.fancyanalytics.logger.properties.ThrowableProperty;
 import de.oliver.jdb.JDB;
 
+import java.io.File;
 import java.util.List;
 
 public class PermissionJsonStorage implements PermissionStorage {
@@ -62,5 +63,15 @@ public class PermissionJsonStorage implements PermissionStorage {
         }
 
         return List.of();
+    }
+
+    @Override
+    public int countGroups() {
+        File dir = new File(DATA_DIR_PATH);
+        File[] groupFiles = dir.listFiles((d, name) -> name.endsWith(".json"));
+        if (groupFiles == null) {
+            return 0;
+        }
+        return groupFiles.length;
     }
 }

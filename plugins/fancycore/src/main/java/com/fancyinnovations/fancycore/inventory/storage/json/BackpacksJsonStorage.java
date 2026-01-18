@@ -150,4 +150,24 @@ public class BackpacksJsonStorage implements BackpacksStorage {
         }
     }
 
+    @Override
+    public int countBackpacks() {
+        File dir = new File(BACKPACKS_DATA_DIR_PATH);
+        File[] ownerDirs = dir.listFiles(File::isDirectory);
+        if (ownerDirs == null) {
+            return 0;
+        }
+
+        int count = 0;
+
+        for (File ownerDir : ownerDirs) {
+            File[] backpackDirs = ownerDir.listFiles(File::isDirectory);
+            if (backpackDirs != null) {
+                count += backpackDirs.length;
+            }
+        }
+
+        return count;
+    }
+
 }

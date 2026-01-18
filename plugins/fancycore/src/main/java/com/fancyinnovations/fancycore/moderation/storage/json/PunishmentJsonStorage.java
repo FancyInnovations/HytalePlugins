@@ -147,4 +147,34 @@ public class PunishmentJsonStorage implements PunishmentStorage {
 
         return null;
     }
+
+    @Override
+    public int countTotalPunishments() {
+        File dir = new File(PUNISHMENTS_DATA_DIR_PATH);
+        File[] playerDirs = dir.listFiles(File::isDirectory);
+        if (playerDirs == null) {
+            return 0;
+        }
+
+        int count = 0;
+        for (File playerDir : playerDirs) {
+            File[] punishmentFiles = playerDir.listFiles((d, name) -> name.endsWith(".json"));
+            if (punishmentFiles != null) {
+                count += punishmentFiles.length;
+            }
+        }
+
+        return count;
+    }
+
+    @Override
+    public int countTotalReports() {
+        File dir = new File(REPORTS_DATA_DIR_PATH);
+        File[] reportFiles = dir.listFiles((d, name) -> name.endsWith(".json"));
+        if (reportFiles == null) {
+            return 0;
+        }
+
+        return reportFiles.length;
+    }
 }

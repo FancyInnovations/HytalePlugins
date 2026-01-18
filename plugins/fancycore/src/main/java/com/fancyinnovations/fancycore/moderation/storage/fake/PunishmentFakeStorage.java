@@ -60,4 +60,14 @@ public class PunishmentFakeStorage implements PunishmentStorage {
                 .findFirst()
                 .orElse(null);
     }
+
+    @Override
+    public int countTotalPunishments() {
+        return this.punishments.size();
+    }
+
+    @Override
+    public int countTotalReports() {
+        return this.reports.size();
+    }
 }

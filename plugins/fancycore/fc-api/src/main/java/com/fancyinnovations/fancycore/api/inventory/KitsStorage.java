@@ -23,4 +23,7 @@ public interface KitsStorage {
     @ApiStatus.Internal
     void deleteKit(Kit kit);
 
+    @ApiStatus.Internal
+    int countKits();
+
 }

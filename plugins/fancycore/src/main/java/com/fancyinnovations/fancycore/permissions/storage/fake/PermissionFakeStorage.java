@@ -34,4 +34,9 @@ public class PermissionFakeStorage implements PermissionStorage {
     public List<Group> getAllGroups() {
         return List.copyOf(groups.values());
     }
+
+    @Override
+    public int countGroups() {
+        return groups.size();
+    }
 }

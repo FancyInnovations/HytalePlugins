@@ -21,6 +21,7 @@ public class FancyCoreConfigImpl implements FancyCoreConfig {
     public static final String SHOULD_JOIN_AT_SPAWN_PATH = "settings.join_at_spawn";
     public static final String DEFAULT_GROUP_NAME_PATH = "settings.default_group_name";
     public static final String FIRST_JOIN_KIT_PATH = "settings.first_join_kit";
+    public static final String DISABLE_ANALYTICS_PATH = "settings.disable_analytics";
 
     public static final String DISABLE_PERMISSION_PROVIDER_PATH = "experimental_features.disable_permission_provider";
 
@@ -174,6 +175,17 @@ public class FancyCoreConfigImpl implements FancyCoreConfig {
                 )
         );
 
+        config.addField(
+                new ConfigField<>(
+                        DISABLE_ANALYTICS_PATH,
+                        "If true, FancyCore will not collect any anonymous usage metrics.",
+                        false,
+                        false,
+                        false,
+                        Boolean.class
+                )
+        );
+
         // Experimental Features
 
         config.addField(
@@ -263,6 +275,11 @@ public class FancyCoreConfigImpl implements FancyCoreConfig {
     @Override
     public String getFirstJoinKitName() {
         return config.get(FIRST_JOIN_KIT_PATH);
+    }
+
+    @Override
+    public boolean isAnalyticsDisabled() {
+        return config.get(DISABLE_ANALYTICS_PATH);
     }
 
     @Override
