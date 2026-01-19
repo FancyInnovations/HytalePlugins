@@ -16,6 +16,8 @@ import com.fancyinnovations.fancycore.api.permissions.PermissionStorage;
 import com.fancyinnovations.fancycore.api.placeholders.PlaceholderService;
 import com.fancyinnovations.fancycore.api.player.FancyPlayerService;
 import com.fancyinnovations.fancycore.api.player.FancyPlayerStorage;
+import com.fancyinnovations.fancycore.api.scoreboard.ScoreboardService;
+import com.fancyinnovations.fancycore.api.scoreboard.ScoreboardStorage;
 import com.fancyinnovations.fancycore.api.teleport.*;
 import de.oliver.fancyanalytics.logger.ExtendedFancyLogger;
 import org.jetbrains.annotations.ApiStatus;
@@ -75,6 +77,10 @@ public interface FancyCore {
     @ApiStatus.Internal
     BackpacksStorage getBackpacksStorage();
     BackpacksService getBackpacksService();
+
+    @ApiStatus.Internal
+    ScoreboardStorage getScoreboardStorage();
+    ScoreboardService getScoreboardService();
 
     @ApiStatus.Internal
     class InstanceHolder {

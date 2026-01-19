@@ -20,6 +20,8 @@ import com.fancyinnovations.fancycore.api.permissions.PermissionStorage;
 import com.fancyinnovations.fancycore.api.placeholders.PlaceholderService;
 import com.fancyinnovations.fancycore.api.player.FancyPlayerService;
 import com.fancyinnovations.fancycore.api.player.FancyPlayerStorage;
+import com.fancyinnovations.fancycore.api.scoreboard.ScoreboardService;
+import com.fancyinnovations.fancycore.api.scoreboard.ScoreboardStorage;
 import com.fancyinnovations.fancycore.api.teleport.*;
 import com.fancyinnovations.fancycore.chat.service.ChatServiceImpl;
 import com.fancyinnovations.fancycore.chat.storage.json.ChatJsonStorage;
@@ -62,7 +64,8 @@ import com.fancyinnovations.fancycore.player.service.CleanUpPlayerCacheRunnable;
 import com.fancyinnovations.fancycore.player.service.FancyPlayerServiceImpl;
 import com.fancyinnovations.fancycore.player.storage.SavePlayersRunnable;
 import com.fancyinnovations.fancycore.player.storage.json.FancyPlayerJsonStorage;
-import com.fancyinnovations.fancycore.scoreboard.ScoreboardService;
+import com.fancyinnovations.fancycore.scoreboard.service.ScoreboardServiceImpl;
+import com.fancyinnovations.fancycore.scoreboard.storage.ScoreboardJsonStorage;
 import com.fancyinnovations.fancycore.teleport.service.SpawnServiceImpl;
 import com.fancyinnovations.fancycore.teleport.service.TeleportRequestServiceImpl;
 import com.fancyinnovations.fancycore.teleport.service.WarpServiceImpl;
@@ -146,6 +149,7 @@ public class FancyCorePlugin extends JavaPlugin implements FancyCore {
     private BackpacksStorage backpacksStorage;
     private BackpacksService backpacksService;
 
+    private ScoreboardStorage scoreboardStorage;
     private ScoreboardService scoreboardService;
 
     public FancyCorePlugin(@Nonnull JavaPluginInit init) {
@@ -231,7 +235,8 @@ public class FancyCorePlugin extends JavaPlugin implements FancyCore {
         backpacksStorage = new BackpacksJsonStorage();
         backpacksService = new BackpacksServiceImpl(backpacksStorage);
 
-        scoreboardService = new ScoreboardService();
+        scoreboardStorage = new ScoreboardJsonStorage();
+        scoreboardService = new ScoreboardServiceImpl(scoreboardStorage);
 
         SeedDefaultData.seed();
 
@@ -543,7 +548,17 @@ public class FancyCorePlugin extends JavaPlugin implements FancyCore {
         return backpacksService;
     }
 
+    @Override
+    public ScoreboardStorage getScoreboardStorage() {
+        return null;
+    }
+
+    @Override
     public ScoreboardService getScoreboardService() {
         return scoreboardService;
+    }
+
+    public ScoreboardServiceImpl getScoreboardServiceImpl() {
+        return (ScoreboardServiceImpl) scoreboardService;
     }
 }

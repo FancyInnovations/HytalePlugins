@@ -9,6 +9,8 @@ import com.fancyinnovations.fancycore.api.permissions.Group;
 import com.fancyinnovations.fancycore.api.permissions.PermissionService;
 import com.fancyinnovations.fancycore.api.placeholders.PlaceholderService;
 import com.fancyinnovations.fancycore.api.player.FancyPlayer;
+import com.fancyinnovations.fancycore.api.scoreboard.ScoreboardPage;
+import com.fancyinnovations.fancycore.api.scoreboard.ScoreboardService;
 import com.fancyinnovations.fancycore.api.teleport.Location;
 import com.fancyinnovations.fancycore.api.teleport.SpawnService;
 import com.fancyinnovations.fancycore.main.FancyCorePlugin;
@@ -200,7 +202,8 @@ public class PlayerJoinListener {
         }
 
         // show scoreboard
-        FancyCorePlugin.get().getScoreboardService().registerScoreboard(fp, player);
+        ScoreboardPage defaultPage = ScoreboardService.get().getPage("default");
+        FancyCorePlugin.get().getScoreboardServiceImpl().attachScoreboard(fp, defaultPage);
     }
 
     public static void onAddPlayerToWorld(AddPlayerToWorldEvent event) {

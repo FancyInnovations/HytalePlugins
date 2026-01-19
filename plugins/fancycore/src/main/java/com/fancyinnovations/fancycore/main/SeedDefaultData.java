@@ -7,11 +7,16 @@ import com.fancyinnovations.fancycore.api.inventory.Kit;
 import com.fancyinnovations.fancycore.api.inventory.KitsService;
 import com.fancyinnovations.fancycore.api.permissions.Group;
 import com.fancyinnovations.fancycore.api.permissions.PermissionService;
+import com.fancyinnovations.fancycore.api.scoreboard.ScoreboardLine;
+import com.fancyinnovations.fancycore.api.scoreboard.ScoreboardService;
 import com.fancyinnovations.fancycore.permissions.GroupImpl;
 import com.fancyinnovations.fancycore.permissions.PermissionImpl;
+import com.fancyinnovations.fancycore.scoreboard.ScoreboardLineImpl;
+import com.fancyinnovations.fancycore.scoreboard.ScoreboardPageImpl;
 import com.hypixel.hytale.server.core.inventory.ItemStack;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -73,6 +78,7 @@ public class SeedDefaultData {
         seedGroups();
         seedEconomy();
         seedKits();
+        seedScoreboards();
     }
 
     private static void seedChatRooms() {
@@ -157,6 +163,67 @@ public class SeedDefaultData {
                 new ItemStack("Weapon_Sword_Wood", 1)
         );
         KitsService.get().createKit(starterKit, starterKitItems);
+    }
+
+    private static void seedScoreboards() {
+        List<ScoreboardLine> lines = new ArrayList<>();
+        lines.add(new ScoreboardLineImpl(
+                "&6&lFancyCore",
+                "Center",
+                30,
+                20,
+                5,
+                10,
+                null
+        ));
+        lines.add(new ScoreboardLineImpl(
+                "&6Player: &e%player_name%",
+                null,
+                null,
+                null,
+                5,
+                10,
+                null
+        ));
+        lines.add(new ScoreboardLineImpl(
+                "&6Group: &e%player_group_prefix%",
+                null,
+                null,
+                null,
+                5,
+                10,
+                null
+        ));
+        lines.add(new ScoreboardLineImpl(
+                "&6Money: &2$&a%player_balance%",
+                null,
+                null,
+                null,
+                5,
+                10,
+                null
+        ));
+        lines.add(new ScoreboardLineImpl(
+                "&6Playtime: &e%player_playtime%",
+                null,
+                null,
+                null,
+                null,
+                null,
+                null
+        ));
+
+        ScoreboardPageImpl defaultPage = new ScoreboardPageImpl(
+                "default",
+                "Right",
+                250,
+                400,
+                200,
+                new ScoreboardPageImpl.BackgroundColor((byte) 50, (byte) 179, (byte) 152, (byte) 36),
+                lines
+        );
+
+        ScoreboardService.get().createPage(defaultPage);
     }
 
 }
