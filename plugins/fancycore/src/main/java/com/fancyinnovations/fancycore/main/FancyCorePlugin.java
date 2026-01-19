@@ -41,6 +41,7 @@ import com.fancyinnovations.fancycore.commands.permissions.OpCMD;
 import com.fancyinnovations.fancycore.commands.permissions.groups.GroupCMD;
 import com.fancyinnovations.fancycore.commands.permissions.player.PermissionsCMD;
 import com.fancyinnovations.fancycore.commands.player.*;
+import com.fancyinnovations.fancycore.commands.scoreboard.ScoreboardCMD;
 import com.fancyinnovations.fancycore.commands.teleport.*;
 import com.fancyinnovations.fancycore.config.FancyCoreConfigImpl;
 import com.fancyinnovations.fancycore.economy.service.CurrencyServiceImpl;
@@ -397,6 +398,9 @@ public class FancyCorePlugin extends JavaPlugin implements FancyCore {
         CommandManager.get().register(new TempBanCMD());
         CommandManager.get().register(new UnbanCMD());
         CommandManager.get().register(new PunishmentsCMD());
+
+        // scoreboards
+        CommandManager.get().register(new ScoreboardCMD());
     }
 
     public void registerListeners() {
@@ -552,7 +556,7 @@ public class FancyCorePlugin extends JavaPlugin implements FancyCore {
 
     @Override
     public ScoreboardStorage getScoreboardStorage() {
-        return null;
+        return scoreboardStorage;
     }
 
     @Override

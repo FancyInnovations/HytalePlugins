@@ -13,6 +13,8 @@ import com.fancyinnovations.fancycore.api.permissions.Group;
 import com.fancyinnovations.fancycore.api.permissions.PermissionService;
 import com.fancyinnovations.fancycore.api.player.FancyPlayer;
 import com.fancyinnovations.fancycore.api.player.FancyPlayerService;
+import com.fancyinnovations.fancycore.api.scoreboard.ScoreboardPage;
+import com.fancyinnovations.fancycore.api.scoreboard.ScoreboardService;
 import com.fancyinnovations.fancycore.api.teleport.Warp;
 import com.fancyinnovations.fancycore.api.teleport.WarpService;
 import com.hypixel.hytale.server.core.Message;
@@ -181,6 +183,19 @@ public class FancyCoreArgs {
             }
 
             return report;
+        }
+    };
+
+    public static final SingleArgumentType<ScoreboardPage> SCOREBOARD_PAGE = new SingleArgumentType<>("ScoreboardPage", "The name of the scoreboard page", new String[]{"default", "adminPage"}) {
+
+        public @Nullable ScoreboardPage parse(@Nonnull String input, @Nonnull ParseResult parseResult) {
+            ScoreboardPage page = ScoreboardService.get().getPage(input);
+            if (page == null) {
+                parseResult.fail(Message.raw("Scoreboard page '" + input + "' not found."));
+                return null;
+            }
+
+            return page;
         }
     };
 

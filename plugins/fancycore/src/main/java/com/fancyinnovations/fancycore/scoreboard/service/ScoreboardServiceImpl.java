@@ -51,6 +51,13 @@ public class ScoreboardServiceImpl implements ScoreboardService {
     }
 
     public void attachScoreboard(FancyPlayer fancyPlayer, ScoreboardPage page) {
+        if (!fancyPlayer.isOnline()) {
+            if (playerScoreboards.containsKey(fancyPlayer)) {
+                playerScoreboards.remove(fancyPlayer);
+            }
+            return;
+        }
+
         Player player = fancyPlayer.getPlayer().getReference().getStore().getComponent(fancyPlayer.getPlayer().getReference(), Player.getComponentType());
         if (player == null) {
             return;
