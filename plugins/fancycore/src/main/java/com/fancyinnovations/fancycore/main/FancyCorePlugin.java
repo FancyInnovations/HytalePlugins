@@ -385,6 +385,7 @@ public class FancyCorePlugin extends JavaPlugin implements FancyCore {
         CommandManager.get().register(new TempBanCMD());
         CommandManager.get().register(new UnbanCMD());
         CommandManager.get().register(new PunishmentsCMD());
+        CommandManager.get().register(new com.fancyinnovations.fancycore.commands.moderation.ModerationGuiCMD());
     }
 
     public void registerListeners() {
@@ -539,3 +540,4 @@ public class FancyCorePlugin extends JavaPlugin implements FancyCore {
     }
 
 }
+
