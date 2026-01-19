@@ -9,12 +9,7 @@ import com.fancyinnovations.uihelper.UIBuilder;
 import com.hypixel.hytale.server.core.universe.PlayerRef;
 import org.jetbrains.annotations.NotNull;
 
-/**
- * Moderation GUI implementation modeled after the official Custom UI docs
- * ({@code Common/UI/Custom/FancyCore/ModerationPage.ui}) and HyUI's PageBuilder usage.
- *
- * The layout is defined in the .ui file; this class only wires events and actions.
- */
+
 public class ModerationGui extends BaseGui<ModerationGuiData> {
 
     private static final String DEFAULT_REASON = "No reason specified";
@@ -32,7 +27,7 @@ public class ModerationGui extends BaseGui<ModerationGuiData> {
     protected void buildUI(@NotNull UIBuilder ui, @NotNull GuiContext ctx) {
         // Path is relative to Common/UI/Custom/, matching the pattern from the docs:
         // https://hytale-docs.com/docs/api/server-internals/custom-ui
-        ui.page("FancyCore/ModerationPage.ui")
+        ui.page("Pages/ModerationPage.ui")
                 .onInput("#PlayerNameInput", "@PlayerName")
                 .onClick("#KickBtn", "Kick")
                 .onClick("#MuteBtn", "Mute")

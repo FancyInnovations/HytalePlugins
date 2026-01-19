@@ -13,8 +13,8 @@ import org.jetbrains.annotations.NotNull;
 
 /**
  * /modgui command – opens the moderation GUI for the executing player.
- * Mirrors the pattern from the Hytale custom UI docs and HyUI's commands.
  */
+
 public class ModerationGuiCMD extends AbstractPlayerCommand {
 
     public ModerationGuiCMD() {
