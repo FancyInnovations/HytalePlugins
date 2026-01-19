@@ -34,6 +34,8 @@ public interface FancyCoreConfig {
 
     String getDefaultScoreboardPageName();
 
+    int getScoreboardRefreshInterval();
+
     boolean isAnalyticsDisabled();
 
     // Experimental features

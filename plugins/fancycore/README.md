@@ -176,6 +176,30 @@ Commands:
 - `/ping [--target=?]`
 - `/playerlist`
 
+### Scoreboard System
+
+- `/scoreboard listpages`
+- `/scoreboard switchpage <page> [--target=?]`
+- `/scoreboard page info <page>`
+- `/scoreboard page create <name>`
+- `/scoreboard page delete <page>`
+- `/scoreboard page setalignment <page> <alignment>`
+- `/scoreboard page setofffset <page> <offset>`
+- `/scoreboard page setwidth <page> <width>`
+- `/scoreboard page setheight <page> <height>`
+- `/scoreboard page setbackground <page> <color>`
+- `/scoreboard page setopacity <page> <opacity>`
+- `/scoreboard page lines info <page> <line>`
+- `/scoreboard page lines add <page> <text>`
+- `/scoreboard page lines remove <page> <line>`
+- `/scoreboard page lines settext <page> <line> <text>`
+- `/scoreboard page lines setalignment <page> <line> <alignment>`
+- `/scoreboard page lines setfontsize <page> <line> <fontsize>`
+- `/scoreboard page lines setpaddingtop <page> <line> <padding>`
+- `/scoreboard page lines setpaddingbottom <page> <line> <padding>`
+- `/scoreboard page lines setpaddingleft <page> <line> <padding>`
+- `/scoreboard page lines setpaddingright <page> <line> <padding>`
+
 ### Plugin commands
 
 Commands:

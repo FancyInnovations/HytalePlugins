@@ -21,7 +21,8 @@ public class FancyCoreConfigImpl implements FancyCoreConfig {
     public static final String SHOULD_JOIN_AT_SPAWN_PATH = "settings.join_at_spawn";
     public static final String DEFAULT_GROUP_NAME_PATH = "settings.default_group_name";
     public static final String FIRST_JOIN_KIT_PATH = "settings.first_join_kit";
-    public static final String DEFAULT_SCOREBOARD_PAGE_PATH = "settings.default_scoreboard_page_name";
+    public static final String DEFAULT_SCOREBOARD_PAGE_PATH = "settings.scoreboard.default_page";
+    public static final String SCOREBOARD_REFRESH_INTERVAL_PATH = "settings.scoreboard.refresh_interval";
     public static final String DISABLE_ANALYTICS_PATH = "settings.disable_analytics";
 
     public static final String DISABLE_PERMISSION_PROVIDER_PATH = "experimental_features.disable_permission_provider";
@@ -189,6 +190,17 @@ public class FancyCoreConfigImpl implements FancyCoreConfig {
 
         config.addField(
                 new ConfigField<>(
+                        SCOREBOARD_REFRESH_INTERVAL_PATH,
+                        "The interval (in milliseconds) at which the scoreboard refreshes for players. Lower values may impact performance.",
+                        false,
+                        1000,
+                        false,
+                        Integer.class
+                )
+        );
+
+        config.addField(
+                new ConfigField<>(
                         DISABLE_ANALYTICS_PATH,
                         "If true, FancyCore will not collect any anonymous usage metrics.",
                         false,
@@ -292,6 +304,11 @@ public class FancyCoreConfigImpl implements FancyCoreConfig {
     @Override
     public String getDefaultScoreboardPageName() {
         return config.get(DEFAULT_SCOREBOARD_PAGE_PATH);
+    }
+
+    @Override
+    public int getScoreboardRefreshInterval() {
+        return config.get(SCOREBOARD_REFRESH_INTERVAL_PATH);
     }
 
     @Override

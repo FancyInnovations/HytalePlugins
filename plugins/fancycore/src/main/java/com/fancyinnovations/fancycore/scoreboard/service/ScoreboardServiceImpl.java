@@ -5,6 +5,7 @@ import com.fancyinnovations.fancycore.api.player.FancyPlayer;
 import com.fancyinnovations.fancycore.api.scoreboard.ScoreboardPage;
 import com.fancyinnovations.fancycore.api.scoreboard.ScoreboardService;
 import com.fancyinnovations.fancycore.api.scoreboard.ScoreboardStorage;
+import com.fancyinnovations.fancycore.main.FancyCorePlugin;
 import com.fancyinnovations.fancycore.scoreboard.ScoreboardUI;
 import com.hypixel.hytale.server.core.entity.entities.Player;
 
@@ -27,7 +28,8 @@ public class ScoreboardServiceImpl implements ScoreboardService {
 
         load();
 
-        FancyCore.get().getThreadPool().scheduleWithFixedDelay(this::update, 0L, 500L, TimeUnit.MILLISECONDS);
+        int scoreboardRefreshInterval = FancyCorePlugin.get().getConfig().getScoreboardRefreshInterval();
+        FancyCore.get().getThreadPool().scheduleWithFixedDelay(this::update, 0L, scoreboardRefreshInterval, TimeUnit.MILLISECONDS);
     }
 
     private void load() {
