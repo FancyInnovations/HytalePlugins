@@ -1,0 +1,69 @@
+$C = "../Common.ui";
+
+// Simple, doc-style layout to avoid CustomUI parse issues.
+// Based directly on the example at:
+// https://hytale-docs.com/docs/api/server-internals/custom-ui
+
+Group {
+  Anchor: (Width: 420, Height: 320);
+  Background: #141c26(0.95);
+  LayoutMode: Top;
+  Padding: (Full: 20);
+
+  Label #Title {
+    Text: "Moderation";
+    Anchor: (Height: 40);
+    Style: (FontSize: 24, TextColor: #ffffff, HorizontalAlignment: Center, RenderBold: true);
+  }
+
+  Group { Anchor: (Height: 20); }
+
+  // Plain TextField to keep things simple and safe
+  TextField #PlayerNameInput {
+    PlaceholderText: "Enter player name...";
+    Anchor: (Height: 40);
+  }
+
+  Group { Anchor: (Height: 20); }
+
+  Group {
+    LayoutMode: Left;
+    Anchor: (Height: 60);
+
+    $C.@TextButton #KickBtn {
+      @Text = "Kick";
+      Anchor: (Width: 120, Height: 44);
+    }
+
+    $C.@TextButton #MuteBtn {
+      @Text = "Mute";
+      Anchor: (Width: 120, Height: 44);
+    }
+
+    $C.@TextButton #BanBtn {
+      @Text = "Ban";
+      Anchor: (Width: 120, Height: 44);
+    }
+  }
+
+  Group {
+    LayoutMode: Left;
+    Anchor: (Height: 60);
+
+    $C.@TextButton #WarnBtn {
+      @Text = "Warn";
+      Anchor: (Width: 120, Height: 44);
+    }
+
+    $C.@TextButton #UnmuteBtn {
+      @Text = "Unmute";
+      Anchor: (Width: 120, Height: 44);
+    }
+
+    $C.@TextButton #UnbanBtn {
+      @Text = "Unban";
+      Anchor: (Width: 120, Height: 44);
+    }
+  }
+}
+
