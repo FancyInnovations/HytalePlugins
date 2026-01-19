@@ -202,8 +202,11 @@ public class PlayerJoinListener {
         }
 
         // show scoreboard
-        ScoreboardPage defaultPage = ScoreboardService.get().getPage("default");
-        FancyCorePlugin.get().getScoreboardServiceImpl().attachScoreboard(fp, defaultPage);
+        String defaultScoreboardPageName = FancyCorePlugin.get().getConfig().getDefaultScoreboardPageName();
+        if (defaultScoreboardPageName != null && !defaultScoreboardPageName.isEmpty()) {
+            ScoreboardPage defaultPage = ScoreboardService.get().getPage(defaultScoreboardPageName);
+            FancyCorePlugin.get().getScoreboardServiceImpl().attachScoreboard(fp, defaultPage);
+        }
     }
 
     public static void onAddPlayerToWorld(AddPlayerToWorldEvent event) {

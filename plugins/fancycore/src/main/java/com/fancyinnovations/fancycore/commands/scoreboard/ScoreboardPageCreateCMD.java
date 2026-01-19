@@ -109,7 +109,7 @@ public class ScoreboardPageCreateCMD extends AbstractPlayerCommand {
                 null
         ));
         page.addLine(new ScoreboardLineImpl(
-                "&7%online_players%/%max_players% online",
+                "&7%online_players% / %max_players% online",
                 "Center",
                 22,
                 15,

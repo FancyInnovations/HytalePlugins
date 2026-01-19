@@ -44,6 +44,7 @@ public class PluginMetrics {
         this.metrics.add(new MetricSupplier<Double>("total_amount_groups", this::totalAmountGroups));
         this.metrics.add(new MetricSupplier<Double>("total_amount_kits", this::totalAmountKits));
         this.metrics.add(new MetricSupplier<Double>("total_amount_backpacks", this::totalAmountBackpacks));
+        this.metrics.add(new MetricSupplier<Double>("total_amount_scoreboard_pages", this::totalAmountScoreboardPages));
 
         EXECUTOR.scheduleAtFixedRate(this::send, 5, 30, TimeUnit.SECONDS);
     }
@@ -115,6 +116,10 @@ public class PluginMetrics {
 
     private double totalAmountBackpacks() {
         return plugin.getBackpacksStorage().countBackpacks();
+    }
+
+    private double totalAmountScoreboardPages() {
+        return plugin.getScoreboardStorage().countPages();
     }
 
     /**

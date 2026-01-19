@@ -32,6 +32,8 @@ public interface FancyCoreConfig {
 
     String getFirstJoinKitName();
 
+    String getDefaultScoreboardPageName();
+
     boolean isAnalyticsDisabled();
 
     // Experimental features

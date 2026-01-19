@@ -7,7 +7,7 @@ import com.fancyinnovations.fancycore.api.inventory.Kit;
 import com.fancyinnovations.fancycore.api.inventory.KitsService;
 import com.fancyinnovations.fancycore.api.permissions.Group;
 import com.fancyinnovations.fancycore.api.permissions.PermissionService;
-import com.fancyinnovations.fancycore.api.scoreboard.ScoreboardLine;
+import com.fancyinnovations.fancycore.api.scoreboard.ScoreboardPage;
 import com.fancyinnovations.fancycore.api.scoreboard.ScoreboardService;
 import com.fancyinnovations.fancycore.permissions.GroupImpl;
 import com.fancyinnovations.fancycore.permissions.PermissionImpl;
@@ -166,17 +166,34 @@ public class SeedDefaultData {
     }
 
     private static void seedScoreboards() {
-        List<ScoreboardLine> lines = new ArrayList<>();
-        lines.add(new ScoreboardLineImpl(
-                "&6&lFancyCore",
+        ScoreboardPage defaultPage = new ScoreboardPageImpl(
+                "default",
+                "Right",
+                300,
+                250,
+                300,
+                new ScoreboardPage.BackgroundColor((byte) 50, (byte) 0, (byte) 0, (byte) 0),
+                new ArrayList<>()
+        );
+        defaultPage.addLine(new ScoreboardLineImpl(
+                "&e&lServer name",
                 "Center",
-                30,
+                32,
                 20,
                 5,
-                10,
-                null
+                0,
+                0
         ));
-        lines.add(new ScoreboardLineImpl(
+        defaultPage.addLine(new ScoreboardLineImpl(
+                "&7Welcome to the server!",
+                "Center",
+                22,
+                0,
+                15,
+                0,
+                0
+        ));
+        defaultPage.addLine(new ScoreboardLineImpl(
                 "&6Player: &e%player_name%",
                 null,
                 null,
@@ -185,7 +202,7 @@ public class SeedDefaultData {
                 10,
                 null
         ));
-        lines.add(new ScoreboardLineImpl(
+        defaultPage.addLine(new ScoreboardLineImpl(
                 "&6Group: &e%player_group_prefix%",
                 null,
                 null,
@@ -194,7 +211,7 @@ public class SeedDefaultData {
                 10,
                 null
         ));
-        lines.add(new ScoreboardLineImpl(
+        defaultPage.addLine(new ScoreboardLineImpl(
                 "&6Money: &2$&a%player_balance%",
                 null,
                 null,
@@ -203,7 +220,7 @@ public class SeedDefaultData {
                 10,
                 null
         ));
-        lines.add(new ScoreboardLineImpl(
+        defaultPage.addLine(new ScoreboardLineImpl(
                 "&6Playtime: &e%player_playtime%",
                 null,
                 null,
@@ -212,16 +229,15 @@ public class SeedDefaultData {
                 null,
                 null
         ));
-
-        ScoreboardPageImpl defaultPage = new ScoreboardPageImpl(
-                "default",
-                "Right",
-                250,
-                400,
-                200,
-                new ScoreboardPageImpl.BackgroundColor((byte) 50, (byte) 179, (byte) 152, (byte) 36),
-                lines
-        );
+        defaultPage.addLine(new ScoreboardLineImpl(
+                "&7%online_players% / %max_players% online",
+                "Center",
+                22,
+                15,
+                5,
+                10,
+                0
+        ));
 
         ScoreboardService.get().createPage(defaultPage);
     }
