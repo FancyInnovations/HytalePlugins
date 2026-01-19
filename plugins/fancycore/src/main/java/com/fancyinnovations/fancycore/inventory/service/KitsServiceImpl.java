@@ -4,6 +4,7 @@ import com.fancyinnovations.fancycore.api.inventory.Kit;
 import com.fancyinnovations.fancycore.api.inventory.KitsService;
 import com.fancyinnovations.fancycore.api.inventory.KitsStorage;
 import com.fancyinnovations.fancycore.api.player.FancyPlayer;
+import com.fancyinnovations.fancycore.inventory.storage.json.KitsJsonStorage;
 import com.hypixel.hytale.server.core.entity.entities.Player;
 import com.hypixel.hytale.server.core.inventory.ItemStack;
 import com.hypixel.hytale.server.core.inventory.container.ItemContainer;
@@ -30,6 +31,7 @@ public class KitsServiceImpl implements KitsService {
     private void load() {
         for (Kit kit : storage.getKits()) {
             kitsCache.put(kit.name(), kit);
+            // Load items for backward compatibility
             kitItemsCache.put(kit.name(), storage.getKitItems(kit.name()));
         }
     }
@@ -58,15 +60,25 @@ public class KitsServiceImpl implements KitsService {
             }
 
             ItemContainer hotbar = player.getInventory().getHotbar();
-            ItemContainer storage = player.getInventory().getStorage();
+            ItemContainer storageContainer = player.getInventory().getStorage();
+            ItemContainer armorContainer = player.getInventory().getArmor();
 
-
-            List<ItemStack> items = KitsService.get().getKitItems(kit);
-            for (ItemStack item : items) {
-                if (!tryToAddItemToContainer(item, hotbar)) {
-                    if (!tryToAddItemToContainer(item, storage)) {
-                        fp.sendMessage("Not enough space in inventory for: " + item.toString());
-                        // TODO: drop item on ground or add mail system
+            // Load and place items from all containers
+            if (storage instanceof KitsJsonStorage) {
+                KitsJsonStorage jsonStorage = (KitsJsonStorage) storage;
+                
+                // Place items in each container
+                placeContainerItems(jsonStorage, kit.name(), "hotbar", hotbar, fp);
+                placeContainerItems(jsonStorage, kit.name(), "storage", storageContainer, fp);
+                placeContainerItems(jsonStorage, kit.name(), "armor", armorContainer, fp);
+            } else {
+                // Fallback: try to add all items to hotbar first, then storage
+                List<ItemStack> items = KitsService.get().getKitItems(kit);
+                for (ItemStack item : items) {
+                    if (!tryToAddItemToContainer(item, hotbar)) {
+                        if (!tryToAddItemToContainer(item, storageContainer)) {
+                            fp.sendMessage("Not enough space in inventory for: " + item.toString());
+                        }
                     }
                 }
             }
@@ -86,11 +98,49 @@ public class KitsServiceImpl implements KitsService {
         kitItemsCache.put(kit.name(), items);
     }
 
+    public void createKitWithContainers(Kit kit, List<ItemStack> hotbarItems, List<ItemStack> storageItems, List<ItemStack> armorItems) {
+        if (storage instanceof KitsJsonStorage) {
+            KitsJsonStorage jsonStorage = (KitsJsonStorage) storage;
+            jsonStorage.storeKitContainer(kit, "hotbar", hotbarItems);
+            jsonStorage.storeKitContainer(kit, "storage", storageItems);
+            jsonStorage.storeKitContainer(kit, "armor", armorItems);
+        } else {
+            // Fallback: combine items
+            List<ItemStack> allItems = new java.util.ArrayList<>(hotbarItems);
+            allItems.addAll(storageItems);
+            allItems.addAll(armorItems);
+            storage.storeKit(kit, allItems);
+        }
+        kitsCache.put(kit.name(), kit);
+        // Cache combined items
+        List<ItemStack> allItems = new java.util.ArrayList<>(hotbarItems);
+        allItems.addAll(storageItems);
+        allItems.addAll(armorItems);
+        kitItemsCache.put(kit.name(), allItems);
+    }
+
     @Override
     public void deleteKit(Kit kit) {
         storage.deleteKit(kit);
         kitsCache.remove(kit.name());
         kitItemsCache.remove(kit.name());
+    }
+
+    private void placeContainerItems(KitsJsonStorage storage, String kitName, String containerName, ItemContainer container, FancyPlayer fp) {
+        List<ItemStack> items = storage.getKitContainerItems(kitName, containerName);
+        for (int i = 0; i < items.size() && i < container.getCapacity(); i++) {
+            ItemStack item = items.get(i);
+            if (item != null) {
+                if (container.getItemStack((short) i) == null) {
+                    container.setItemStackForSlot((short) i, item);
+                } else {
+                    // Slot is occupied, try to add it elsewhere
+                    if (!tryToAddItemToContainer(item, container)) {
+                        fp.sendMessage("Not enough space in " + containerName + " for: " + item.toString());
+                    }
+                }
+            }
+        }
     }
 
     private boolean tryToAddItemToContainer(ItemStack item, ItemContainer container) {

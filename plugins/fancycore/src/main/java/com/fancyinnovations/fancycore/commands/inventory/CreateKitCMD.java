@@ -5,6 +5,7 @@ import com.fancyinnovations.fancycore.api.inventory.KitsService;
 import com.fancyinnovations.fancycore.api.player.FancyPlayer;
 import com.fancyinnovations.fancycore.api.player.FancyPlayerService;
 import com.fancyinnovations.fancycore.commands.arguments.FancyCoreArgs;
+import com.fancyinnovations.fancycore.inventory.service.KitsServiceImpl;
 import com.hypixel.hytale.component.Ref;
 import com.hypixel.hytale.component.Store;
 import com.hypixel.hytale.server.core.Message;
@@ -60,21 +61,39 @@ public class CreateKitCMD extends AbstractPlayerCommand {
             fp.sendMessage("You are not an player");
             return;
         }
-        ItemContainer container = player.getInventory().getStorage();
+        
+        ItemContainer hotbar = player.getInventory().getHotbar();
+        ItemContainer storage = player.getInventory().getStorage();
+        ItemContainer armor = player.getInventory().getArmor();
 
-        List<ItemStack> items = new ArrayList<>();
-        for (short i = 0; i < container.getCapacity(); i++) {
-            ItemStack itemStack = container.getItemStack(i);
-            if (itemStack == null) {
-                continue;
-            }
+        // Store items in order to preserve slot positions
+        List<ItemStack> hotbarItems = new ArrayList<>();
+        for (short i = 0; i < hotbar.getCapacity(); i++) {
+            hotbarItems.add(hotbar.getItemStack(i)); // Include nulls to preserve slot positions
+        }
 
-            items.add(itemStack);
+        List<ItemStack> storageItems = new ArrayList<>();
+        for (short i = 0; i < storage.getCapacity(); i++) {
+            storageItems.add(storage.getItemStack(i)); // Include nulls to preserve slot positions
+        }
+
+        List<ItemStack> armorItems = new ArrayList<>();
+        for (short i = 0; i < armor.getCapacity(); i++) {
+            armorItems.add(armor.getItemStack(i)); // Include nulls to preserve slot positions
         }
 
         Kit kit = new Kit(name, name, name, cooldown);
 
-        KitsService.get().createKit(kit, items);
+        // Use the new method if available, otherwise fallback to old method
+        if (KitsService.get() instanceof KitsServiceImpl) {
+            ((KitsServiceImpl) KitsService.get()).createKitWithContainers(kit, hotbarItems, storageItems, armorItems);
+        } else {
+            // Fallback: combine items
+            List<ItemStack> allItems = new ArrayList<>(hotbarItems);
+            allItems.addAll(storageItems);
+            allItems.addAll(armorItems);
+            KitsService.get().createKit(kit, allItems);
+        }
 
         fp.sendMessage("Created kit "+kit.name());
     }

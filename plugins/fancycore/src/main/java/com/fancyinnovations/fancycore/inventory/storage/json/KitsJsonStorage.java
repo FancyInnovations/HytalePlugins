@@ -34,17 +34,26 @@ public class KitsJsonStorage implements KitsStorage {
 
     @Override
     public List<ItemStack> getKitItems(String kitName) {
-        File itemsFile = new File(PUNISHMENTS_DATA_DIR_PATH + "/" + kitName + "/items.json");
-        if (!itemsFile.exists()) {
+        // Legacy method - combine all containers
+        List<ItemStack> allItems = new ArrayList<>();
+        allItems.addAll(getKitContainerItems(kitName, "hotbar"));
+        allItems.addAll(getKitContainerItems(kitName, "storage"));
+        allItems.addAll(getKitContainerItems(kitName, "armor"));
+        return allItems;
+    }
+
+    public List<ItemStack> getKitContainerItems(String kitName, String containerName) {
+        File containerFile = new File(PUNISHMENTS_DATA_DIR_PATH + "/" + kitName + "/" + containerName + ".json");
+        if (!containerFile.exists()) {
             return List.of();
         }
 
         try {
-            String data = Files.readString(itemsFile.toPath());
+            String data = Files.readString(containerFile.toPath());
             return ItemStackJsonStorageHelper.fromJson(data);
         } catch (IOException e) {
             FancyCorePlugin.get().getFancyLogger().warn(
-                    "Failed to load Kit items",
+                    "Failed to load Kit " + containerName + " items",
                     StringProperty.of("kit", kitName),
                     ThrowableProperty.of(e)
             );
@@ -82,16 +91,23 @@ public class KitsJsonStorage implements KitsStorage {
 
     @Override
     public void storeKit(Kit kit, List<ItemStack> items) {
+        // Legacy method - store all items in storage.json
+        storeKitContainer(kit, "storage", items);
+    }
+
+    public void storeKitContainer(Kit kit, String containerName, List<ItemStack> items) {
         try {
             db.set(kit.name() + "/kit", kit);
 
+            File kitDir = new File(PUNISHMENTS_DATA_DIR_PATH + "/" + kit.name());
+            kitDir.mkdirs();
+
             String itemsJson = ItemStackJsonStorageHelper.toJson(items);
-            File itemsFile = new File(PUNISHMENTS_DATA_DIR_PATH + "/" + kit.name() + "/items.json");
-            itemsFile.getParentFile().mkdirs();
-            Files.writeString(itemsFile.toPath(), itemsJson);
+            File containerFile = new File(kitDir, containerName + ".json");
+            Files.writeString(containerFile.toPath(), itemsJson);
         } catch (IOException e) {
             FancyCorePlugin.get().getFancyLogger().error(
-                    "Failed to store Kit",
+                    "Failed to store Kit " + containerName,
                     StringProperty.of("kit", kit.name()),
                     ThrowableProperty.of(e)
             );
@@ -102,9 +118,15 @@ public class KitsJsonStorage implements KitsStorage {
     public void deleteKit(Kit kit) {
         db.delete(kit.name());
 
-        File itemsFile = new File(PUNISHMENTS_DATA_DIR_PATH + "/" + kit.name() + "/items.json");
-        if (itemsFile.exists()) {
-            itemsFile.delete();
+        File kitDir = new File(PUNISHMENTS_DATA_DIR_PATH + "/" + kit.name());
+        if (kitDir.exists()) {
+            // Delete all container files
+            for (String containerName : new String[]{"hotbar", "storage", "armor"}) {
+                File containerFile = new File(kitDir, containerName + ".json");
+                if (containerFile.exists()) {
+                    containerFile.delete();
+                }
+            }
         }
     }
 
