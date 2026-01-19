@@ -1,0 +1,5 @@
+Label #ScoreboardLine {
+  Style: (FontSize: 22);
+  Padding: (Left: 10, Bottom: 5);
+  Text: "Scoreboard Line";
+}

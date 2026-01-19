@@ -62,6 +62,7 @@ import com.fancyinnovations.fancycore.player.service.CleanUpPlayerCacheRunnable;
 import com.fancyinnovations.fancycore.player.service.FancyPlayerServiceImpl;
 import com.fancyinnovations.fancycore.player.storage.SavePlayersRunnable;
 import com.fancyinnovations.fancycore.player.storage.json.FancyPlayerJsonStorage;
+import com.fancyinnovations.fancycore.scoreboard.ScoreboardService;
 import com.fancyinnovations.fancycore.teleport.service.SpawnServiceImpl;
 import com.fancyinnovations.fancycore.teleport.service.TeleportRequestServiceImpl;
 import com.fancyinnovations.fancycore.teleport.service.WarpServiceImpl;
@@ -145,6 +146,8 @@ public class FancyCorePlugin extends JavaPlugin implements FancyCore {
     private BackpacksStorage backpacksStorage;
     private BackpacksService backpacksService;
 
+    private ScoreboardService scoreboardService;
+
     public FancyCorePlugin(@Nonnull JavaPluginInit init) {
         super(init);
         INSTANCE = this;
@@ -227,6 +230,8 @@ public class FancyCorePlugin extends JavaPlugin implements FancyCore {
 
         backpacksStorage = new BackpacksJsonStorage();
         backpacksService = new BackpacksServiceImpl(backpacksStorage);
+
+        scoreboardService = new ScoreboardService();
 
         SeedDefaultData.seed();
 
@@ -538,4 +543,7 @@ public class FancyCorePlugin extends JavaPlugin implements FancyCore {
         return backpacksService;
     }
 
+    public ScoreboardService getScoreboardService() {
+        return scoreboardService;
+    }
 }

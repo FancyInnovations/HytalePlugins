@@ -25,6 +25,12 @@ public class PlayerPlayTimeFormattedPlaceholder implements PlaceholderProvider {
 
     @Override
     public String parse(@Nullable FancyPlayer player, @NotNull String input) {
-        return TimeUtils.formatTime(player.getData().getPlayTime());
+        long playTime = player.getData().getPlayTime();
+        if (player.isOnline()) {
+            long currentSessionTime = System.currentTimeMillis() - player.getJoinedAt();
+            playTime += currentSessionTime;
+        }
+
+        return TimeUtils.formatTime(playTime);
     }
 }

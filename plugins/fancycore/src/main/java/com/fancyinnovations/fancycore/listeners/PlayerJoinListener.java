@@ -20,16 +20,17 @@ import com.fancyinnovations.fancycore.utils.TimeUtils;
 import com.hypixel.hytale.component.Ref;
 import com.hypixel.hytale.component.Store;
 import com.hypixel.hytale.server.core.entity.UUIDComponent;
+import com.hypixel.hytale.server.core.entity.entities.Player;
+import com.hypixel.hytale.server.core.entity.entities.player.movement.MovementManager;
 import com.hypixel.hytale.server.core.event.events.player.AddPlayerToWorldEvent;
 import com.hypixel.hytale.server.core.event.events.player.PlayerConnectEvent;
 import com.hypixel.hytale.server.core.event.events.player.PlayerReadyEvent;
 import com.hypixel.hytale.server.core.modules.entity.component.TransformComponent;
 import com.hypixel.hytale.server.core.modules.entity.teleport.Teleport;
-import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
 import com.hypixel.hytale.server.core.universe.PlayerRef;
 import com.hypixel.hytale.server.core.universe.Universe;
 import com.hypixel.hytale.server.core.universe.world.World;
-import com.hypixel.hytale.server.core.entity.entities.player.movement.MovementManager;
+import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
 
 import java.util.Collection;
 import java.util.UUID;
@@ -124,6 +125,10 @@ public class PlayerJoinListener {
     public static void onPlayerReady(PlayerReadyEvent event) {
         Ref<EntityStore> ref = event.getPlayerRef();
         Store<EntityStore> store = event.getPlayerRef().getStore();
+        Player player = store.getComponent(ref, Player.getComponentType());
+        if (player == null) {
+            return;
+        }
 
         UUIDComponent uuidComponent = ref.getStore().getComponent(ref, UUIDComponent.getComponentType());
         FancyPlayerImpl fp = (FancyPlayerImpl) playerService.getByUUID(uuidComponent.getUuid());
@@ -193,6 +198,9 @@ public class PlayerJoinListener {
                 });
             }
         }
+
+        // show scoreboard
+        FancyCorePlugin.get().getScoreboardService().registerScoreboard(fp, player);
     }
 
     public static void onAddPlayerToWorld(AddPlayerToWorldEvent event) {

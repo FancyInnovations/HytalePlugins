@@ -1,0 +1,15 @@
+$Common = "Common.ui";
+
+Group #ScoreboardWrapper {
+  LayoutMode: Right;
+
+  Group #ScoreboardPanel {
+    Background: #000000(0.5);
+    Anchor: (Top: 250, Width: 300, Height: 430);
+    LayoutMode: Top;
+
+    Group #ScoreboardBody {
+        LayoutMode: Top;
+    }
+  }
+}

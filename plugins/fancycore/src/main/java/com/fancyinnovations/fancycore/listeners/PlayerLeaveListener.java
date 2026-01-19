@@ -34,5 +34,8 @@ public class PlayerLeaveListener {
 
         fp.setPlayer(null);
         new PlayerLeftEvent(fp).fire();
+
+        // TODO: Unregister scoreboard
+//        FancyCorePlugin.get().getScoreboardService().registerScoreboard(fp, player);
     }
 }
