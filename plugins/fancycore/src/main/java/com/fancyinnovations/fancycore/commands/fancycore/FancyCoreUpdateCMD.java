@@ -87,7 +87,19 @@ public class FancyCoreUpdateCMD extends CommandBase {
                     StringProperty.of("download_link", latestVersion.downloadURL())
             );
 
-        } catch (URISyntaxException | IOException | InterruptedException e) {
+        } catch (URISyntaxException | IOException e) {
+            ctx.sender().sendMessage(
+                    Message.raw("Failed to download the latest version of FancyCore. Please check the logs for more information.")
+            );
+            logger.error(
+                    "Failed to download the latest version of FancyCore",
+                    StringProperty.of("version", latestVersion.name()),
+                    StringProperty.of("published_at", TimeUtils.formatDate(latestVersion.publishedAt())),
+                    StringProperty.of("download_link", latestVersion.downloadURL()),
+                    ThrowableProperty.of(e)
+            );
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
             ctx.sender().sendMessage(
                     Message.raw("Failed to download the latest version of FancyCore. Please check the logs for more information.")
             );

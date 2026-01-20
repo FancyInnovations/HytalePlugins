@@ -71,8 +71,12 @@ public class NearCMD extends AbstractPlayerCommand {
                 }
 
                 Store<EntityStore> otherStore = otherRef.getStore();
+                if (otherStore == null) {
+                    continue;
+                }
+                
                 World otherWorld = ((EntityStore) otherStore.getExternalData()).getWorld();
-                if (!otherWorld.equals(world)) {
+                if (otherWorld == null || !otherWorld.equals(world)) {
                     continue;
                 }
 

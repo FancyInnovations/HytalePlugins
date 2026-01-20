@@ -17,8 +17,8 @@ import java.util.UUID;
 
 public class PunishmentJsonStorage implements PunishmentStorage {
 
-    private static final String PUNISHMENTS_DATA_DIR_PATH = "mods/FancyCore/data/punishments";
-    private static final String REPORTS_DATA_DIR_PATH = "mods/FancyCore/data/reports";
+    private static final String PUNISHMENTS_DATA_DIR_PATH = com.fancyinnovations.fancycore.config.FancyCorePaths.PUNISHMENTS_DATA_DIR;
+    private static final String REPORTS_DATA_DIR_PATH = com.fancyinnovations.fancycore.config.FancyCorePaths.REPORTS_DATA_DIR;
     private final JDB punishmentDB;
     private final JDB reportDB;
 

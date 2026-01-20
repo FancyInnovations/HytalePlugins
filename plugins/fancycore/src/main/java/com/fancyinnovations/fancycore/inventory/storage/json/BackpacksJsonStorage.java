@@ -17,7 +17,7 @@ import java.util.UUID;
 
 public class BackpacksJsonStorage implements BackpacksStorage {
 
-    private static final String BACKPACKS_DATA_DIR_PATH = "mods/FancyCore/data/backpacks";
+    private static final String BACKPACKS_DATA_DIR_PATH = com.fancyinnovations.fancycore.config.FancyCorePaths.BACKPACKS_DATA_DIR;
     private final JDB db;
 
     public BackpacksJsonStorage() {

@@ -15,7 +15,7 @@ import java.util.UUID;
 
 public class FancyPlayerJsonStorage implements FancyPlayerStorage {
 
-    private static final String DATA_DIR_PATH = "mods/FancyCore/data/players";
+    private static final String DATA_DIR_PATH = com.fancyinnovations.fancycore.config.FancyCorePaths.PLAYERS_DATA_DIR;
     private final JDB jdb;
 
     public FancyPlayerJsonStorage() {
@@ -46,6 +46,9 @@ public class FancyPlayerJsonStorage implements FancyPlayerStorage {
     public FancyPlayerData loadPlayer(UUID uuid) {
         try {
             JsonFancyPlayer jsonFancyPlayer = jdb.get(uuid.toString(), JsonFancyPlayer.class);
+            if (jsonFancyPlayer == null) {
+                return null;
+            }
             return jsonFancyPlayer.toFancyPlayer();
         } catch (IOException e) {
             FancyCorePlugin.get().getFancyLogger().error(

@@ -11,7 +11,7 @@ import java.util.List;
 
 public class PermissionJsonStorage implements PermissionStorage {
 
-    private static final String DATA_DIR_PATH = "mods/FancyCore/data/groups";
+    private static final String DATA_DIR_PATH = com.fancyinnovations.fancycore.config.FancyCorePaths.GROUPS_DATA_DIR;
     private final JDB db;
 
     public PermissionJsonStorage() {
@@ -33,7 +33,11 @@ public class PermissionJsonStorage implements PermissionStorage {
     @Override
     public Group getGroup(String name) {
         try {
-            return db.get(name, JsonGroup.class).toGroup();
+            JsonGroup jsonGroup = db.get(name, JsonGroup.class);
+            if (jsonGroup == null) {
+                return null;
+            }
+            return jsonGroup.toGroup();
         } catch (Exception e) {
             FancyCorePlugin.get().getFancyLogger().error(
                     "Failed to load Group",

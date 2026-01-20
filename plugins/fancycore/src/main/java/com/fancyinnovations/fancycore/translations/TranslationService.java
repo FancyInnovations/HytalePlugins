@@ -16,7 +16,7 @@ import java.util.concurrent.ConcurrentHashMap;
 
 public class TranslationService implements com.fancyinnovations.fancycore.api.translations.TranslationService {
 
-    private static final String LANG_DIR = "mods/FancyCore/lang";
+    private static final String LANG_DIR = com.fancyinnovations.fancycore.config.FancyCorePaths.LANG_DIR;
     private static final String DEFAULT_LANG = "en_us";
     private static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
 

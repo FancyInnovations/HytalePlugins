@@ -9,10 +9,16 @@ import java.util.concurrent.TimeUnit;
 public class CleanUpPlayerCacheRunnable implements Runnable {
 
     private final FancyPlayerServiceImpl service;
+    private final FancyCorePlugin plugin;
     private ScheduledFuture<?> schedule;
 
     public CleanUpPlayerCacheRunnable() {
-        this.service = (FancyPlayerServiceImpl) FancyCorePlugin.get().getPlayerService();
+        FancyCorePlugin pluginInstance = FancyCorePlugin.get();
+        if (pluginInstance == null) {
+            throw new IllegalStateException("FancyCorePlugin instance is not available");
+        }
+        this.plugin = pluginInstance;
+        this.service = (FancyPlayerServiceImpl) plugin.getPlayerService();
     }
 
     @Override
@@ -29,7 +35,7 @@ public class CleanUpPlayerCacheRunnable implements Runnable {
             throw new IllegalStateException("CleanUpPlayerCacheRunnable is already scheduled");
         }
 
-        this.schedule = FancyCorePlugin.get().getThreadPool().scheduleWithFixedDelay(
+        this.schedule = plugin.getThreadPool().scheduleWithFixedDelay(
                 this,
                 10,
                 30,

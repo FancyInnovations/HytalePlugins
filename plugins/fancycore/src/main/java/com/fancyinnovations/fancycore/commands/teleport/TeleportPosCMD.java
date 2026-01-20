@@ -64,17 +64,26 @@ public class TeleportPosCMD extends CommandBase {
 
         // Execute teleportation on the correct world thread
         // We always read components and modify the store from within the world thread
-        World currentWorld = ((EntityStore) senderRef.getStore().getExternalData()).getWorld();
+        Store<EntityStore> senderStore = senderRef.getStore();
+        if (senderStore == null) {
+            ctx.sendMessage(Message.raw("Failed to get your entity store."));
+            return;
+        }
+        
+        World currentWorld = ((EntityStore) senderStore.getExternalData()).getWorld();
+        if (currentWorld == null) {
+            ctx.sendMessage(Message.raw("Failed to get your world."));
+            return;
+        }
+        
         World targetWorld = worldArg.provided(ctx) ? worldArg.get(ctx) : currentWorld;
 
         // Save previous location for /back command (on current world thread)
         currentWorld.execute(() -> {
-            Store<EntityStore> senderStore = senderRef.getStore();
             TeleportLocationHelper.savePreviousLocation(fp, senderRef, senderStore, currentWorld);
         });
 
         targetWorld.execute(() -> {
-            Store<EntityStore> senderStore = senderRef.getStore();
 
             // Get current rotation to preserve it
             TransformComponent transformComponent = (TransformComponent) senderStore.getComponent(senderRef, TransformComponent.getComponentType());

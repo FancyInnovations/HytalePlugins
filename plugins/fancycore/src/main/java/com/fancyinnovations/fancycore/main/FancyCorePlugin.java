@@ -101,6 +101,8 @@ import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.ScheduledFuture;
+import java.util.concurrent.TimeUnit;
 import java.util.function.Function;
 
 public class FancyCorePlugin extends JavaPlugin implements FancyCore {
@@ -203,7 +205,7 @@ public class FancyCorePlugin extends JavaPlugin implements FancyCore {
 
         pluginMetrics = new PluginMetrics("4bcf8d05-9d69-4574-9d81-96ec0ec2894c");
 
-        eventService = new EventServiceImpl();
+        eventService = new EventServiceImpl(fancyCoreConfig);
         placeholderService = new PlaceholderServiceImpl();
         BuiltInPlaceholderProviders.registerAll();
 
@@ -293,11 +295,45 @@ public class FancyCorePlugin extends JavaPlugin implements FancyCore {
 
     @Override
     protected void shutdown() {
-        fancyLogger.info("FancyCore is shutting down...a");
+        fancyLogger.info("FancyCore is shutting down...");
 
-        savePlayersRunnable.run();
+        // Cancel all scheduled tasks before shutdown
+        if (savePlayersRunnable != null) {
+            ScheduledFuture<?> saveSchedule = savePlayersRunnable.getSchedule();
+            if (saveSchedule != null && !saveSchedule.isCancelled()) {
+                saveSchedule.cancel(false);
+            }
+            savePlayersRunnable.run();
+        }
+
+        if (cleanUpPlayerCacheRunnable != null) {
+            ScheduledFuture<?> cleanupSchedule = cleanUpPlayerCacheRunnable.getSchedule();
+            if (cleanupSchedule != null && !cleanupSchedule.isCancelled()) {
+                cleanupSchedule.cancel(false);
+            }
+        }
+
+        if (scoreboardService != null && scoreboardService instanceof ScoreboardServiceImpl) {
+            ScheduledFuture<?> scoreboardSchedule = ((ScoreboardServiceImpl) scoreboardService).getUpdateSchedule();
+            if (scoreboardSchedule != null && !scoreboardSchedule.isCancelled()) {
+                scoreboardSchedule.cancel(false);
+            }
+        }
 
         threadPool.shutdown();
+        try {
+            if (!threadPool.awaitTermination(30, TimeUnit.SECONDS)) {
+                fancyLogger.warn("Thread pool did not terminate within 30 seconds, forcing shutdown...");
+                threadPool.shutdownNow();
+                if (!threadPool.awaitTermination(10, TimeUnit.SECONDS)) {
+                    fancyLogger.error("Thread pool did not terminate after forced shutdown");
+                }
+            }
+        } catch (InterruptedException e) {
+            fancyLogger.warn("Thread pool shutdown interrupted, forcing shutdown...");
+            threadPool.shutdownNow();
+            Thread.currentThread().interrupt();
+        }
 
         new ServerStoppedEvent().fire();
 

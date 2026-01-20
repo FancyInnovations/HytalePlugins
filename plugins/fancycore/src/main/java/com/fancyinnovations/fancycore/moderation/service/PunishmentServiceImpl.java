@@ -119,8 +119,15 @@ public class PunishmentServiceImpl implements PunishmentService {
                 .replace("reason", reason)
                 .getParsedMessage();
 
+        if (player.getPlayer() == null || player.getPlayer().getWorldUuid() == null) {
+            // Player is offline, punishment is still recorded but cannot disconnect
+            return punishment;
+        }
+
         Universe.get().getWorld(player.getPlayer().getWorldUuid()).execute(() -> {
-            player.getPlayer().getPacketHandler().disconnect(kickMessage);
+            if (player.getPlayer() != null) {
+                player.getPlayer().getPacketHandler().disconnect(kickMessage);
+            }
         });
 
         return punishment;
@@ -158,7 +165,10 @@ public class PunishmentServiceImpl implements PunishmentService {
                     .getParsedMessage();
         }
 
-        player.getPlayer().getPacketHandler().disconnect(kickMessage);
+        if (player.getPlayer() != null) {
+            player.getPlayer().getPacketHandler().disconnect(kickMessage);
+        }
+        // If player is offline, ban is still recorded but disconnect message cannot be sent
 
         return punishment;
     }

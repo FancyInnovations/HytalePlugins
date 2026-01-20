@@ -22,7 +22,10 @@ public class DiscordWebhook {
             if (resp.statusCode() != 204) {
                 FancyCorePlugin.get().getFancyLogger().warn("Failed to send message with discord webhook: " + resp.body());
             }
-        } catch (URISyntaxException | IOException | InterruptedException e) {
+        } catch (URISyntaxException | IOException e) {
+            FancyCorePlugin.get().getFancyLogger().error("Failed to send webhook", ThrowableProperty.of(e));
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
             FancyCorePlugin.get().getFancyLogger().error("Failed to send webhook", ThrowableProperty.of(e));
         }
     }

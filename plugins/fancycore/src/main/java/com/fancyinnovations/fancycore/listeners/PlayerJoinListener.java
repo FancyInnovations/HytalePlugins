@@ -41,12 +41,14 @@ import java.util.concurrent.TimeUnit;
 
 public class PlayerJoinListener {
 
-    private final static FancyPlayerServiceImpl playerService = (FancyPlayerServiceImpl) FancyCorePlugin.get().getPlayerService();
+    private static FancyPlayerServiceImpl getPlayerService() {
+        return (FancyPlayerServiceImpl) FancyCorePlugin.get().getPlayerService();
+    }
 
     public static void onPlayerConnect(PlayerConnectEvent event) {
         boolean firstJoin = false;
 
-        FancyPlayerImpl fp = (FancyPlayerImpl) playerService.getByUUID(event.getPlayerRef().getUuid());
+        FancyPlayerImpl fp = (FancyPlayerImpl) getPlayerService().getByUUID(event.getPlayerRef().getUuid());
         if (fp == null) {
             FancyPlayerDataImpl newFancyPlayerData = new FancyPlayerDataImpl(event.getPlayerRef().getUuid(), event.getPlayerRef().getUsername());
 
@@ -65,7 +67,7 @@ public class PlayerJoinListener {
             );
 
             // Add to cache and save to database
-            playerService.addPlayerToCache(fp);
+            getPlayerService().addPlayerToCache(fp);
             FancyCorePlugin.get().getPlayerStorage().savePlayer(fp.getData());
 
             firstJoin = true;
@@ -99,7 +101,7 @@ public class PlayerJoinListener {
         }
 
         if (firstJoin) {
-            for (FancyPlayer onlinePlayer : playerService.getOnlinePlayers()) {
+            for (FancyPlayer onlinePlayer : getPlayerService().getOnlinePlayers()) {
                 String firstJoinMsg = PlaceholderService.get().parse(fp, FancyCore.get().getConfig().getFirstJoinMessage());
                 onlinePlayer.sendMessage(firstJoinMsg);
             }
@@ -124,7 +126,7 @@ public class PlayerJoinListener {
             fp.sendMessage(joinMessage);
         } else {
             String joinMsg = PlaceholderService.get().parse(fp, FancyCore.get().getConfig().getJoinMessage());
-            for (FancyPlayer onlinePlayer : playerService.getOnlinePlayers()) {
+            for (FancyPlayer onlinePlayer : getPlayerService().getOnlinePlayers()) {
                 onlinePlayer.sendMessage(joinMsg);
             }
         }
@@ -136,14 +138,22 @@ public class PlayerJoinListener {
 
     public static void onPlayerReady(PlayerReadyEvent event) {
         Ref<EntityStore> ref = event.getPlayerRef();
-        Store<EntityStore> store = event.getPlayerRef().getStore();
+        if (ref == null || !ref.isValid()) {
+            return;
+        }
+        
+        Store<EntityStore> store = ref.getStore();
+        if (store == null) {
+            return;
+        }
+        
         Player player = store.getComponent(ref, Player.getComponentType());
         if (player == null) {
             return;
         }
 
-        UUIDComponent uuidComponent = ref.getStore().getComponent(ref, UUIDComponent.getComponentType());
-        FancyPlayerImpl fp = (FancyPlayerImpl) playerService.getByUUID(uuidComponent.getUuid());
+        UUIDComponent uuidComponent = store.getComponent(ref, UUIDComponent.getComponentType());
+        FancyPlayerImpl fp = (FancyPlayerImpl) getPlayerService().getByUUID(uuidComponent.getUuid());
         if (fp == null) {
             return;
         }
@@ -153,8 +163,10 @@ public class PlayerJoinListener {
             if (spawnLocation != null) {
                 TransformComponent transformComponent = store.getComponent(ref, TransformComponent.getComponentType());
 
-                Teleport teleport = new Teleport(event.getPlayer().getWorld(), spawnLocation.positionVec(), spawnLocation.rotationVec());
-                store.addComponent(ref, Teleport.getComponentType(), teleport);
+                if (event.getPlayer() != null && event.getPlayer().getWorld() != null) {
+                    Teleport teleport = new Teleport(event.getPlayer().getWorld(), spawnLocation.positionVec(), spawnLocation.rotationVec());
+                    store.addComponent(ref, Teleport.getComponentType(), teleport);
+                }
             }
         }
 
@@ -185,7 +197,7 @@ public class PlayerJoinListener {
                     Collection<PlayerRef> players = world.getPlayerRefs();
                     for (PlayerRef otherPlayerRef : players) {
                         if (!otherPlayerRef.getUuid().equals(joiningPlayerUuid)) {
-                            FancyPlayer otherFancyPlayer = playerService.getByUUID(otherPlayerRef.getUuid());
+                            FancyPlayer otherFancyPlayer = getPlayerService().getByUUID(otherPlayerRef.getUuid());
                             if (otherFancyPlayer != null && otherFancyPlayer.getData().isVanished()) {
                                 joiningPlayerRef.getHiddenPlayersManager().hidePlayer(otherPlayerRef.getUuid());
                             }

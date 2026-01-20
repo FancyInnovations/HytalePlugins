@@ -52,8 +52,22 @@ public class KitsServiceImpl implements KitsService {
             return;
         }
 
-        Universe.get().getWorld(fp.getPlayer().getWorldUuid()).execute(() -> {
-            Player player = fp.getPlayer().getReference().getStore().getComponent(fp.getPlayer().getReference(), Player.getComponentType());
+        var playerRef = fp.getPlayer();
+        if (playerRef == null || playerRef.getWorldUuid() == null) {
+            return;
+        }
+
+        var world = Universe.get().getWorld(playerRef.getWorldUuid());
+        if (world == null) {
+            return;
+        }
+
+        world.execute(() -> {
+            var ref = playerRef.getReference();
+            if (ref == null || !ref.isValid()) {
+                return;
+            }
+            Player player = ref.getStore().getComponent(ref, Player.getComponentType());
             if (player == null) {
                 fp.sendMessage("You are not an player");
                 return;

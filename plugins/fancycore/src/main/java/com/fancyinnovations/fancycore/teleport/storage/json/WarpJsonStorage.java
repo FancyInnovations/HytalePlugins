@@ -11,7 +11,7 @@ import java.util.List;
 
 public class WarpJsonStorage implements WarpStorage {
 
-    private static final String DATA_DIR_PATH = "mods/FancyCore/data/warps";
+    private static final String DATA_DIR_PATH = com.fancyinnovations.fancycore.config.FancyCorePaths.WARPS_DATA_DIR;
     private final JDB db;
 
     public WarpJsonStorage() {

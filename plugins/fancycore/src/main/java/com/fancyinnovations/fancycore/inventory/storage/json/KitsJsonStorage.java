@@ -16,7 +16,7 @@ import java.util.List;
 
 public class KitsJsonStorage implements KitsStorage {
 
-    private static final String PUNISHMENTS_DATA_DIR_PATH = "mods/FancyCore/data/kits";
+    private static final String PUNISHMENTS_DATA_DIR_PATH = com.fancyinnovations.fancycore.config.FancyCorePaths.KITS_DATA_DIR;
     private final JDB db;
 
     public KitsJsonStorage() {

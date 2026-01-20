@@ -63,7 +63,9 @@ public class PingCMD extends CommandBase {
         long pingMillis = PacketHandler.PingInfo.TIME_UNIT.toMillis(Math.round(averagePing));
 
         String message;
-        if (target.getData().getUUID().equals(fp != null ? fp.getData().getUUID() : null)) {
+        boolean isSelf = fp != null && target.getData() != null && fp.getData() != null
+                && target.getData().getUUID().equals(fp.getData().getUUID());
+        if (isSelf) {
             message = "Your ping is " + pingMillis + "ms.";
         } else {
             message = target.getData().getUsername() + "'s ping is " + pingMillis + "ms.";

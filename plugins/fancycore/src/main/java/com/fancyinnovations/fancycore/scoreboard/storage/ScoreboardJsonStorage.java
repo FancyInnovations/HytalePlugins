@@ -12,7 +12,7 @@ import java.util.List;
 
 public class ScoreboardJsonStorage implements ScoreboardStorage {
 
-    private static final String DATA_DIR_PATH = "mods/FancyCore/data/scoreboards";
+    private static final String DATA_DIR_PATH = com.fancyinnovations.fancycore.config.FancyCorePaths.SCOREBOARDS_DATA_DIR;
     private final JDB db;
 
     public ScoreboardJsonStorage() {

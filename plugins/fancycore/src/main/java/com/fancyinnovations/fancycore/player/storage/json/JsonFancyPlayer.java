@@ -91,7 +91,7 @@ public record JsonFancyPlayer(
             }
         }
 
-        Map<Currency, Double> balances = new HashMap<>();
+        Map<Currency, Double> currencyBalances = new HashMap<>();
         if (this.balances != null) {
             for (var entry : this.balances.entrySet()) {
                 Currency currency = FancyCore.get().getCurrencyService().getCurrency(entry.getKey());
@@ -100,32 +100,30 @@ public record JsonFancyPlayer(
                     continue;
                 }
 
-                balances.put(currency, entry.getValue());
+                currencyBalances.put(currency, entry.getValue());
             }
         }
 
         // For backwards compatibility: if lastLoginTime is 0 or not set, use firstLoginTime
         long actualLastLoginTime = (lastLoginTime > 0) ? lastLoginTime : firstLoginTime;
-        
-        return new FancyPlayerDataImpl(
-                UUID.fromString(uuid),
-                username,
-                perms,
-                groups,
-                nickname,
-                chatColor,
-                ignoredPlayerUUIDs,
-                privateMessagesEnabled,
-                balances,
-                firstLoginTime,
-                actualLastLoginTime,
-                isVanished,
-                isFlying,
-                playTime,
-                homes,
-                kitCooldowns,
-                customData
-        );
+
+        return FancyPlayerDataImpl.builder(UUID.fromString(uuid), username)
+                .permissions(perms)
+                .groups(groups)
+                .nickname(nickname)
+                .chatColor(chatColor)
+                .ignoredPlayers(ignoredPlayerUUIDs)
+                .enabledPrivateMessages(privateMessagesEnabled)
+                .balances(currencyBalances)
+                .firstLoginTime(firstLoginTime)
+                .lastLoginTime(actualLastLoginTime)
+                .isVanished(isVanished)
+                .isFlying(isFlying)
+                .playTime(playTime)
+                .homes(homes)
+                .kitCooldowns(kitCooldowns)
+                .customData(customData)
+                .build();
     }
 
 }

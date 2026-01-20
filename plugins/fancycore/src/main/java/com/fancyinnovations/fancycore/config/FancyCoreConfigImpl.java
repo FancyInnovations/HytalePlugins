@@ -27,7 +27,7 @@ public class FancyCoreConfigImpl implements FancyCoreConfig {
 
     public static final String DISABLE_PERMISSION_PROVIDER_PATH = "experimental_features.disable_permission_provider";
 
-    private static final String CONFIG_FILE_PATH = "mods/FancyCore/config.json";
+    private static final String CONFIG_FILE_PATH = FancyCorePaths.CONFIG_FILE;
     private ConfigJSON config;
 
     public void init() {

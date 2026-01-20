@@ -15,22 +15,22 @@ import java.util.concurrent.ConcurrentHashMap;
 
 public class EventServiceImpl implements EventService {
 
-    public static final FancyCoreConfig CONFIG = FancyCorePlugin.get().getConfig();
-
+    private final FancyCoreConfig config;
     private final Map<Class<? extends FancyEvent>, List<EventListener<? extends FancyEvent>>> listeners;
 
-    public EventServiceImpl() {
+    public EventServiceImpl(FancyCoreConfig config) {
+        this.config = config;
         this.listeners = new ConcurrentHashMap<>();
     }
 
     @Override
     public boolean fireEvent(FancyEvent event) {
-        if (!CONFIG.getEventDiscordWebhookUrl().isEmpty()) {
-            for (String evt : CONFIG.getEventDiscordNotifications()) {
+        if (!config.getEventDiscordWebhookUrl().isEmpty()) {
+            for (String evt : config.getEventDiscordNotifications()) {
                 if (event.getClass().getSimpleName().equalsIgnoreCase(evt)) {
                     Message discordMessage = event.getDiscordMessage();
                     if (discordMessage != null) {
-                        DiscordWebhook.sendMsg(CONFIG.getEventDiscordWebhookUrl(), discordMessage);
+                        DiscordWebhook.sendMsg(config.getEventDiscordWebhookUrl(), discordMessage);
                     }
 
                     break;
@@ -43,7 +43,7 @@ public class EventServiceImpl implements EventService {
         }
 
         for (EventListener<? extends FancyEvent> listener : this.listeners.get(event.getClass())) {
-            ((EventListener<FancyEvent>) listener).on(event);
+            invokeListener(listener, event);
 
             if (event.isCancellable() && event.isCancelled()) {
                 return false;
@@ -51,6 +51,11 @@ public class EventServiceImpl implements EventService {
         }
 
         return true;
+    }
+
+    @SuppressWarnings("unchecked")
+    private <T extends FancyEvent> void invokeListener(EventListener<? extends FancyEvent> listener, T event) {
+        ((EventListener<T>) listener).on(event);
     }
 
     @Override

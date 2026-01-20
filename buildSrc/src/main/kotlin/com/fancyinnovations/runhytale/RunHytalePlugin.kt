@@ -88,34 +88,99 @@ open class RunServerTask : DefaultTask() {
         }
 
         // stdout
-        Thread {
-            process.inputStream.bufferedReader().useLines { it ->
-                it.forEach {
-                    println(it)
+        val stdoutThread = Thread {
+            try {
+                process.inputStream.bufferedReader().useLines { it ->
+                    it.forEach {
+                        println(it)
+                    }
                 }
+            } catch (e: Exception) {
+                System.err.println("Error reading process stdout: ${e.message}")
             }
-        }.start()
+        }
+        stdoutThread.isDaemon = true
+        stdoutThread.start()
 
         // stderr
-        Thread {
-            process.errorStream.bufferedReader().useLines { it ->
-                it.forEach {
-                    System.err.println(it)
+        val stderrThread = Thread {
+            try {
+                process.errorStream.bufferedReader().useLines { it ->
+                    it.forEach {
+                        System.err.println(it)
+                    }
                 }
+            } catch (e: Exception) {
+                System.err.println("Error reading process stderr: ${e.message}")
             }
-        }.start()
+        }
+        stderrThread.isDaemon = true
+        stderrThread.start()
 
         // stdin
-        Thread {
-            System.`in`.bufferedReader().useLines { lines ->
-                lines.forEach {
-                    process.outputStream.write((it + "\n").toByteArray())
-                    process.outputStream.flush()
+        val stdinThread = Thread {
+            try {
+                val output = process.outputStream
+                System.`in`.bufferedReader().useLines { lines ->
+                    lines.forEach {
+                        try {
+                            output.write((it + "\n").toByteArray())
+                            output.flush()
+                        } catch (e: Exception) {
+                            // Process may have terminated, stop reading
+                            return@useLines
+                        }
+                    }
                 }
+            } catch (e: Exception) {
+                System.err.println("Error writing to process stdin: ${e.message}")
             }
-        }.start()
+        }
+        stdinThread.isDaemon = true
+        stdinThread.start()
 
         val exitCode = process.waitFor()
+        
+        // Wait for reading threads to finish before closing streams
+        // Close stdin first to signal the stdin thread to stop
+        try {
+            process.outputStream.close()
+        } catch (e: Exception) {
+            // Ignore
+        }
+        
+        // Interrupt stdin thread and wait for it to finish
+        try {
+            stdinThread.interrupt()
+            stdinThread.join(1000) // Wait up to 1 second
+        } catch (e: Exception) {
+            // Ignore
+        }
+        
+        // Wait for stdout and stderr threads to finish (they will exit when streams are closed)
+        try {
+            stdoutThread.join(1000) // Wait up to 1 second
+        } catch (e: Exception) {
+            // Ignore
+        }
+        try {
+            stderrThread.join(1000) // Wait up to 1 second
+        } catch (e: Exception) {
+            // Ignore
+        }
+        
+        // Now safe to close input streams
+        try {
+            process.inputStream.close()
+        } catch (e: Exception) {
+            // Ignore
+        }
+        try {
+            process.errorStream.close()
+        } catch (e: Exception) {
+            // Ignore
+        }
+        
         println("Server exited with code $exitCode")
     }
 }
