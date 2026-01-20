@@ -1,9 +1,11 @@
 package com.fancyinnovations.fancycore.api.events.player;
 
+import com.fancyinnovations.fancycore.api.FancyCore;
 import com.fancyinnovations.fancycore.api.discord.Embed;
 import com.fancyinnovations.fancycore.api.discord.Message;
 import com.fancyinnovations.fancycore.api.moderation.Punishment;
 import com.fancyinnovations.fancycore.api.player.FancyPlayer;
+import com.fancyinnovations.fancycore.api.translations.MessageKey;
 
 import java.util.List;
 
@@ -28,67 +30,74 @@ public class PlayerPunishedEvent extends PlayerEvent {
         return punishment;
     }
 
+    private String getDuration() {
+        return punishment.expiresAt() == -1 ? "Permanent" : ((punishment.expiresAt() - punishment.issuedAt()) / 1000) + " seconds";
+    }
+
     @Override
     public Message getDiscordMessage() {
-        // TODO (I18N): make text translatable
+        var translationService = FancyCore.get().getTranslationService();
 
         switch (punishment.type()) {
             case WARNING -> {
+                String title = translationService.getRaw(MessageKey.DISCORD_PLAYER_WARNED);
+                String embedContent = translationService
+                        .getMessage(MessageKey.EVENT_PLAYER_PUNISHED_WARNING)
+                        .replace("player", player.getData().getUsername())
+                        .replace("reason", punishment.reason())
+                        .replace("issued_by", punishment.issuedBy().toString())
+                        .getParsedMessage();
+
                 return new Message(
-                        "Player warned",
-                        List.of(
-                                new Embed(
-                                        player.getData().getUsername() + " has been warned",
-                                        "Reason: " + punishment.reason() +
-                                                "\nIssued by: " +
-                                                punishment.issuedBy(),
-                                        0xdbb134
-                                )
-                        )
+                        title,
+                        List.of(new Embed(embedContent, "Reason: " + punishment.reason() + "\nIssued by: " + punishment.issuedBy(), 0xdbb134))
                 );
             }
 
             case MUTE -> {
+                String title = translationService.getRaw(MessageKey.DISCORD_PLAYER_MUTED);
+                String embedContent = translationService
+                        .getMessage(MessageKey.EVENT_PLAYER_PUNISHED_MUTE)
+                        .replace("player", player.getData().getUsername())
+                        .replace("reason", punishment.reason())
+                        .replace("issued_by", punishment.issuedBy().toString())
+                        .replace("duration", getDuration())
+                        .getParsedMessage();
+
                 return new Message(
-                        "Player muted",
-                        List.of(
-                                new Embed(
-                                        player.getData().getUsername() + " has been muted",
-                                        "Reason: " + punishment.reason() +
-                                                "\nIssued by: " + punishment.issuedBy() +
-                                                "\nDuration: " + (punishment.expiresAt() == -1 ? "Permanent" : ((punishment.expiresAt() - punishment.issuedAt()) / 1000) + " seconds"),
-                                        0xdbb134
-                                )
-                        )
+                        title,
+                        List.of(new Embed(embedContent, "Reason: " + punishment.reason() + "\nIssued by: " + punishment.issuedBy() + "\nDuration: " + getDuration(), 0xdbb134))
                 );
             }
 
             case KICK -> {
+                String title = translationService.getRaw(MessageKey.DISCORD_PLAYER_KICKED);
+                String embedContent = translationService
+                        .getMessage(MessageKey.EVENT_PLAYER_PUNISHED_KICK)
+                        .replace("player", player.getData().getUsername())
+                        .replace("reason", punishment.reason())
+                        .replace("issued_by", punishment.issuedBy().toString())
+                        .getParsedMessage();
+
                 return new Message(
-                        "Player kicked",
-                        List.of(
-                                new Embed(
-                                        player.getData().getUsername() + " has been kicked",
-                                        "Reason: " + punishment.reason() +
-                                                "\nIssued by: " + punishment.issuedBy(),
-                                        0xdbb134
-                                )
-                        )
+                        title,
+                        List.of(new Embed(embedContent, "Reason: " + punishment.reason() + "\nIssued by: " + punishment.issuedBy(), 0xdbb134))
                 );
             }
 
             case BAN -> {
+                String title = translationService.getRaw(MessageKey.DISCORD_PLAYER_BANNED);
+                String embedContent = translationService
+                        .getMessage(MessageKey.EVENT_PLAYER_PUNISHED_BAN)
+                        .replace("player", player.getData().getUsername())
+                        .replace("reason", punishment.reason())
+                        .replace("issued_by", punishment.issuedBy().toString())
+                        .replace("duration", getDuration())
+                        .getParsedMessage();
+
                 return new Message(
-                        "Player banned",
-                        List.of(
-                                new Embed(
-                                        player.getData().getUsername() + " has been banned",
-                                        "Reason: " + punishment.reason() +
-                                                "\nIssued by: " + punishment.issuedBy() +
-                                                "\nDuration: " + (punishment.expiresAt() == -1 ? "Permanent" : ((punishment.expiresAt() - punishment.issuedAt()) / 1000) + " seconds"),
-                                        0xdbb134
-                                )
-                        )
+                        title,
+                        List.of(new Embed(embedContent, "Reason: " + punishment.reason() + "\nIssued by: " + punishment.issuedBy() + "\nDuration: " + getDuration(), 0xdbb134))
                 );
             }
         }

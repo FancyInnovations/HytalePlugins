@@ -1,9 +1,11 @@
 package com.fancyinnovations.fancycore.api.events.player;
 
+import com.fancyinnovations.fancycore.api.FancyCore;
 import com.fancyinnovations.fancycore.api.discord.Embed;
 import com.fancyinnovations.fancycore.api.discord.Message;
 import com.fancyinnovations.fancycore.api.events.FancyEvent;
 import com.fancyinnovations.fancycore.api.player.FancyPlayer;
+import com.fancyinnovations.fancycore.api.translations.MessageKey;
 
 import java.util.List;
 
@@ -30,12 +32,18 @@ public abstract class PlayerEvent extends FancyEvent {
 
     @Override
     public Message getDiscordMessage() {
-        // TODO (I18N): make text translatable
+        String message = FancyCore.get().getTranslationService()
+                .getMessage(MessageKey.EVENT_PLAYER_GENERIC)
+                .replace("player", player.getData().getUsername())
+                .getParsedMessage();
+
+        String embedTitle = FancyCore.get().getTranslationService().getRaw(MessageKey.DISCORD_PLAYER_EVENT_FIRED);
+
         return new Message(
-                "A player event of type " + this.getClass().getSimpleName() + " was fired.",
+                message,
                 List.of(
                         new Embed(
-                                "Player event fired",
+                                embedTitle,
                                 "Event Type: " + this.getClass().getSimpleName() + "\nFired At: <t:"+firedAt()+":f>" +
                                         "\nPlayer: " + player.getData().getUsername(),
                                 0x3498db

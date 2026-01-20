@@ -4,6 +4,7 @@ import com.fancyinnovations.fancycore.api.FancyCore;
 import com.fancyinnovations.fancycore.api.chat.ChatRoom;
 import com.fancyinnovations.fancycore.api.events.chat.*;
 import com.fancyinnovations.fancycore.api.player.FancyPlayer;
+import com.fancyinnovations.fancycore.api.translations.MessageKey;
 import com.fancyinnovations.fancycore.main.FancyCorePlugin;
 import com.fancyinnovations.fancycore.utils.TimeUtils;
 import com.hypixel.hytale.server.core.permissions.PermissionsModule;
@@ -80,7 +81,8 @@ public class ChatRoomImpl implements ChatRoom {
     @Override
     public void sendMessage(FancyPlayer sender, String message) {
         if (muted && !PermissionsModule.get().hasPermission(sender.getData().getUUID(), "fancycore.chat.bypassmute")) {
-            sender.sendMessage("Chat is currently muted."); // TODO (I18N): make message translatable
+            String mutedMsg = FancyCore.get().getTranslationService().getRaw(MessageKey.CHAT_ROOM_MUTED);
+            sender.sendMessage(mutedMsg);
             return;
         }
 
@@ -88,7 +90,11 @@ public class ChatRoomImpl implements ChatRoom {
         long currentTime = System.currentTimeMillis();
         long remainingCooldown = cooldown - (currentTime - lastMessageTime);
         if (remainingCooldown > 0 && !PermissionsModule.get().hasPermission(sender.getData().getUUID(), "fancycore.chat.bypasscooldown")) {
-            sender.sendMessage("You must wait " + TimeUtils.formatTime(remainingCooldown) + " before sending another message."); // TODO (I18N): make message translatable
+            String cooldownMsg = FancyCore.get().getTranslationService()
+                    .getMessage(MessageKey.CHAT_ROOM_COOLDOWN)
+                    .replace("time", TimeUtils.formatTime(remainingCooldown))
+                    .getParsedMessage();
+            sender.sendMessage(cooldownMsg);
             return;
         }
 
@@ -133,7 +139,8 @@ public class ChatRoomImpl implements ChatRoom {
             broadcastMessage(""); // Sending empty messages to simulate clearing chat
         }
 
-        broadcastMessage("Chat has been cleared."); // TODO (I18N): make message translatable
+        String clearedMsg = FancyCore.get().getTranslationService().getRaw(MessageKey.CHAT_ROOM_CLEARED);
+        broadcastMessage(clearedMsg);
     }
 
     @Override

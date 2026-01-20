@@ -21,7 +21,7 @@ public class PunishmentServiceImpl implements PunishmentService {
 
     public PunishmentServiceImpl() {
         this.storage = FancyCorePlugin.get().getPunishmentStorage();
-        this.translator = FancyCorePlugin.get().getTranslationService();
+        this.translator = (TranslationService) FancyCorePlugin.get().getTranslationService();
 
         translator
                 .addMessage("punishments.warning.default_reason", "You have been warned for: {reason}.")

@@ -3,6 +3,7 @@ package com.fancyinnovations.fancycore.api.events;
 import com.fancyinnovations.fancycore.api.FancyCore;
 import com.fancyinnovations.fancycore.api.discord.Embed;
 import com.fancyinnovations.fancycore.api.discord.Message;
+import com.fancyinnovations.fancycore.api.translations.MessageKey;
 
 import java.util.List;
 
@@ -80,12 +81,18 @@ public abstract class FancyEvent {
      * @return a Message object for Discord, or null if not applicable
      */
     public Message getDiscordMessage() {
-        // TODO (I18N): make text translatable
+        String message = FancyCore.get().getTranslationService()
+                .getMessage(MessageKey.EVENT_GENERIC)
+                .replace("event_type", this.getClass().getSimpleName())
+                .getParsedMessage();
+
+        String embedTitle = FancyCore.get().getTranslationService().getRaw(MessageKey.DISCORD_EVENT_FIRED);
+
         return new Message(
-                "An event of type " + this.getClass().getSimpleName() + " was fired.",
+                message,
                 List.of(
                         new Embed(
-                                "Event fired",
+                                embedTitle,
                                 "Event Type: " + this.getClass().getSimpleName() + "\nFired At: <t:"+firedAt+":f>",
                                 0x3498db
                         )

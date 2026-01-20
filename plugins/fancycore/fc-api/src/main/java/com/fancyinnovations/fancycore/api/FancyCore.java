@@ -19,6 +19,7 @@ import com.fancyinnovations.fancycore.api.player.FancyPlayerStorage;
 import com.fancyinnovations.fancycore.api.scoreboard.ScoreboardService;
 import com.fancyinnovations.fancycore.api.scoreboard.ScoreboardStorage;
 import com.fancyinnovations.fancycore.api.teleport.*;
+import com.fancyinnovations.fancycore.api.translations.TranslationService;
 import de.oliver.fancyanalytics.logger.ExtendedFancyLogger;
 import org.jetbrains.annotations.ApiStatus;
 
@@ -39,6 +40,8 @@ public interface FancyCore {
     EventService getEventService();
 
     PlaceholderService getPlaceholderService();
+
+    TranslationService getTranslationService();
 
     @ApiStatus.Internal
     FancyPlayerStorage getPlayerStorage();

@@ -22,7 +22,7 @@ public class ScoreboardPageLinesSetAlignmentCMD extends AbstractPlayerCommand {
 
     private final RequiredArg<ScoreboardPage> pageArg = withRequiredArg("page", "the scoreboard page", FancyCoreArgs.SCOREBOARD_PAGE);
     private final RequiredArg<Integer> lineArg = withRequiredArg("line", "the number of the line (starting from 1)", ArgTypes.INTEGER);
-    private final RequiredArg<String> aligbmentArg = withRequiredArg("alignment", "Center or Left", ArgTypes.STRING);
+    private final RequiredArg<String> alignmentArg = withRequiredArg("alignment", "Center or Left", ArgTypes.STRING);
 
     public ScoreboardPageLinesSetAlignmentCMD() {
         super("setalignment", "Set the alignment of a scoreboard line");
@@ -43,7 +43,7 @@ public class ScoreboardPageLinesSetAlignmentCMD extends AbstractPlayerCommand {
         }
 
         // TODO 'Right' alignment crashes the client
-        String alignment = aligbmentArg.get(ctx);
+        String alignment = alignmentArg.get(ctx);
         if (alignment.equalsIgnoreCase("center")) {
             alignment = "Center";
         } else if (alignment.equalsIgnoreCase("left")) {
