@@ -9,14 +9,14 @@ public class FancySpacesVersionFetcher implements VersionFetcher {
     private final String spaceID;
     private final String channel;
 
-    public FancySpacesVersionFetcher(String spaceID, String channel) {
+    public FancySpacesVersionFetcher(String spaceID, String channel, String apiKey) {
         this.spaceID = spaceID;
         this.channel = channel;
-        this.fs = new FancySpaces();
+        this.fs = new FancySpaces(apiKey);
     }
 
     public FancySpacesVersionFetcher(String spaceID) {
-        this(spaceID, null);
+        this(spaceID, null, null);
     }
 
     @Override
