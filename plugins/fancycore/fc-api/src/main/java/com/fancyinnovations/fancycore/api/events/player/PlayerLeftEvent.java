@@ -1,7 +1,9 @@
 package com.fancyinnovations.fancycore.api.events.player;
 
+import com.fancyinnovations.fancycore.api.FancyCore;
 import com.fancyinnovations.fancycore.api.discord.Message;
 import com.fancyinnovations.fancycore.api.player.FancyPlayer;
+import com.fancyinnovations.fancycore.api.translations.MessageKey;
 
 import java.util.List;
 
@@ -16,10 +18,11 @@ public class PlayerLeftEvent extends PlayerEvent {
 
     @Override
     public Message getDiscordMessage() {
-        // TODO (I18N): make text translatable
-        return new Message(
-                "Player " + player.getData().getUsername() + " has left the server.",
-                List.of()
-        );
+        String message = FancyCore.get().getTranslationService()
+                .getMessage(MessageKey.EVENT_PLAYER_LEFT)
+                .replace("player", player.getData().getUsername())
+                .getParsedMessage();
+
+        return new Message(message, List.of());
     }
 }

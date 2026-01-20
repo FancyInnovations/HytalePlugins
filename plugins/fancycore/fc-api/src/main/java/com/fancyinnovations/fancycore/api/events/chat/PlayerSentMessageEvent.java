@@ -5,6 +5,7 @@ import com.fancyinnovations.fancycore.api.chat.ChatRoom;
 import com.fancyinnovations.fancycore.api.discord.Message;
 import com.fancyinnovations.fancycore.api.events.player.PlayerEvent;
 import com.fancyinnovations.fancycore.api.player.FancyPlayer;
+import com.fancyinnovations.fancycore.api.translations.MessageKey;
 
 import java.util.List;
 
@@ -53,15 +54,17 @@ public class PlayerSentMessageEvent extends PlayerEvent {
 
     @Override
     public Message getDiscordMessage() {
-        // TODO (I18N): make text translatable
-
         if (!chatRoom.getName().equals(FancyCore.get().getConfig().getDefaultChatroom())) {
             return null;
         }
 
-        return new Message(
-                player.getData().getUsername() + ": " + rawMessage,
-                List.of()
-        );
+        String message = FancyCore.get().getTranslationService()
+                .getMessage(MessageKey.EVENT_CHAT_SENT)
+                .replace("player", player.getData().getUsername())
+                .replace("message", rawMessage)
+                .replace("chat_room", chatRoom.getName())
+                .getParsedMessage();
+
+        return new Message(message, List.of());
     }
 }

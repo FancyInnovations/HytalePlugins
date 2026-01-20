@@ -1,6 +1,8 @@
 package com.fancyinnovations.fancycore.utils;
 
 import com.fancyinnovations.fancycore.api.discord.Message;
+import com.fancyinnovations.fancycore.main.FancyCorePlugin;
+import de.oliver.fancyanalytics.logger.properties.ThrowableProperty;
 import de.oliver.fancyanalytics.sdk.utils.HttpRequest;
 
 import java.io.IOException;
@@ -18,11 +20,10 @@ public class DiscordWebhook {
         try {
             HttpResponse<String> resp = request.send();
             if (resp.statusCode() != 204) {
-                System.out.println("Failed to send message with discord webhook: " + resp.body());
+                FancyCorePlugin.get().getFancyLogger().warn("Failed to send message with discord webhook: " + resp.body());
             }
         } catch (URISyntaxException | IOException | InterruptedException e) {
-            System.out.println("Failed to send webhook");
-            e.printStackTrace();
+            FancyCorePlugin.get().getFancyLogger().error("Failed to send webhook", ThrowableProperty.of(e));
         }
     }
 

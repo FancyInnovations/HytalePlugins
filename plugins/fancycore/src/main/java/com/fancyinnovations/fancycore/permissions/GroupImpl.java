@@ -75,7 +75,7 @@ public class GroupImpl implements Group {
 
     @Override
     public List<String> getParents() {
-        return List.of();
+        return List.copyOf(parents);
     }
 
     @Override

@@ -13,6 +13,7 @@ import com.fancyinnovations.fancycore.api.scoreboard.ScoreboardPage;
 import com.fancyinnovations.fancycore.api.scoreboard.ScoreboardService;
 import com.fancyinnovations.fancycore.api.teleport.Location;
 import com.fancyinnovations.fancycore.api.teleport.SpawnService;
+import com.fancyinnovations.fancycore.api.translations.MessageKey;
 import com.fancyinnovations.fancycore.main.FancyCorePlugin;
 import com.fancyinnovations.fancycore.main.SeedDefaultData;
 import com.fancyinnovations.fancycore.player.FancyPlayerDataImpl;
@@ -80,10 +81,19 @@ public class PlayerJoinListener {
         Punishment punishment = fp.isBanned();
         if (punishment != null) {
             if (punishment.expiresAt() < 0) {
-                event.getPlayerRef().getPacketHandler().disconnect("You are banned from this server.\nReason: " + punishment.reason()); //TODO (I18N): replace with translated message (include ban reason and duration)
+                String banMessage = FancyCore.get().getTranslationService()
+                        .getMessage(MessageKey.BAN_PERMANENT)
+                        .replace("reason", punishment.reason())
+                        .getParsedMessage();
+                event.getPlayerRef().getPacketHandler().disconnect(banMessage);
             } else {
                 String duration = TimeUtils.formatTime(punishment.remainingDuration());
-                event.getPlayerRef().getPacketHandler().disconnect("You are banned from this server.\nReason: " + punishment.reason() + "\nRemaining duration: " + duration); //TODO (I18N): replace with translated message (include ban reason and duration)
+                String banMessage = FancyCore.get().getTranslationService()
+                        .getMessage(MessageKey.BAN_TEMPORARY)
+                        .replace("reason", punishment.reason())
+                        .replace("duration", duration)
+                        .getParsedMessage();
+                event.getPlayerRef().getPacketHandler().disconnect(banMessage);
             }
             return;
         }

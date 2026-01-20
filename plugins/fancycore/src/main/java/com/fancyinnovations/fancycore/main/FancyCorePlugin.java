@@ -167,7 +167,8 @@ public class FancyCorePlugin extends JavaPlugin implements FancyCore {
                 logsFile.getParentFile().mkdirs();
                 logsFile.createNewFile();
             } catch (Exception e) {
-                e.printStackTrace();
+                // Logger not yet initialized, use System.err as fallback during bootstrap
+                System.err.println("[FancyCore] Failed to create log file: " + e.getMessage());
             }
         }
         JsonAppender jsonAppender = new JsonAppender(false, false, true, logsFile.getPath());
@@ -455,7 +456,8 @@ public class FancyCorePlugin extends JavaPlugin implements FancyCore {
         return placeholderService;
     }
 
-    public TranslationService getTranslationService() {
+    @Override
+    public com.fancyinnovations.fancycore.api.translations.TranslationService getTranslationService() {
         return translationService;
     }
 
