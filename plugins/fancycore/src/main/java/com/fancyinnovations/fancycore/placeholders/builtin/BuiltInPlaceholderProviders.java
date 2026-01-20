@@ -26,6 +26,14 @@ public class BuiltInPlaceholderProviders {
         PlaceholderService.get().registerProvider(PlayerPlayTimeMsPlaceholder.INSTANCE);
         PlaceholderService.get().registerProvider(PlayerUuidPlaceholder.INSTANCE);
         PlaceholderService.get().registerProvider(PlayerWorldPlaceholder.INSTANCE);
+        PlaceholderService.get().registerProvider(PlayerIsOPPlaceholder.INSTANCE);
+        PlaceholderService.get().registerProvider(PlayerGamemodePlaceholder.INSTANCE);
+        PlaceholderService.get().registerProvider(PlayerLocationXPlaceholder.INSTANCE);
+        PlaceholderService.get().registerProvider(PlayerLocationYPlaceholder.INSTANCE);
+        PlaceholderService.get().registerProvider(PlayerLocationZPlaceholder.INSTANCE);
+        PlaceholderService.get().registerProvider(PlayerLocationYawPlaceholder.INSTANCE);
+        PlaceholderService.get().registerProvider(PlayerLocationPitchPlaceholder.INSTANCE);
+        PlaceholderService.get().registerProvider(PlayerLocationRollPlaceholder.INSTANCE);
 
         // Server placeholders
         PlaceholderService.get().registerProvider(ServerMaxPlayersPlaceholder.INSTANCE);

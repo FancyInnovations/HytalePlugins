@@ -17,7 +17,7 @@ public class LPSuffixPlaceholder implements PlaceholderProvider {
     private LuckPerms luckPerms = null;
 
     private LPSuffixPlaceholder() {
-        if (PluginManager.get().getPlugin(PluginIdentifier.fromString("LuckPerms")) != null) {
+        if (PluginManager.get().getPlugin(PluginIdentifier.fromString("LuckPerms:LuckPerms")) != null) {
             luckPerms = LuckPermsProvider.get();
         }
     }
@@ -35,7 +35,7 @@ public class LPSuffixPlaceholder implements PlaceholderProvider {
     @Override
     public String parse(@Nullable FancyPlayer player, @NotNull String input) {
         if (player == null || luckPerms == null) {
-            return "";
+            return "N/A";
         }
 
         User user = luckPerms.getUserManager().getUser(player.getData().getUUID());

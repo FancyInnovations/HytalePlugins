@@ -24,6 +24,10 @@ public class PlayerFirstTimeJoinedRawPlaceholder implements PlaceholderProvider 
 
     @Override
     public String parse(@Nullable FancyPlayer player, @NotNull String input) {
+        if (player == null) {
+            return "N/A";
+        }
+
         return String.valueOf(player.getData().getFirstLoginTime());
     }
 }

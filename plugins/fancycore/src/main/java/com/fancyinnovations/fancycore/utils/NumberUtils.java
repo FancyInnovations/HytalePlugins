@@ -6,11 +6,10 @@ import java.util.Locale;
 
 public class NumberUtils {
 
+    public static final DecimalFormat FORMAT_TWO_DECIMALS;
     private static final String[] NUMBER_SUFFIXES = {
             "", "k", "m", "b", "t", "q", "Q"
     };
-
-    private static final DecimalFormat FORMAT_TWO_DECIMALS;
 
     static {
         DecimalFormatSymbols symbols = new DecimalFormatSymbols(Locale.US);

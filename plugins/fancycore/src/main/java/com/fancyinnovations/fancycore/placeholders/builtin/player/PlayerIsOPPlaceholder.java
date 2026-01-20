@@ -2,25 +2,25 @@ package com.fancyinnovations.fancycore.placeholders.builtin.player;
 
 import com.fancyinnovations.fancycore.api.placeholders.PlaceholderProvider;
 import com.fancyinnovations.fancycore.api.player.FancyPlayer;
-import com.fancyinnovations.fancycore.utils.TimeUtils;
+import com.hypixel.hytale.server.core.permissions.PermissionsModule;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-public class PlayerFirstTimeJoinedPlaceholder implements PlaceholderProvider {
+public class PlayerIsOPPlaceholder implements PlaceholderProvider {
 
-    public static final PlayerFirstTimeJoinedPlaceholder INSTANCE = new PlayerFirstTimeJoinedPlaceholder();
+    public static final PlayerIsOPPlaceholder INSTANCE = new PlayerIsOPPlaceholder();
 
-    private PlayerFirstTimeJoinedPlaceholder() {
+    private PlayerIsOPPlaceholder() {
     }
 
     @Override
     public String getName() {
-        return "Player first time joined";
+        return "Player is OP";
     }
 
     @Override
     public String getIdentifier() {
-        return "player_first_time_joined";
+        return "player_is_op";
     }
 
     @Override
@@ -29,6 +29,7 @@ public class PlayerFirstTimeJoinedPlaceholder implements PlaceholderProvider {
             return "N/A";
         }
 
-        return TimeUtils.formatDate(player.getData().getFirstLoginTime());
+        boolean hasOP = PermissionsModule.get().hasPermission(player.getData().getUUID(), "*");
+        return Boolean.toString(hasOP);
     }
 }

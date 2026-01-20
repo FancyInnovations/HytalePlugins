@@ -71,7 +71,15 @@ public class ScoreboardUI extends CustomUIHud {
 
         int i = 0;
         for (ScoreboardLine line : currentPage.getLines()) {
-            String processedText = PlaceholderService.get().parse(fancyPlayer, line.getContent());
+            String processedText = line.getContent();
+            try {
+                processedText = PlaceholderService.get().parse(fancyPlayer, line.getContent());
+            } catch (Exception e) {
+                FancyCorePlugin.get().getFancyLogger().warn(
+                        "Failed to parse placeholders for scoreboard line: " + line.getContent(),
+                        ThrowableProperty.of(e)
+                );
+            }
             Message colouredText = ColorUtils.colour(processedText);
 
             builder.appendInline("#ScoreboardBody", "Group { LayoutMode: Top; Anchor: (Bottom: 0); }");

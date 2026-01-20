@@ -224,6 +224,13 @@ Player placeholders:
 - `%player_group_prefix%` - Player group prefix
 - `%player_group_suffix%` - Player group suffix
 - `%player_world%` - Player current world
+- `%player_is_op%` - Player is OP
+- `%player_location_x%` - Player X coordinate
+- `%player_location_y%` - Player Y coordinate
+- `%player_location_z%` - Player Z coordinate
+- `%player_location_yaw%` - Player yaw
+- `%player_location_pitch%` - Player pitch
+- `%player_location_roll%` - Player roll
 
 Server placeholders:
 - `%online_players%` - Number of online players

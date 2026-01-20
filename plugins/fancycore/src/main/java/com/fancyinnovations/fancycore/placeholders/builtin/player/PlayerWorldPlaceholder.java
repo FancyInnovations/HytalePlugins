@@ -26,13 +26,17 @@ public class PlayerWorldPlaceholder implements PlaceholderProvider {
 
     @Override
     public String parse(@Nullable FancyPlayer player, @NotNull String input) {
-        if (player.getPlayer() == null || player.getPlayer().getWorldUuid() == null) {
-            return "Unknown";
+        if (player == null) {
+            return "N/A";
+        }
+
+        if (player.getPlayer().getWorldUuid() == null) {
+            return "N/A";
         }
 
         World world = Universe.get().getWorld(player.getPlayer().getWorldUuid());
         if (world == null) {
-            return "Unknown";
+            return "N/A";
         }
 
         return world.getName();

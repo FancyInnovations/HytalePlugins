@@ -26,6 +26,10 @@ public class PlayerGroupSuffixPlaceholder implements PlaceholderProvider {
 
     @Override
     public String parse(@Nullable FancyPlayer player, @NotNull String input) {
+        if (player == null) {
+            return "N/A";
+        }
+
         Group highestGroup = null;
         for (String group : player.getData().getGroups()) {
             Group g = PermissionService.get().getGroup(group);

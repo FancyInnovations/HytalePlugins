@@ -26,6 +26,10 @@ public class PlayerBalanceFormattedPlaceholder implements PlaceholderProvider {
 
     @Override
     public String parse(@Nullable FancyPlayer player, @NotNull String input) {
+        if (player == null) {
+            return "N/A";
+        }
+
         return NumberUtils.formatNumber(player.getData().getBalance(FancyCore.get().getCurrencyService().getPrimaryCurrency()));
     }
 }
