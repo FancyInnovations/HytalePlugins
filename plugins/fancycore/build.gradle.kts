@@ -33,7 +33,7 @@ dependencies {
     implementation("de.oliver:config:1.0.0")
     implementation("de.oliver.FancyAnalytics:java-sdk:0.0.5")
     implementation("de.oliver.FancyAnalytics:logger:0.0.9")
-    implementation("com.fancyinnovations.fancyspaces:java-sdk:0.0.3")
+    implementation("com.fancyinnovations.fancyspaces:java-sdk:0.0.4")
 
     compileOnly("net.luckperms:api:5.5")
 

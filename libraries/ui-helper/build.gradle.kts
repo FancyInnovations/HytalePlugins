@@ -8,7 +8,7 @@ dependencies {
 
     compileOnly("de.oliver.FancyAnalytics:logger:0.0.9")
     implementation("de.oliver.FancyAnalytics:java-sdk:0.0.5")
-    compileOnly("com.fancyinnovations.fancyspaces:java-sdk:0.0.3")
+    compileOnly("com.fancyinnovations.fancyspaces:java-sdk:0.0.4")
 
     compileOnly("com.google.code.gson:gson:2.13.2")
     compileOnly("org.jetbrains:annotations:26.0.2-1")
