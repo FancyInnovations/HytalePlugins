@@ -26,7 +26,7 @@ public class TeleportAcceptCMD extends CommandBase {
 
     public TeleportAcceptCMD() {
         super("teleportaccept", "Accepts a pending teleport request from another player");
-        addAliases("tpa", "tpaccept");
+        addAliases("tpaccept", "tpyes");
          requirePermission("fancycore.commands.teleportaccept");
     }
 

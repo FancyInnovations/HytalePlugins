@@ -15,6 +15,7 @@ public class IgnoreCMD extends CommandBase {
 
     public IgnoreCMD() {
         super("ignore", "Ignore a player to stop receiving their messages.");
+        addAliases("silence");
         requirePermission("fancycore.commands.ignore");
     }
 

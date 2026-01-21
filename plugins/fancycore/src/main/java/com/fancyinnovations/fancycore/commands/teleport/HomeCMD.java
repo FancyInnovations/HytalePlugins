@@ -25,7 +25,7 @@ public class HomeCMD extends AbstractPlayerCommand {
 
     public HomeCMD() {
         super("home", "Teleports you to your home point with the specified name or the first home if no name is provided");
-        addAliases("home", "h");
+        addAliases("h");
         requirePermission("fancycore.commands.home");
     }
 
