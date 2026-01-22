@@ -98,11 +98,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.ScheduledFuture;
-import java.util.concurrent.TimeUnit;
+import java.util.concurrent.*;
 import java.util.function.Function;
 
 public class FancyCorePlugin extends JavaPlugin implements FancyCore {
@@ -323,8 +319,8 @@ public class FancyCorePlugin extends JavaPlugin implements FancyCore {
 
         threadPool.shutdown();
         try {
-            if (!threadPool.awaitTermination(30, TimeUnit.SECONDS)) {
-                fancyLogger.warn("Thread pool did not terminate within 30 seconds, forcing shutdown...");
+            if (!threadPool.awaitTermination(5, TimeUnit.SECONDS)) {
+                fancyLogger.warn("Thread pool did not terminate within 5 seconds, forcing shutdown...");
                 threadPool.shutdownNow();
                 if (!threadPool.awaitTermination(10, TimeUnit.SECONDS)) {
                     fancyLogger.error("Thread pool did not terminate after forced shutdown");

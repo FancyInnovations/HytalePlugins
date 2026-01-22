@@ -55,6 +55,6 @@ public class WarpCMD extends AbstractPlayerCommand {
         Teleport teleport = new Teleport(targetWorld, location.positionVec(), location.rotationVec());
         store.addComponent(ref, Teleport.getComponentType(), teleport);
 
-        fp.sendMessage("Teleported to spawn point.");
+        fp.sendMessage("Teleported to warp: " + warp.name());
     }
 }
