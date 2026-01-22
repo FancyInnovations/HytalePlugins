@@ -4,14 +4,13 @@ import com.fancyinnovations.fancycore.api.player.FancyPlayer;
 import com.fancyinnovations.fancycore.api.player.FancyPlayerService;
 import com.fancyinnovations.fancycore.api.teleport.Warp;
 import com.fancyinnovations.fancycore.api.teleport.WarpService;
-import com.fancyinnovations.fancycore.uis.warps.WarpsPage;
+import com.fancyinnovations.fancycore.uis.teleportation.WarpsPage;
 import com.hypixel.hytale.component.Ref;
 import com.hypixel.hytale.component.Store;
 import com.hypixel.hytale.server.core.Message;
 import com.hypixel.hytale.server.core.command.system.CommandContext;
 import com.hypixel.hytale.server.core.command.system.basecommands.AbstractPlayerCommand;
 import com.hypixel.hytale.server.core.entity.entities.Player;
-import com.hypixel.hytale.server.core.permissions.PermissionsModule;
 import com.hypixel.hytale.server.core.universe.PlayerRef;
 import com.hypixel.hytale.server.core.universe.world.World;
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
@@ -46,14 +45,19 @@ public class ListWarpsCMD extends AbstractPlayerCommand {
         }
 
         Player player = store.getComponent(ref, Player.getComponentType());
+        if (player == null) {
+            ctx.sendMessage(Message.raw("Player component not found."));
+            return;
+        }
+
         player.getPageManager().openCustomPage(ref, store, new WarpsPage(playerRef));
 
-        ctx.sendMessage(Message.raw("Available Warps:"));
-        for (Warp warp : warps) {
-            if (!PermissionsModule.get().hasPermission(fp.getData().getUUID(), "fancycore.warps." + warp.name())) {
-                continue;
-            }
-            ctx.sendMessage(Message.raw("- " + warp.name()));
-        }
+//        ctx.sendMessage(Message.raw("Available Warps:"));
+//        for (Warp warp : warps) {
+//            if (!PermissionsModule.get().hasPermission(fp.getData().getUUID(), "fancycore.warps." + warp.name())) {
+//                continue;
+//            }
+//            ctx.sendMessage(Message.raw("- " + warp.name()));
+//        }
     }
 }

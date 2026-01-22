@@ -1,4 +1,4 @@
-package com.fancyinnovations.fancycore.uis.warps;
+package com.fancyinnovations.fancycore.uis.teleportation;
 
 import com.fancyinnovations.fancycore.api.player.FancyPlayer;
 import com.fancyinnovations.fancycore.api.player.FancyPlayerService;

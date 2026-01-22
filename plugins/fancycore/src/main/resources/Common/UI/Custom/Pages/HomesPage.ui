@@ -1,0 +1,57 @@
+$C = "../Common.ui";
+
+@CustomStyle = TextButtonStyle(
+              Default: (Background: $C.@DefaultSquareButtonDefaultBackground, LabelStyle: $C.@DefaultButtonLabelStyle),
+              Hovered: (Background: $C.@DefaultSquareButtonHoveredBackground, LabelStyle: $C.@DefaultButtonLabelStyle),
+              Pressed: (Background: $C.@DefaultSquareButtonPressedBackground, LabelStyle: $C.@DefaultButtonLabelStyle),
+              Disabled: (Background: $C.@DefaultSquareButtonDisabledBackground, LabelStyle: $C.@DefaultButtonDisabledLabelStyle),
+              Sounds: $C.@ButtonSounds,
+            );
+
+$C.@PageOverlay {
+  $C.@DecoratedContainer {
+    Anchor: (Width: 600, Height: 669);
+
+    #Title {
+        $C.@Title {
+          @Text = "Homes";
+        }
+    }
+
+    #Content {
+      LayoutMode: Left;
+
+      Group #Main {
+        LayoutMode: Top;
+
+        Group #Separator{
+          Anchor: (Width: 300, Top: 16, Bottom: 10);
+          OutlineColor: #93844c;
+          OutlineSize: 0.5;
+        }
+
+        Label {
+          Anchor: ();
+          Style: (
+            FontSize: 18,
+            TextColor: #93844c,
+            RenderBold: true
+            );
+          Text: "Homes";
+        }
+
+        Group #LocationList {
+          Anchor: (Width: 580, Top: 2);
+          FlexWeight: 1;
+          LayoutMode: TopScrolling;
+          Padding: (Left: 7);
+          ScrollbarStyle: $C.@DefaultScrollbarStyle;
+
+          Group #LocationCards {
+            LayoutMode: Top;
+          }
+        }
+      }
+    }
+  }
+}
