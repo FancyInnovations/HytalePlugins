@@ -38,5 +38,8 @@ public class PlayerLeaveListener {
                 () -> FancyCorePlugin.get().getScoreboardServiceImpl().detachScoreboard(fp),
                 50, TimeUnit.MILLISECONDS   // ~1 tick (50ms)
         );
+
+        new PlayerLeftEvent(fp).fire();
+        fp.setPlayer(null);
     }
 }
