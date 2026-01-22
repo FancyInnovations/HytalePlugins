@@ -28,7 +28,7 @@ dependencies {
     implementation(project(":plugins:fancycore:fc-api"))
 
     implementation(project(":libraries:version-checker"))
-    implementation(project(":libraries:ui-helper"))
+//    implementation(project(":libraries:ui-helper"))
 
     implementation("de.oliver:JDB:1.0.4")
     implementation("de.oliver:config:1.0.1")

@@ -3,8 +3,17 @@ plugins {
     id("maven-publish")
 }
 
+repositories {
+    mavenLocal()
+    mavenCentral()
+    maven(url = "https://repo.fancyinnovations.com/snapshots")
+    maven(url = "https://repo.lushplugins.org/releases")
+    maven(url = "https://maven.hytale.com/release")
+    maven(url = "https://maven.hytale.com/pre-release")
+}
+
 dependencies {
-    compileOnly(files("../hytale-server/HytaleServer.jar"))
+    compileOnly("com.hypixel.hytale:Server:2026.01.22-6f8bdbdc4")
 
     compileOnly("de.oliver.FancyAnalytics:logger:0.0.9")
     implementation("de.oliver.FancyAnalytics:java-sdk:0.0.5")
