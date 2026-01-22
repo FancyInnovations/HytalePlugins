@@ -1,0 +1,60 @@
+$C = "../Common.ui";
+
+@CustomLabelStyle = LabelStyle(
+  FontSize: 17,
+  TextColor: #bfcdd5,
+  RenderBold: true,
+  RenderUppercase: true,
+  HorizontalAlignment: Center,
+  VerticalAlignment: Center
+);
+
+@CustomStyle = TextButtonStyle(
+  Default: (Background: $C.@DefaultSquareButtonDefaultBackground, LabelStyle: @CustomLabelStyle),
+  Hovered: (Background: $C.@DefaultSquareButtonHoveredBackground, LabelStyle: @CustomLabelStyle),
+  Pressed: (Background: $C.@DefaultSquareButtonPressedBackground, LabelStyle: @CustomLabelStyle),
+  Disabled: (Background: $C.@DefaultSquareButtonDisabledBackground, LabelStyle: @CustomLabelStyle),
+  Sounds: $C.@ButtonSounds,
+);
+
+Group {
+  LayoutMode: Left;
+  Background: $C.@InputBoxBackground;
+  FlexWeight: 1;
+  Padding: (Left: 10, Top: 5, Bottom: 3);
+  Anchor: (Bottom: 5);
+
+  // LEFT SIDE
+  Group {
+    LayoutMode: Top;
+    FlexWeight: 1;
+
+    Label #KitName {
+      Style: (
+        FontSize: 22,
+        RenderBold: true,
+        TextColor: #ffffff
+      );
+    }
+
+    Group {
+      LayoutMode: Left;
+
+      Label { Text: "Cooldown: "; Style: (FontSize: 14, RenderBold: true, TextColor: #93844c); }
+      Label #Cooldown { Style: (FontSize: 14, TextColor: #ffffff); }
+    }
+  }
+
+  // RIGHT SIDE
+  Group {
+    Anchor: (Vertical: 0);
+    Padding: (Right: 6);
+
+    $C.@TextButton #GetButton {
+      Padding: (Left: 8, Right: 8, Top: 4, Bottom: 4);
+      Text: "Get";
+      Overscroll: false;
+      Style: @CustomStyle;
+    }
+  }
+}

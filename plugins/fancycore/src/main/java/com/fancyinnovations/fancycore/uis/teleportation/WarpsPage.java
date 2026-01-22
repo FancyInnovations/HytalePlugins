@@ -14,6 +14,7 @@ import com.hypixel.hytale.server.core.entity.UUIDComponent;
 import com.hypixel.hytale.server.core.entity.entities.Player;
 import com.hypixel.hytale.server.core.entity.entities.player.pages.InteractiveCustomUIPage;
 import com.hypixel.hytale.server.core.modules.entity.teleport.Teleport;
+import com.hypixel.hytale.server.core.permissions.PermissionsModule;
 import com.hypixel.hytale.server.core.ui.builder.EventData;
 import com.hypixel.hytale.server.core.ui.builder.UICommandBuilder;
 import com.hypixel.hytale.server.core.ui.builder.UIEventBuilder;
@@ -31,6 +32,16 @@ public class WarpsPage extends InteractiveCustomUIPage<LocationUIData> {
 
     @Override
     public void build(@NotNull Ref<EntityStore> ref, @NotNull UICommandBuilder command, @NotNull UIEventBuilder event, @NotNull Store<EntityStore> store) {
+        UUIDComponent uuidComponent = store.getComponent(ref, UUIDComponent.getComponentType());
+        if (uuidComponent == null) {
+            return;
+        }
+
+        FancyPlayer fp = FancyPlayerService.get().getByUUID(uuidComponent.getUuid());
+        if (fp == null) {
+            return;
+        }
+
         command.append("Pages/WarpsPage.ui");
 
         command.clear("#LocationCards");
@@ -38,6 +49,10 @@ public class WarpsPage extends InteractiveCustomUIPage<LocationUIData> {
 
         int i = 0;
         for (Warp warp : WarpService.get().getAllWarps()) {
+            if (!PermissionsModule.get().hasPermission(fp.getData().getUUID(), "fancycore.warps." + warp.name())) {
+                continue;
+            }
+
             command.append("#LocationCards", "Pages/LocationEntry.ui");
 
             command.set("#LocationCards[" + i + "] #LocationName.Text", warp.name());
@@ -59,8 +74,6 @@ public class WarpsPage extends InteractiveCustomUIPage<LocationUIData> {
 
     @Override
     public void handleDataEvent(@NotNull Ref<EntityStore> ref, @NotNull Store<EntityStore> store, @NotNull LocationUIData data) {
-        super.handleDataEvent(ref, store, data);
-
         UUIDComponent uuidComponent = store.getComponent(ref, UUIDComponent.getComponentType());
         if (uuidComponent == null) {
             return;
@@ -74,6 +87,11 @@ public class WarpsPage extends InteractiveCustomUIPage<LocationUIData> {
         Warp warp = WarpService.get().getWarp(data.getLocationName());
         if (warp == null) {
             fp.sendMessage("Warp not found: " + data.getLocationName());
+            return;
+        }
+
+        if (!PermissionsModule.get().hasPermission(fp.getData().getUUID(), "fancycore.warps." + warp.name())) {
+            fp.sendMessage("You do not have permission to use this warp.");
             return;
         }
 
