@@ -16,13 +16,14 @@ allprojects {
         mavenCentral()
         maven(url = "https://repo.fancyinnovations.com/snapshots")
         maven(url = "https://repo.lushplugins.org/releases")
+        maven(url = "https://maven.hytale.com/release")
+        maven(url = "https://maven.hytale.com/pre-release")
     }
 }
 
 dependencies {
-    // TODO (HTEA): Update dependency when available
-//    compileOnly("com.hypixel.hytale:HytaleServer-parent:1.0-SNAPSHOT")
-    compileOnly(files("../../libraries/hytale-server/HytaleServer.jar"))
+    compileOnly("com.hypixel.hytale:Server:2026.01.22-6f8bdbdc4")
+//    compileOnly(files("../../libraries/hytale-server/HytaleServer.jar"))
 
     implementation(project(":plugins:fancycore:fc-api"))
 
