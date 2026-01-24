@@ -5,7 +5,7 @@ plugins {
 }
 
 dependencies {
-    compileOnly("com.hypixel.hytale:Server:2026.01.22-6f8bdbdc4")
+    compileOnly("com.hypixel.hytale:Server:2026.01.24-6e2d4fc36")
 
     compileOnly("de.oliver.FancyAnalytics:logger:0.0.9")
     compileOnly("org.jetbrains:annotations:26.0.2-1")

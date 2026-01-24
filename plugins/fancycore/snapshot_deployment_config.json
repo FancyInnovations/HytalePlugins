@@ -7,7 +7,7 @@
     "space_id": "fc",
     "platform": "hytale_plugin",
     "channel": "alpha",
-    "supported_versions": [ "2026.01.13-50e69c385" ]
+    "supported_versions": [ "2026.01.24-6e2d4fc36" ]
   },
   "orbis": {
     "resource_id": "cmj49s5lm000a01s6az79izy3",
@@ -15,13 +15,13 @@
     "compatible_hytale_version_ids": [ "cmj1x42ef001k4qz9r03ojrpe" ]
   },
   "modtale": {
-    "project_id": "4ab11727-c0b4-4c76-bb03-a86d781ec24b",
+    "project_id": "c5f224a3-b212-4e1b-9662-809db14845a4",
     "channel": "ALPHA",
-    "game_versions": [ "2026.01.13-50e69c385" ]
+    "game_versions": [ "2026.01.24-6e2d4fc36" ]
   },
   "unifiedhytale": {
     "project_id": "bdf8f934-3fa6-4101-a666-86b77adcbb25",
-    "game_versions": [ "2026.01.13-50e69c385" ],
+    "game_versions": [ "2026.01.24-6e2d4fc36" ],
     "release_channel": "alpha"
   },
   "hytahub": {
