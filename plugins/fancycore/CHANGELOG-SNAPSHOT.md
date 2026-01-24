@@ -1,6 +1,11 @@
-Commit hash: %COMMIT_HASH%
+## Changes
 
-Commit message: %COMMIT_MESSAGE%
+* Added support for 2026.01.24-6e2d4fc36
+
+## Commit
+
+* Commit hash: %COMMIT_HASH%
+* Commit message: %COMMIT_MESSAGE%
 
 *(The last commit message does not always directly reflect the changes related to this version.)*
 
