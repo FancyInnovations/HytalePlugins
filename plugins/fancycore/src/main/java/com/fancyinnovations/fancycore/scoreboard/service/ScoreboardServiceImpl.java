@@ -13,7 +13,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.TimeUnit;
 
 public class ScoreboardServiceImpl implements ScoreboardService {
@@ -21,7 +20,6 @@ public class ScoreboardServiceImpl implements ScoreboardService {
     private final Map<FancyPlayer, ScoreboardUI> playerScoreboards;
     private final Map<String, ScoreboardPage> cache;
     private final ScoreboardStorage storage;
-    private ScheduledFuture<?> updateSchedule;
 
     public ScoreboardServiceImpl(ScoreboardStorage storage) {
         this.playerScoreboards = new ConcurrentHashMap<>();
@@ -31,17 +29,25 @@ public class ScoreboardServiceImpl implements ScoreboardService {
         load();
 
         int scoreboardRefreshInterval = FancyCorePlugin.get().getConfig().getScoreboardRefreshInterval();
-        this.updateSchedule = FancyCore.get().getThreadPool().scheduleWithFixedDelay(this::update, 0L, scoreboardRefreshInterval, TimeUnit.MILLISECONDS);
-    }
-    
-    public ScheduledFuture<?> getUpdateSchedule() {
-        return updateSchedule;
+        FancyCore.get().getThreadPool().scheduleWithFixedDelay(this::update, 0L, scoreboardRefreshInterval, TimeUnit.MILLISECONDS);
     }
 
     private void load() {
         List<ScoreboardPage> pages = storage.loadAllPages();
+        if (pages == null || pages.isEmpty()) {
+            FancyCorePlugin.get().getFancyLogger().error("No scoreboard pages loaded from storage!");
+        }
+
         for (ScoreboardPage page : pages) {
-            cache.put(page.getName(), page);
+            if (page != null && page.getName() != null) {
+                cache.put(page.getName(), page);
+            }
+        }
+
+        if (!cache.containsKey("default")) {
+            FancyCorePlugin.get().getFancyLogger().warn(
+                    "The default scoreboard page ('default') does not exist. Check your storage or create it manually."
+            );
         }
     }
 
@@ -59,6 +65,11 @@ public class ScoreboardServiceImpl implements ScoreboardService {
     }
 
     public void attachScoreboard(FancyPlayer fancyPlayer, ScoreboardPage page) {
+        if (page == null) {
+            FancyCorePlugin.get().getFancyLogger().error("Unable to attach scoreboard: page null for player " + fancyPlayer.getPlayer().getUsername());
+            return;
+        }
+
         if (!fancyPlayer.isOnline()) {
             if (playerScoreboards.containsKey(fancyPlayer)) {
                 playerScoreboards.remove(fancyPlayer);
@@ -66,17 +77,7 @@ public class ScoreboardServiceImpl implements ScoreboardService {
             return;
         }
 
-        if (fancyPlayer.getPlayer() == null || fancyPlayer.getPlayer().getReference() == null) {
-            return;
-        }
-
-        var ref = fancyPlayer.getPlayer().getReference();
-        var store = ref.getStore();
-        if (store == null) {
-            return;
-        }
-        
-        Player player = store.getComponent(ref, Player.getComponentType());
+        Player player = fancyPlayer.getPlayer().getReference().getStore().getComponent(fancyPlayer.getPlayer().getReference(), Player.getComponentType());
         if (player == null) {
             return;
         }
@@ -100,21 +101,8 @@ public class ScoreboardServiceImpl implements ScoreboardService {
     }
 
     public void detachScoreboard(FancyPlayer fancyPlayer) {
-        if (fancyPlayer.getPlayer() == null || fancyPlayer.getPlayer().getReference() == null) {
-            playerScoreboards.remove(fancyPlayer);
-            return;
-        }
-
-        var ref = fancyPlayer.getPlayer().getReference();
-        var store = ref.getStore();
-        if (store == null) {
-            playerScoreboards.remove(fancyPlayer);
-            return;
-        }
-        
-        Player player = store.getComponent(ref, Player.getComponentType());
+        Player player = fancyPlayer.getPlayer().getReference().getStore().getComponent(fancyPlayer.getPlayer().getReference(), Player.getComponentType());
         if (player == null) {
-            playerScoreboards.remove(fancyPlayer);
             return;
         }
 

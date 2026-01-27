@@ -56,6 +56,13 @@ public class ScoreboardUI extends CustomUIHud {
             builder = new UICommandBuilder();
         }
 
+        if (currentPage == null) {
+            FancyCorePlugin.get().getFancyLogger().warn("Attempting to refresh the UI without the current page for " + fancyPlayer.getPlayer().getUsername());
+            builder.append("Hud/ScoreboardBase.ui");
+            update(true, builder);
+            return;
+        }
+
         builder.append("Hud/ScoreboardBase.ui");
 
         setAnchorForPanel(builder, "#ScoreboardPanel.Anchor", currentPage.getOffset(), currentPage.getWidth(), currentPage.getHeight());
