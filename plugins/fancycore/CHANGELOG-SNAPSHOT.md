@@ -1,6 +1,6 @@
 ## Changes
 
-* Added support for 2026.01.24-6e2d4fc36
+* Added support for 2026.01.27-734d39026
 
 ## Commit
 

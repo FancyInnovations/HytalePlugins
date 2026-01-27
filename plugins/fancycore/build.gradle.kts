@@ -22,7 +22,7 @@ allprojects {
 }
 
 dependencies {
-    compileOnly("com.hypixel.hytale:Server:2026.01.24-6e2d4fc36")
+    compileOnly("com.hypixel.hytale:Server:2026.01.27-734d39026")
 //    compileOnly(files("../../libraries/hytale-server/HytaleServer.jar"))
 
     implementation(project(":plugins:fancycore:fc-api"))
