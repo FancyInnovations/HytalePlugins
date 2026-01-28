@@ -100,124 +100,6 @@ public class FancyPlayerDataImpl implements FancyPlayerData {
         return new Builder(uuid, username);
     }
 
-    /**
-     * Builder for FancyPlayerDataImpl.
-     * Required fields (uuid, username) are set in the constructor.
-     * All other fields have sensible defaults.
-     */
-    public static class Builder {
-        // Required fields
-        private final UUID uuid;
-        private final String username;
-
-        // Optional fields with defaults
-        private List<Permission> permissions = null;
-        private List<String> groups = null;
-        private String nickname = null;
-        private String chatColor = null;
-        private List<UUID> ignoredPlayers = null;
-        private boolean enabledPrivateMessages = true;
-        private Map<Currency, Double> balances = null;
-        private long firstLoginTime = System.currentTimeMillis();
-        private long lastLoginTime = System.currentTimeMillis();
-        private boolean isVanished = false;
-        private boolean isFlying = false;
-        private long playTime = 0L;
-        private List<Home> homes = null;
-        private Map<String, Long> kitCooldowns = null;
-        private Map<String, Object> customData = null;
-        private boolean isDirty = false;
-
-        private Builder(UUID uuid, String username) {
-            this.uuid = uuid;
-            this.username = username;
-        }
-
-        public Builder permissions(List<Permission> permissions) {
-            this.permissions = permissions;
-            return this;
-        }
-
-        public Builder groups(List<String> groups) {
-            this.groups = groups;
-            return this;
-        }
-
-        public Builder nickname(String nickname) {
-            this.nickname = nickname;
-            return this;
-        }
-
-        public Builder chatColor(String chatColor) {
-            this.chatColor = chatColor;
-            return this;
-        }
-
-        public Builder ignoredPlayers(List<UUID> ignoredPlayers) {
-            this.ignoredPlayers = ignoredPlayers;
-            return this;
-        }
-
-        public Builder enabledPrivateMessages(boolean enabledPrivateMessages) {
-            this.enabledPrivateMessages = enabledPrivateMessages;
-            return this;
-        }
-
-        public Builder balances(Map<Currency, Double> balances) {
-            this.balances = balances;
-            return this;
-        }
-
-        public Builder firstLoginTime(long firstLoginTime) {
-            this.firstLoginTime = firstLoginTime;
-            return this;
-        }
-
-        public Builder lastLoginTime(long lastLoginTime) {
-            this.lastLoginTime = lastLoginTime;
-            return this;
-        }
-
-        public Builder isVanished(boolean isVanished) {
-            this.isVanished = isVanished;
-            return this;
-        }
-
-        public Builder isFlying(boolean isFlying) {
-            this.isFlying = isFlying;
-            return this;
-        }
-
-        public Builder playTime(long playTime) {
-            this.playTime = playTime;
-            return this;
-        }
-
-        public Builder homes(List<Home> homes) {
-            this.homes = homes;
-            return this;
-        }
-
-        public Builder kitCooldowns(Map<String, Long> kitCooldowns) {
-            this.kitCooldowns = kitCooldowns;
-            return this;
-        }
-
-        public Builder customData(Map<String, Object> customData) {
-            this.customData = customData;
-            return this;
-        }
-
-        public Builder isDirty(boolean isDirty) {
-            this.isDirty = isDirty;
-            return this;
-        }
-
-        public FancyPlayerDataImpl build() {
-            return new FancyPlayerDataImpl(this);
-        }
-    }
-
     @Override
     public UUID getUUID() {
         return uuid;
@@ -462,6 +344,7 @@ public class FancyPlayerDataImpl implements FancyPlayerData {
         for (Home home : homes) {
             this.homes.put(home.name(), home);
         }
+        this.isDirty = true;
     }
 
     @Override
@@ -472,11 +355,13 @@ public class FancyPlayerDataImpl implements FancyPlayerData {
     @Override
     public void addHome(Home home) {
         this.homes.put(home.name(), home);
+        this.isDirty = true;
     }
 
     @Override
     public void removeHome(String homeName) {
         this.homes.remove(homeName);
+        this.isDirty = true;
     }
 
     @Override
@@ -487,6 +372,7 @@ public class FancyPlayerDataImpl implements FancyPlayerData {
     @Override
     public void setLastTimeUsedKit(String kitName, long timestamp) {
         kitCooldowns.put(kitName, timestamp);
+        this.isDirty = true;
     }
 
     @Override
@@ -502,6 +388,7 @@ public class FancyPlayerDataImpl implements FancyPlayerData {
     @Override
     public <T> void setCustomData(String key, T value) {
         customData.put(key, value);
+        this.isDirty = true;
     }
 
     @Override
@@ -512,6 +399,7 @@ public class FancyPlayerDataImpl implements FancyPlayerData {
     @Override
     public void removeCustomData(String key) {
         customData.remove(key);
+        this.isDirty = true;
     }
 
     @Override
@@ -527,6 +415,124 @@ public class FancyPlayerDataImpl implements FancyPlayerData {
     @Override
     public String toJson() {
         return FancyCorePlugin.GSON.toJson(JsonFancyPlayer.from(this));
+    }
+
+    /**
+     * Builder for FancyPlayerDataImpl.
+     * Required fields (uuid, username) are set in the constructor.
+     * All other fields have sensible defaults.
+     */
+    public static class Builder {
+        // Required fields
+        private final UUID uuid;
+        private final String username;
+
+        // Optional fields with defaults
+        private List<Permission> permissions = null;
+        private List<String> groups = null;
+        private String nickname = null;
+        private String chatColor = null;
+        private List<UUID> ignoredPlayers = null;
+        private boolean enabledPrivateMessages = true;
+        private Map<Currency, Double> balances = null;
+        private long firstLoginTime = System.currentTimeMillis();
+        private long lastLoginTime = System.currentTimeMillis();
+        private boolean isVanished = false;
+        private boolean isFlying = false;
+        private long playTime = 0L;
+        private List<Home> homes = null;
+        private Map<String, Long> kitCooldowns = null;
+        private Map<String, Object> customData = null;
+        private boolean isDirty = false;
+
+        private Builder(UUID uuid, String username) {
+            this.uuid = uuid;
+            this.username = username;
+        }
+
+        public Builder permissions(List<Permission> permissions) {
+            this.permissions = permissions;
+            return this;
+        }
+
+        public Builder groups(List<String> groups) {
+            this.groups = groups;
+            return this;
+        }
+
+        public Builder nickname(String nickname) {
+            this.nickname = nickname;
+            return this;
+        }
+
+        public Builder chatColor(String chatColor) {
+            this.chatColor = chatColor;
+            return this;
+        }
+
+        public Builder ignoredPlayers(List<UUID> ignoredPlayers) {
+            this.ignoredPlayers = ignoredPlayers;
+            return this;
+        }
+
+        public Builder enabledPrivateMessages(boolean enabledPrivateMessages) {
+            this.enabledPrivateMessages = enabledPrivateMessages;
+            return this;
+        }
+
+        public Builder balances(Map<Currency, Double> balances) {
+            this.balances = balances;
+            return this;
+        }
+
+        public Builder firstLoginTime(long firstLoginTime) {
+            this.firstLoginTime = firstLoginTime;
+            return this;
+        }
+
+        public Builder lastLoginTime(long lastLoginTime) {
+            this.lastLoginTime = lastLoginTime;
+            return this;
+        }
+
+        public Builder isVanished(boolean isVanished) {
+            this.isVanished = isVanished;
+            return this;
+        }
+
+        public Builder isFlying(boolean isFlying) {
+            this.isFlying = isFlying;
+            return this;
+        }
+
+        public Builder playTime(long playTime) {
+            this.playTime = playTime;
+            return this;
+        }
+
+        public Builder homes(List<Home> homes) {
+            this.homes = homes;
+            return this;
+        }
+
+        public Builder kitCooldowns(Map<String, Long> kitCooldowns) {
+            this.kitCooldowns = kitCooldowns;
+            return this;
+        }
+
+        public Builder customData(Map<String, Object> customData) {
+            this.customData = customData;
+            return this;
+        }
+
+        public Builder isDirty(boolean isDirty) {
+            this.isDirty = isDirty;
+            return this;
+        }
+
+        public FancyPlayerDataImpl build() {
+            return new FancyPlayerDataImpl(this);
+        }
     }
 
 }
