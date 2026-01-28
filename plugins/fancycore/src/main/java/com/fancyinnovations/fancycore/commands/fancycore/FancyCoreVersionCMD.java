@@ -13,6 +13,7 @@ public class FancyCoreVersionCMD extends CommandBase {
 
     protected FancyCoreVersionCMD() {
         super("version", "Displays the current version of FancyCore");
+        requirePermission("fancycore.commands.fancycore.version");
     }
 
     @Override

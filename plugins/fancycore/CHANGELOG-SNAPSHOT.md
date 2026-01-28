@@ -1,6 +1,6 @@
 ## Changes
 
-Changed playtime format to "3h" if less than 24 hours, otherwise "4d".
+* Added missing permission for `/fancycore version` command
 
 ## Commit
 
