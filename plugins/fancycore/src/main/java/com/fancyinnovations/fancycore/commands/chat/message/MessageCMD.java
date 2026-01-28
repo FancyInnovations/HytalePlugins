@@ -2,6 +2,7 @@ package com.fancyinnovations.fancycore.commands.chat.message;
 
 import com.fancyinnovations.fancycore.api.FancyCore;
 import com.fancyinnovations.fancycore.api.events.chat.PrivateMessageSentEvent;
+import com.fancyinnovations.fancycore.api.placeholders.PlaceholderService;
 import com.fancyinnovations.fancycore.api.player.FancyPlayer;
 import com.fancyinnovations.fancycore.api.player.FancyPlayerService;
 import com.fancyinnovations.fancycore.commands.arguments.FancyCoreArgs;
@@ -77,8 +78,11 @@ public class MessageCMD extends CommandBase {
 
         String parsedMessage = FancyCore.get().getConfig().getPrivateMessageFormat()
                 .replace("%sender%", sender.getData().getUsername())
-                .replace("%receiver%", receiver.getData().getUsername())
-                .replace("%message%", message);
+                .replace("%receiver%", receiver.getData().getUsername());
+
+        parsedMessage = PlaceholderService.get().parse(sender, parsedMessage);
+
+        parsedMessage = parsedMessage.replace("%message%", message);
 
         receiver.sendMessage(parsedMessage);
         sender.sendMessage(parsedMessage);
