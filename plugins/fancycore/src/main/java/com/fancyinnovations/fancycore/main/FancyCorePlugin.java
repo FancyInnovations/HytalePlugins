@@ -38,6 +38,7 @@ import com.fancyinnovations.fancycore.commands.moderation.*;
 import com.fancyinnovations.fancycore.commands.moderation.punishments.PunishmentsCMD;
 import com.fancyinnovations.fancycore.commands.moderation.reports.ReportCMD;
 import com.fancyinnovations.fancycore.commands.moderation.reports.ReportsCMD;
+import com.fancyinnovations.fancycore.commands.permissions.DeopCMD;
 import com.fancyinnovations.fancycore.commands.permissions.OpCMD;
 import com.fancyinnovations.fancycore.commands.permissions.groups.GroupCMD;
 import com.fancyinnovations.fancycore.commands.permissions.player.PermissionsCMD;
@@ -404,6 +405,7 @@ public class FancyCorePlugin extends JavaPlugin implements FancyCore {
             CommandManager.get().register(new PermissionsCMD());
             CommandManager.get().register(new GroupCMD());
             CommandManager.get().register(new OpCMD());
+            CommandManager.get().register(new DeopCMD());
         }
 
         // kits

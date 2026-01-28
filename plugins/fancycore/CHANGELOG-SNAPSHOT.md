@@ -1,6 +1,7 @@
 ## Changes
 
 * Added missing permission for `/fancycore version` command
+* Added `/deop <target>` command to deop a specific player
 
 ## Commit
 
