@@ -3,7 +3,7 @@ package com.fancyinnovations.fancycore.placeholders.builtin.player;
 import com.fancyinnovations.fancycore.api.FancyCore;
 import com.fancyinnovations.fancycore.api.placeholders.PlaceholderProvider;
 import com.fancyinnovations.fancycore.api.player.FancyPlayer;
-import com.fancyinnovations.fancycore.utils.NumberUtils;
+import com.fancyinnovations.hytaleutils.NumberUtils;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 

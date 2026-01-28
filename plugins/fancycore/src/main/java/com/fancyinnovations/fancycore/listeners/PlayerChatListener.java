@@ -4,7 +4,7 @@ import com.fancyinnovations.fancycore.api.moderation.Punishment;
 import com.fancyinnovations.fancycore.api.player.FancyPlayer;
 import com.fancyinnovations.fancycore.main.FancyCorePlugin;
 import com.fancyinnovations.fancycore.player.service.FancyPlayerServiceImpl;
-import com.fancyinnovations.fancycore.utils.TimeUtils;
+import com.fancyinnovations.hytaleutils.TimeUtils;
 import com.hypixel.hytale.server.core.event.events.player.PlayerChatEvent;
 
 public class PlayerChatListener {

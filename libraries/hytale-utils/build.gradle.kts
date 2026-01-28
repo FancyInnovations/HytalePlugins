@@ -4,11 +4,12 @@ plugins {
 }
 
 dependencies {
+    compileOnly("com.hypixel.hytale:Server:2026.01.28-87d03be09")
+
     compileOnly("de.oliver.FancyAnalytics:logger:0.0.9")
-    compileOnly("de.oliver.FancyAnalytics:java-sdk:0.0.5")
-    compileOnly("com.fancyinnovations.fancyspaces:java-sdk:0.0.4")
 
     compileOnly("com.google.code.gson:gson:2.13.2")
+    compileOnly("org.mongodb:mongodb-driver-sync:5.6.2")
     compileOnly("org.jetbrains:annotations:26.0.2-1")
 }
 
@@ -38,8 +39,8 @@ tasks {
         publications {
             create<MavenPublication>("maven") {
                 groupId = "com.fancyinnovations.hytale"
-                artifactId = "version-checker"
-                version = getVersionCheckerVersion()
+                artifactId = "hytale-utils"
+                version = getHytaleUtilsVersion()
                 from(project.components["java"])
             }
         }
@@ -61,6 +62,6 @@ tasks {
     }
 }
 
-fun getVersionCheckerVersion(): String {
+fun getHytaleUtilsVersion(): String {
     return file("VERSION").readText()
 }

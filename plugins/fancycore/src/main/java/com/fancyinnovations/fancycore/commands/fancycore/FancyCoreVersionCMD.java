@@ -1,7 +1,7 @@
 package com.fancyinnovations.fancycore.commands.fancycore;
 
 import com.fancyinnovations.fancycore.main.FancyCorePlugin;
-import com.fancyinnovations.fancycore.utils.TimeUtils;
+import com.fancyinnovations.hytaleutils.TimeUtils;
 import com.fancyinnovations.versionchecker.FetchedVersion;
 import com.fancyinnovations.versionchecker.VersionConfig;
 import com.hypixel.hytale.server.core.Message;

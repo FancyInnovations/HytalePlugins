@@ -2,7 +2,7 @@ package com.fancyinnovations.fancycore.placeholders.builtin.player;
 
 import com.fancyinnovations.fancycore.api.placeholders.PlaceholderProvider;
 import com.fancyinnovations.fancycore.api.player.FancyPlayer;
-import com.fancyinnovations.fancycore.utils.TimeUtils;
+import com.fancyinnovations.hytaleutils.TimeUtils;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 

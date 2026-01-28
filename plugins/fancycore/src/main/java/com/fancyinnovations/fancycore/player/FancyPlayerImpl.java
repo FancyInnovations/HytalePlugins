@@ -7,7 +7,7 @@ import com.fancyinnovations.fancycore.api.moderation.Punishment;
 import com.fancyinnovations.fancycore.api.moderation.PunishmentType;
 import com.fancyinnovations.fancycore.api.player.FancyPlayer;
 import com.fancyinnovations.fancycore.api.player.FancyPlayerData;
-import com.fancyinnovations.fancycore.utils.ColorUtils;
+import com.fancyinnovations.hytaleutils.ColorUtils;
 import com.hypixel.hytale.server.core.permissions.PermissionsModule;
 import com.hypixel.hytale.server.core.universe.PlayerRef;
 import org.jetbrains.annotations.Nullable;

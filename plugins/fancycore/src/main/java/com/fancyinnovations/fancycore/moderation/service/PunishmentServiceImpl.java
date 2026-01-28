@@ -8,8 +8,8 @@ import com.fancyinnovations.fancycore.main.FancyCorePlugin;
 import com.fancyinnovations.fancycore.moderation.PlayerReportImpl;
 import com.fancyinnovations.fancycore.moderation.PunishmentImpl;
 import com.fancyinnovations.fancycore.translations.TranslationService;
-import com.fancyinnovations.fancycore.utils.IDGen;
-import com.fancyinnovations.fancycore.utils.TimeUtils;
+import com.fancyinnovations.hytaleutils.IDGen;
+import com.fancyinnovations.hytaleutils.TimeUtils;
 import com.hypixel.hytale.server.core.universe.Universe;
 
 import java.util.List;

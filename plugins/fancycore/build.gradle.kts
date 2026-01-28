@@ -10,23 +10,24 @@ allprojects {
     group = "com.fancyinnovations"
     version = getFCVersion()
     description = "All the essentials for your Hytale server"
+}
 
-    repositories {
-        mavenLocal()
-        mavenCentral()
-        maven(url = "https://repo.fancyinnovations.com/snapshots")
-        maven(url = "https://repo.lushplugins.org/releases")
-        maven(url = "https://maven.hytale.com/release")
-        maven(url = "https://maven.hytale.com/pre-release")
-    }
+repositories {
+    mavenLocal()
+    mavenCentral()
+    maven(url = "https://jitpack.io")
+    maven("https://repo.fancyinnovations.com/releases")
+    maven("https://repo.fancyinnovations.com/snapshots")
+    maven(url = "https://maven.hytale.com/release")
+    maven(url = "https://maven.hytale.com/pre-release")
 }
 
 dependencies {
-    compileOnly("com.hypixel.hytale:Server:2026.01.27-734d39026")
-//    compileOnly(files("../../libraries/hytale-server/HytaleServer.jar"))
+    compileOnly("com.hypixel.hytale:Server:2026.01.28-87d03be09")
 
     implementation(project(":plugins:fancycore:fc-api"))
 
+    implementation(project(":libraries:hytale-utils"))
     implementation(project(":libraries:version-checker"))
 //    implementation(project(":libraries:ui-helper"))
 

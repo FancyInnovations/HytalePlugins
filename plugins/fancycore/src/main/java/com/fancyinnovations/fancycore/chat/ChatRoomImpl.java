@@ -6,7 +6,7 @@ import com.fancyinnovations.fancycore.api.events.chat.*;
 import com.fancyinnovations.fancycore.api.player.FancyPlayer;
 import com.fancyinnovations.fancycore.api.translations.MessageKey;
 import com.fancyinnovations.fancycore.main.FancyCorePlugin;
-import com.fancyinnovations.fancycore.utils.TimeUtils;
+import com.fancyinnovations.hytaleutils.TimeUtils;
 import com.hypixel.hytale.server.core.permissions.PermissionsModule;
 import de.oliver.fancyanalytics.logger.properties.StringProperty;
 

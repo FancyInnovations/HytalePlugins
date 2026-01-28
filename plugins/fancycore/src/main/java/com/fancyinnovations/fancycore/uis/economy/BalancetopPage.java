@@ -6,7 +6,7 @@ import com.fancyinnovations.fancycore.api.economy.LeaderboardEntry;
 import com.fancyinnovations.fancycore.api.player.FancyPlayer;
 import com.fancyinnovations.fancycore.api.player.FancyPlayerService;
 import com.fancyinnovations.fancycore.uis.EmptyUIData;
-import com.fancyinnovations.fancycore.utils.NumberUtils;
+import com.fancyinnovations.hytaleutils.NumberUtils;
 import com.hypixel.hytale.component.Ref;
 import com.hypixel.hytale.component.Store;
 import com.hypixel.hytale.protocol.packets.interface_.CustomPageLifetime;

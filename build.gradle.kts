@@ -9,7 +9,10 @@ allprojects {
     repositories {
         mavenLocal()
         mavenCentral()
-        maven("https://repo.fancyinnovations.com/releases")
         maven(url = "https://jitpack.io")
+        maven("https://repo.fancyinnovations.com/releases")
+        maven("https://repo.fancyinnovations.com/snapshots")
+        maven(url = "https://maven.hytale.com/release")
+        maven(url = "https://maven.hytale.com/pre-release")
     }
 }

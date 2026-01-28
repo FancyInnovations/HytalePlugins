@@ -5,7 +5,7 @@ import com.fancyinnovations.fancycore.api.player.FancyPlayerService;
 import com.fancyinnovations.fancycore.api.teleport.Location;
 import com.fancyinnovations.fancycore.api.teleport.Warp;
 import com.fancyinnovations.fancycore.api.teleport.WarpService;
-import com.fancyinnovations.fancycore.utils.NumberUtils;
+import com.fancyinnovations.hytaleutils.NumberUtils;
 import com.hypixel.hytale.component.Ref;
 import com.hypixel.hytale.component.Store;
 import com.hypixel.hytale.math.vector.Vector3d;

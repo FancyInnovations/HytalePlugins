@@ -1,12 +1,10 @@
-package com.fancyinnovations.fancycore.utils;
+package com.fancyinnovations.hytaleutils;
 
-import com.fancyinnovations.fancycore.api.FancyCore;
 import com.mongodb.ConnectionString;
 import com.mongodb.MongoClientSettings;
 import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoClients;
 import com.mongodb.client.MongoDatabase;
-import de.oliver.fancyanalytics.logger.properties.ThrowableProperty;
 
 import java.nio.charset.StandardCharsets;
 
@@ -77,12 +75,7 @@ public class MongoDBConnector {
             client = MongoClients.create(settings);
             database = client.getDatabase("FancyAnalytics");
         } catch (Exception e) {
-            FancyCore core = FancyCore.get();
-            if (core != null) {
-                core.getFancyLogger().warn("Failed to connect to MongoDB", ThrowableProperty.of(e));
-            } else {
-                System.err.println("Failed to connect to MongoDB: " + e.getMessage());
-            }
+            System.err.println("Failed to connect to MongoDB: " + e.getMessage());
             return false;
         }
         return true;
@@ -93,12 +86,7 @@ public class MongoDBConnector {
             try {
                 client.close();
             } catch (Exception e) {
-                FancyCore core = FancyCore.get();
-                if (core != null) {
-                    core.getFancyLogger().warn("Failed to close MongoDB client", ThrowableProperty.of(e));
-                } else {
-                    System.err.println("Failed to close MongoDB client: " + e.getMessage());
-                }
+                System.err.println("Failed to close MongoDB client: " + e.getMessage());
             } finally {
                 client = null;
                 database = null;

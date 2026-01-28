@@ -1,4 +1,4 @@
-package com.fancyinnovations.fancycore.utils;
+package com.fancyinnovations.hytaleutils;
 
 
 import com.hypixel.hytale.server.core.Message;

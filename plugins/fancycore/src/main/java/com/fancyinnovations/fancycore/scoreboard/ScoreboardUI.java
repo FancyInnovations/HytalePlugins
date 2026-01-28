@@ -5,7 +5,7 @@ import com.fancyinnovations.fancycore.api.player.FancyPlayer;
 import com.fancyinnovations.fancycore.api.scoreboard.ScoreboardLine;
 import com.fancyinnovations.fancycore.api.scoreboard.ScoreboardPage;
 import com.fancyinnovations.fancycore.main.FancyCorePlugin;
-import com.fancyinnovations.fancycore.utils.ColorUtils;
+import com.fancyinnovations.hytaleutils.ColorUtils;
 import com.hypixel.hytale.protocol.ColorAlpha;
 import com.hypixel.hytale.server.core.Message;
 import com.hypixel.hytale.server.core.asset.util.ColorParseUtil;
