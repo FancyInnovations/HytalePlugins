@@ -24,6 +24,10 @@ public record PunishmentImpl(
     }
 
     public boolean isActive() {
+        if (type == PunishmentType.KICK || type == PunishmentType.WARNING) {
+            return false;
+        }
+
         return expiresAt <= 0 || System.currentTimeMillis() < expiresAt;
     }
 

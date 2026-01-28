@@ -3,6 +3,7 @@
 * Added missing permission for `/fancycore version` command
 * Added `/deop <target>` command to deop a specific player
 * Added placeholder parsing to private messages
+* Don't show kicks and warns as active punishments
 
 ## Commit
 
