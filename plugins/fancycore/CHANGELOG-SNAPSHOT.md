@@ -1,6 +1,6 @@
 ## Changes
 
-* Added support for 2026.01.28-87d03be09
+Changed playtime format to "3h" if less than 24 hours, otherwise "4d".
 
 ## Commit
 

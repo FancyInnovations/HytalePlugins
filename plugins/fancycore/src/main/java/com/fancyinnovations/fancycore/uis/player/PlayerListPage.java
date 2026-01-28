@@ -60,7 +60,7 @@ public class PlayerListPage extends InteractiveCustomUIPage<EmptyUIData> {
             command.set("#PlayerListCards[" + i + "] #Username.Text", onlinePlayer.getData().getUsername());
             command.set("#PlayerListCards[" + i + "] #Group.Text", primaryGroupName);
             command.set("#PlayerListCards[" + i + "] #Balance.Text", primaryCurrency.symbol() + NumberUtils.formatNumber(balance));
-            command.set("#PlayerListCards[" + i + "] #Playtime.Text", TimeUtils.formatTime(onlinePlayer.getData().getPlayTime()));
+            command.set("#PlayerListCards[" + i + "] #Playtime.Text", TimeUtils.formatPlaytime(onlinePlayer.getData().getPlayTime()));
 
             i++;
         }

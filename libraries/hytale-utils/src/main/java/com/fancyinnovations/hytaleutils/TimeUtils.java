@@ -40,4 +40,14 @@ public class TimeUtils {
         return DATE_FORMAT.format(date);
     }
 
+    public static String formatPlaytime(long millis) {
+        long hours = millis / (1000 * 60 * 60);
+        if (hours >= 24) {
+            long days = hours / 24;
+            return days + "d";
+        } else {
+            return hours + "h";
+        }
+    }
+
 }

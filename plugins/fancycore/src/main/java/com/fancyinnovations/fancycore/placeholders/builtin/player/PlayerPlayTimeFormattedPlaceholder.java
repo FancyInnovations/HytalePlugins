@@ -35,6 +35,6 @@ public class PlayerPlayTimeFormattedPlaceholder implements PlaceholderProvider {
             playTime += currentSessionTime;
         }
 
-        return TimeUtils.formatTime(playTime);
+        return TimeUtils.formatPlaytime(playTime);
     }
 }
