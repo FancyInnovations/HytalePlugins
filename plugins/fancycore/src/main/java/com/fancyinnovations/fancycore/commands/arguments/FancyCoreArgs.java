@@ -27,7 +27,7 @@ import java.util.UUID;
 
 public class FancyCoreArgs {
 
-    public static final SingleArgumentType<Long> DURATION = new SingleArgumentType<>("Duration", "<number><suffix>, suffix can be 's'=seconds, 'min'=minutes, 'h'=hours, 'd'=days, 'w'=weeks, 'm'=months, 'y'=years", new String[]{"1s", "45min", "2h", "3d", "1w", "6m", "1y"}) {
+    public static final SingleArgumentType<Long> DURATION = new SingleArgumentType<>("Duration", "<number><suffix>, suffix can be 's'=seconds, 'm'=minutes, 'h'=hours, 'd'=days, 'w'=weeks, 'mp'=months, 'y'=years", new String[]{"1s", "45min", "2h", "3d", "1w", "6mo", "1y"}) {
 
         public @Nullable Long parse(@Nonnull String input, @Nonnull ParseResult parseResult) {
             try {
@@ -58,11 +58,11 @@ public class FancyCoreArgs {
 
                 switch (suffix) {
                     case "s" -> duration = number * 1000L;
-                    case "min" -> duration = number * 60 * 1000L;
+                    case "m", "min" -> duration = number * 60 * 1000L;
                     case "h" -> duration = number * 60 * 60 * 1000L;
                     case "d" -> duration = number * 24 * 60 * 60 * 1000L;
                     case "w" -> duration = number * 7 * 24 * 60 * 60 * 1000L;
-                    case "m" -> duration = number * 30L * 24 * 60 * 60 * 1000L;
+                    case "mo" -> duration = number * 30L * 24 * 60 * 60 * 1000L;
                     case "y" -> duration = number * 365L * 24 * 60 * 60 * 1000L;
                     default -> {
                         parseResult.fail(Message.raw("Invalid duration suffix."));
