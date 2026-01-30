@@ -40,10 +40,6 @@ public class CurrencyTemplateSetCMD extends CommandBase {
 
         FancyPlayer target = targetArg.get(ctx);
         double amount = amountArg.get(ctx);
-        if (amount <= 0) {
-            fp.sendMessage("You must add a positive amount.");
-            return;
-        }
 
         target.getData().setBalance(currency, amount);
 

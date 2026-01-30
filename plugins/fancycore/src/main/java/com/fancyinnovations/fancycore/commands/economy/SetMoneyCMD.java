@@ -38,10 +38,6 @@ public class SetMoneyCMD extends CommandBase {
 
         FancyPlayer target = targetArg.get(ctx);
         double amount = amountArg.get(ctx);
-        if (amount <= 0) {
-            fp.sendMessage("You must add a positive amount.");
-            return;
-        }
 
         Currency currency = CurrencyService.get().getPrimaryCurrency();
         if (currency == null) {
