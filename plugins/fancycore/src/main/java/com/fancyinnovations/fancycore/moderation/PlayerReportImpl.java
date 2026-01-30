@@ -23,6 +23,16 @@ public class PlayerReportImpl implements PlayerReport {
         this.resolvedAt = -1;
     }
 
+    public PlayerReportImpl(String id, long reportedAt, FancyPlayer reportedPlayer, FancyPlayer reportingPlayer, String reason, boolean resolved, long resolvedAt) {
+        this.id = id;
+        this.reportedAt = reportedAt;
+        this.reportedPlayer = reportedPlayer;
+        this.reportingPlayer = reportingPlayer;
+        this.reason = reason;
+        this.resolved = resolved;
+        this.resolvedAt = resolvedAt;
+    }
+
     @Override
     public String id() {
         return id;

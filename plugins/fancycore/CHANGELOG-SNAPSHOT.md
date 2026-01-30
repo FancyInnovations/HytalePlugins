@@ -5,6 +5,7 @@
 * Added placeholder parsing to private messages
 * Don't show kicks and warns as active punishments
 * Added `disable_scoreboard_system` feature flag to disable the scoreboard
+* Fixed report time not loading correctly
 
 ## Commit
 

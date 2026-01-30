@@ -36,9 +36,12 @@ public record JsonReport(
 
         return new PlayerReportImpl(
                 id,
+                reportedAt,
                 reportedFP,
                 reportingFP,
-                reason
+                reason,
+                resolved,
+                resolvedAt
         );
     }
 
