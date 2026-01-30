@@ -75,7 +75,7 @@ public class FancyCoreUpdateCMD extends CommandBase {
             }
 
             HttpResponse<byte[]> resp = req.send();
-            Files.write(Path.of("mods/FancyCore.jar"), resp.body());
+            Files.write(Path.of("mods/FancyCore" + latestVersion.name() + ".jar"), resp.body());
 
             ctx.sender().sendMessage(
                     Message.raw("Successfully downloaded FancyCore version " + latestVersion.name() + ". Please restart the server to apply the update.")
