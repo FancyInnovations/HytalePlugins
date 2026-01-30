@@ -4,6 +4,10 @@ plugins {
 }
 
 dependencies {
+    compileOnly("com.hypixel.hytale:Server:2026.01.28-87d03be09")
+
+    compileOnly(project(":libraries:hytale-utils"))
+
     compileOnly("de.oliver.FancyAnalytics:logger:0.0.9")
     compileOnly("de.oliver.FancyAnalytics:java-sdk:0.0.5")
     compileOnly("com.fancyinnovations.fancyspaces:java-sdk:0.0.4")

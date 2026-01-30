@@ -1,6 +1,5 @@
-package com.fancyinnovations.fancycore.commands.fancycore;
+package com.fancyinnovations.versionchecker.commands;
 
-import com.fancyinnovations.fancycore.main.FancyCorePlugin;
 import com.fancyinnovations.fancyspaces.utils.HttpRequest;
 import com.fancyinnovations.hytaleutils.TimeUtils;
 import com.fancyinnovations.versionchecker.FetchedVersion;
@@ -20,16 +19,25 @@ import java.net.http.HttpResponse;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
-public class FancyCoreUpdateCMD extends CommandBase {
+public class UpdateCMD extends CommandBase {
 
+    private final String pluginName;
     private final ExtendedFancyLogger logger;
     private final VersionChecker versionChecker;
 
-    public FancyCoreUpdateCMD()  {
-        super("update", "Update the FancyCore plugin to the latest version");
-        requirePermission("fancycore.commands.fancycore.update");
-        this.logger = FancyCorePlugin.get().getFancyLogger();
-        this.versionChecker = FancyCorePlugin.get().getVersionChecker();
+    public UpdateCMD(String pluginName, VersionChecker versionChecker, ExtendedFancyLogger logger, String permission)  {
+        super("update", "Downloads latest version of " + pluginName);
+        this.pluginName = pluginName;
+        this.logger = logger;
+        this.versionChecker = versionChecker;
+
+        if (permission != null && !permission.isEmpty()) {
+            requirePermission(permission);
+        }
+    }
+
+    public UpdateCMD(String pluginName, VersionChecker versionChecker, ExtendedFancyLogger logger) {
+        this(pluginName, versionChecker, logger, null);
     }
 
     @Override
@@ -37,51 +45,51 @@ public class FancyCoreUpdateCMD extends CommandBase {
         FetchedVersion latestVersion = this.versionChecker.check();
         if (latestVersion == null) {
             ctx.sender().sendMessage(
-                    Message.raw("You are already using the latest version of FancyCore.")
+                    Message.raw("You are already using the latest version of " + pluginName + ".")
             );
-            logger.info("FancyCore is already up to date.");
+            logger.info(pluginName + " is already up to date.");
             return;
         }
 
         ctx.sender().sendMessage(
-                Message.raw("A new version of FancyCore is available: " + latestVersion.name() + ". It will be downloaded now. Please restart the server after the download is complete.")
+                Message.raw("A new version of " + pluginName + " is available: " + latestVersion.name() + ". It will be downloaded now. Please restart the server after the download is complete.")
         );
         logger.info(
-                "A new version of FancyCore is available",
+                "A new version of " + pluginName + " is available",
                 StringProperty.of("version", latestVersion.name()),
                 StringProperty.of("published_at", TimeUtils.formatDate(latestVersion.publishedAt())),
                 StringProperty.of("download_link", latestVersion.downloadURL())
         );
 
         ctx.sender().sendMessage(
-                Message.raw("Downloading FancyCore version " + latestVersion.name() + "...")
+                Message.raw("Downloading " + pluginName + " version " + latestVersion.name() + "...")
         );
         logger.info(
-                "Starting to download the latest version of FancyCore...",
+                "Starting to download the latest version of " + pluginName + "...",
                 StringProperty.of("version", latestVersion.name())
         );
 
         HttpRequest req = new HttpRequest(latestVersion.downloadURL())
                 .withMethod("GET")
-                .withHeader("User-Agent", "FancyCore-PluginUpdater")
+                .withHeader("User-Agent", pluginName + "-PluginUpdater")
                 .withBodyHandler(HttpResponse.BodyHandlers.ofByteArray());
 
         try {
             File modsDir = new File("mods");
             for (File file : modsDir.listFiles()) {
-                if (file.getName().startsWith("FancyCore") && file.getName().endsWith(".jar")) {
+                if (file.getName().toLowerCase().startsWith(pluginName.toLowerCase()) && file.getName().endsWith(".jar")) {
                     Files.delete(file.toPath());
                 }
             }
 
             HttpResponse<byte[]> resp = req.send();
-            Files.write(Path.of("mods/FancyCore" + latestVersion.name() + ".jar"), resp.body());
+            Files.write(Path.of("mods/" + pluginName + "-" + latestVersion.name() + ".jar"), resp.body());
 
             ctx.sender().sendMessage(
-                    Message.raw("Successfully downloaded FancyCore version " + latestVersion.name() + ". Please restart the server to apply the update.")
+                    Message.raw("Successfully downloaded " + pluginName + " version " + latestVersion.name() + ". Please restart the server to apply the update.")
             );
             logger.info(
-                    "Successfully downloaded the latest version of FancyCore",
+                    "Successfully downloaded the latest version of " + pluginName,
                     StringProperty.of("version", latestVersion.name()),
                     StringProperty.of("published_at", TimeUtils.formatDate(latestVersion.publishedAt())),
                     StringProperty.of("download_link", latestVersion.downloadURL())
@@ -89,10 +97,10 @@ public class FancyCoreUpdateCMD extends CommandBase {
 
         } catch (URISyntaxException | IOException e) {
             ctx.sender().sendMessage(
-                    Message.raw("Failed to download the latest version of FancyCore. Please check the logs for more information.")
+                    Message.raw("Failed to download the latest version of " + pluginName + ". Please check the logs for more information.")
             );
             logger.error(
-                    "Failed to download the latest version of FancyCore",
+                    "Failed to download the latest version of " + pluginName,
                     StringProperty.of("version", latestVersion.name()),
                     StringProperty.of("published_at", TimeUtils.formatDate(latestVersion.publishedAt())),
                     StringProperty.of("download_link", latestVersion.downloadURL()),
@@ -101,10 +109,10 @@ public class FancyCoreUpdateCMD extends CommandBase {
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt();
             ctx.sender().sendMessage(
-                    Message.raw("Failed to download the latest version of FancyCore. Please check the logs for more information.")
+                    Message.raw("Failed to download the latest version of " + pluginName + ". Please check the logs for more information.")
             );
             logger.error(
-                    "Failed to download the latest version of FancyCore",
+                    "Failed to download the latest version of " + pluginName,
                     StringProperty.of("version", latestVersion.name()),
                     StringProperty.of("published_at", TimeUtils.formatDate(latestVersion.publishedAt())),
                     StringProperty.of("download_link", latestVersion.downloadURL()),
