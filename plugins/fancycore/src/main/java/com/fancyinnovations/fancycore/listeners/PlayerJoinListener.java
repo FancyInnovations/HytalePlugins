@@ -121,9 +121,6 @@ public class PlayerJoinListener {
                     );
                 }
             }
-
-            String joinMessage = PlaceholderService.get().parse(fp, FancyCorePlugin.get().getConfig().getFirstJoinMessage());
-            fp.sendMessage(joinMessage);
         } else {
             String joinMsg = PlaceholderService.get().parse(fp, FancyCore.get().getConfig().getJoinMessage());
             for (FancyPlayer onlinePlayer : getPlayerService().getOnlinePlayers()) {
