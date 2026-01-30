@@ -244,8 +244,12 @@ public class FancyCorePlugin extends JavaPlugin implements FancyCore {
         backpacksStorage = new BackpacksJsonStorage();
         backpacksService = new BackpacksServiceImpl(backpacksStorage);
 
-        scoreboardStorage = new ScoreboardJsonStorage();
-        scoreboardService = new ScoreboardServiceImpl(scoreboardStorage);
+        if (!fancyCoreConfig.disableScoreboardSystem()) {
+            scoreboardStorage = new ScoreboardJsonStorage();
+            scoreboardService = new ScoreboardServiceImpl(scoreboardStorage);
+        } else {
+            fancyLogger.info("Disabled FancyCore's built-in scoreboard system. This might cause issues with other features/plugins depending on it.");
+        }
 
         SeedDefaultData.seed();
 
@@ -449,7 +453,9 @@ public class FancyCorePlugin extends JavaPlugin implements FancyCore {
         CommandManager.get().register(new PunishmentsCMD());
 
         // scoreboards
-        CommandManager.get().register(new ScoreboardCMD());
+        if (!fancyCoreConfig.disableScoreboardSystem()) {
+            CommandManager.get().register(new ScoreboardCMD());
+        }
     }
 
     public void registerListeners() {

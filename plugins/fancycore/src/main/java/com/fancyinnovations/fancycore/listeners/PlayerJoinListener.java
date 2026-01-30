@@ -221,10 +221,12 @@ public class PlayerJoinListener {
         }
 
         // show scoreboard
-        String defaultScoreboardPageName = FancyCorePlugin.get().getConfig().getDefaultScoreboardPageName();
-        if (defaultScoreboardPageName != null && !defaultScoreboardPageName.isEmpty()) {
-            ScoreboardPage defaultPage = ScoreboardService.get().getPage(defaultScoreboardPageName);
-            FancyCorePlugin.get().getScoreboardServiceImpl().attachScoreboard(fp, defaultPage);
+        if (!FancyCorePlugin.get().getConfig().disableScoreboardSystem()) {
+            String defaultScoreboardPageName = FancyCorePlugin.get().getConfig().getDefaultScoreboardPageName();
+            if (defaultScoreboardPageName != null && !defaultScoreboardPageName.isEmpty()) {
+                ScoreboardPage defaultPage = ScoreboardService.get().getPage(defaultScoreboardPageName);
+                FancyCorePlugin.get().getScoreboardServiceImpl().attachScoreboard(fp, defaultPage);
+            }
         }
     }
 

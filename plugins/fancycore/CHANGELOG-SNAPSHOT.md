@@ -4,6 +4,7 @@
 * Added `/deop <target>` command to deop a specific player
 * Added placeholder parsing to private messages
 * Don't show kicks and warns as active punishments
+* Added `disable_scoreboard_system` feature flag to disable the scoreboard
 
 ## Commit
 

@@ -28,6 +28,7 @@ public class FancyCoreConfigImpl implements FancyCoreConfig {
     public static final String DISABLE_PERMISSION_PROVIDER_PATH = "experimental_features.disable_permission_provider"; // TODO remove in future versions (replaced by DISABLE_PERMISSION_SYSTEM_PATH)
     public static final String DISABLE_PERMISSION_SYSTEM_PATH = "experimental_features.disable_permission_system";
     public static final String DISABLE_ECONOMY_SYSTEM_PATH = "experimental_features.disable_economy_system";
+    public static final String DISABLE_SCOREBOARD_SYSTEM_PATH = "experimental_features.disable_scoreboard_system";
 
     private static final String CONFIG_FILE_PATH = FancyCorePaths.CONFIG_FILE;
     private ConfigJSON config;
@@ -246,6 +247,17 @@ public class FancyCoreConfigImpl implements FancyCoreConfig {
                 )
         );
 
+        config.addField(
+                new ConfigField<>(
+                        DISABLE_SCOREBOARD_SYSTEM_PATH,
+                        "If true, FancyCore's scoreboard system will be disabled.",
+                        false,
+                        false,
+                        false,
+                        Boolean.class
+                )
+        );
+
         config.reload();
     }
 
@@ -347,5 +359,10 @@ public class FancyCoreConfigImpl implements FancyCoreConfig {
     @Override
     public boolean disableEconomySystem() {
         return config.get(DISABLE_ECONOMY_SYSTEM_PATH);
+    }
+
+    @Override
+    public boolean disableScoreboardSystem() {
+        return config.get(DISABLE_SCOREBOARD_SYSTEM_PATH);
     }
 }

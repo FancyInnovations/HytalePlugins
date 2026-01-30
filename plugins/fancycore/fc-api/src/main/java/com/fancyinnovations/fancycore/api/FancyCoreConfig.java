@@ -44,6 +44,8 @@ public interface FancyCoreConfig {
 
     boolean disableEconomySystem();
 
+    boolean disableScoreboardSystem();
+
     void reload();
 
 }
