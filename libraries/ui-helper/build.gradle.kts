@@ -34,7 +34,11 @@ tasks {
                     name = "Authorization"
                     value = providers
                         .gradleProperty("fancyspacesApiKey")
-                        .orElse(providers.environmentVariable("FANCYSPACES_API_KEY"))
+                        .orElse(
+                            providers
+                                .environmentVariable("FANCYSPACES_API_KEY")
+                                .orElse("")
+                        )
                         .get()
                 }
 
@@ -51,7 +55,11 @@ tasks {
                     name = "Authorization"
                     value = providers
                         .gradleProperty("fancyspacesApiKey")
-                        .orElse(providers.environmentVariable("FANCYSPACES_API_KEY"))
+                        .orElse(
+                            providers
+                                .environmentVariable("FANCYSPACES_API_KEY")
+                                .orElse("")
+                        )
                         .get()
                 }
 
