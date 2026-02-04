@@ -9,7 +9,7 @@ dependencies {
     compileOnly("de.oliver.FancyAnalytics:logger:0.0.9")
 
     compileOnly("com.google.code.gson:gson:2.13.2")
-    compileOnly("org.mongodb:mongodb-driver-sync:5.6.2")
+    compileOnly("org.mongodb:mongodb-driver-sync:5.6.3")
     compileOnly("org.jetbrains:annotations:26.0.2-1")
 }
 

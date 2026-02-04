@@ -40,7 +40,7 @@ dependencies {
     compileOnly("net.luckperms:api:5.5")
 
     compileOnly("com.google.code.gson:gson:2.13.2")
-    implementation("org.mongodb:mongodb-driver-sync:5.6.2")
+    implementation("org.mongodb:mongodb-driver-sync:5.6.3")
     implementation("org.jetbrains:annotations:26.0.2-1")
 
     testImplementation("org.junit.jupiter:junit-jupiter:6.0.2")
