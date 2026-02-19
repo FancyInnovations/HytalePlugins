@@ -8,7 +8,7 @@ dependencies {
     compileOnly("com.hypixel.hytale:Server:2026.01.28-87d03be09")
 
     compileOnly("de.oliver.FancyAnalytics:logger:0.0.9")
-    compileOnly("org.jetbrains:annotations:26.0.2-1")
+    compileOnly("org.jetbrains:annotations:26.1.0")
 }
 
 tasks {
