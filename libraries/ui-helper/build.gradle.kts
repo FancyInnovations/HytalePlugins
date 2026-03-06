@@ -13,7 +13,7 @@ repositories {
 }
 
 dependencies {
-    compileOnly("com.hypixel.hytale:Server:2026.01.28-87d03be09")
+    compileOnly("com.hypixel.hytale:Server:2026.02.19-1a311a592")
 
     compileOnly("de.oliver.FancyAnalytics:logger:0.0.9")
     compileOnly("de.oliver.FancyAnalytics:java-sdk:0.0.5")
