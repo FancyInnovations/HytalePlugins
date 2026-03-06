@@ -57,5 +57,7 @@ jobs:
           hytahub_api_key: ${{ secrets.HYTAHUB_API_KEY }}
           discord_webhook_url: ${{ secrets.DISCORD_WEBHOOK_URL }}
 
-#      - name: Publish to reposilite (snapshots)
-#        run: ./gradlew :plugins:fancycore:fc-api:publishAllPublicationsToFancyinnovationsSnapshotsRepository
+      - name: Publish to maven snapshots repo
+        run: ./gradlew :plugins:fancycore:fc-api:publishMavenPublicationToFancyspacesSnapshotsRepository
+        env:
+          FANCYSPACES_API_KEY: ${{ secrets.FANCYSPACES_API_KEY }}
