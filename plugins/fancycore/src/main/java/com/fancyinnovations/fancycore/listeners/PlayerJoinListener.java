@@ -22,6 +22,7 @@ import com.fancyinnovations.fancycore.player.service.FancyPlayerServiceImpl;
 import com.fancyinnovations.hytaleutils.TimeUtils;
 import com.hypixel.hytale.component.Ref;
 import com.hypixel.hytale.component.Store;
+import com.hypixel.hytale.server.core.Message;
 import com.hypixel.hytale.server.core.entity.UUIDComponent;
 import com.hypixel.hytale.server.core.entity.entities.Player;
 import com.hypixel.hytale.server.core.entity.entities.player.movement.MovementManager;
@@ -87,7 +88,7 @@ public class PlayerJoinListener {
                         .getMessage(MessageKey.BAN_PERMANENT)
                         .replace("reason", punishment.reason())
                         .getParsedMessage();
-                event.getPlayerRef().getPacketHandler().disconnect(banMessage);
+                event.getPlayerRef().getPacketHandler().disconnect(Message.raw(banMessage));
             } else {
                 String duration = TimeUtils.formatTime(punishment.remainingDuration());
                 String banMessage = FancyCore.get().getTranslationService()
@@ -95,7 +96,7 @@ public class PlayerJoinListener {
                         .replace("reason", punishment.reason())
                         .replace("duration", duration)
                         .getParsedMessage();
-                event.getPlayerRef().getPacketHandler().disconnect(banMessage);
+                event.getPlayerRef().getPacketHandler().disconnect(Message.raw(banMessage));
             }
             return;
         }

@@ -23,7 +23,7 @@ repositories {
 }
 
 dependencies {
-    compileOnly("com.hypixel.hytale:Server:2026.02.19-1a311a592")
+    compileOnly("com.hypixel.hytale:Server:2026.03.26-89796e57b")
 
     implementation(project(":plugins:fancycore:fc-api"))
 

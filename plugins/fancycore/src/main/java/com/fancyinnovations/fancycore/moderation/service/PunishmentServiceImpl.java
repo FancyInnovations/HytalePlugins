@@ -10,6 +10,7 @@ import com.fancyinnovations.fancycore.moderation.PunishmentImpl;
 import com.fancyinnovations.fancycore.translations.TranslationService;
 import com.fancyinnovations.hytaleutils.IDGen;
 import com.fancyinnovations.hytaleutils.TimeUtils;
+import com.hypixel.hytale.server.core.Message;
 import com.hypixel.hytale.server.core.universe.Universe;
 
 import java.util.List;
@@ -126,7 +127,7 @@ public class PunishmentServiceImpl implements PunishmentService {
 
         Universe.get().getWorld(player.getPlayer().getWorldUuid()).execute(() -> {
             if (player.getPlayer() != null) {
-                player.getPlayer().getPacketHandler().disconnect(kickMessage);
+                player.getPlayer().getPacketHandler().disconnect(Message.raw(kickMessage));
             }
         });
 
@@ -166,7 +167,7 @@ public class PunishmentServiceImpl implements PunishmentService {
         }
 
         if (player.getPlayer() != null) {
-            player.getPlayer().getPacketHandler().disconnect(kickMessage);
+            player.getPlayer().getPacketHandler().disconnect(Message.raw(kickMessage));
         }
         // If player is offline, ban is still recorded but disconnect message cannot be sent
 
