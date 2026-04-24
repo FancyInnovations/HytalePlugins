@@ -4,7 +4,7 @@ plugins {
 }
 
 dependencies {
-    compileOnly("com.hypixel.hytale:Server:2026.02.19-1a311a592")
+    compileOnly("com.hypixel.hytale:Server:2026.04.23-937872667")
 
     compileOnly(project(":libraries:hytale-utils"))
 
@@ -12,8 +12,8 @@ dependencies {
     compileOnly("de.oliver.FancyAnalytics:java-sdk:0.0.5")
     compileOnly("com.fancyinnovations.fancyspaces:java-sdk:0.0.4")
 
-    compileOnly("com.google.code.gson:gson:2.13.2")
-    compileOnly("org.jetbrains:annotations:26.0.2-1")
+    compileOnly("com.google.code.gson:gson:2.14.0")
+    compileOnly("org.jetbrains:annotations:26.1.0")
 }
 
 tasks {
