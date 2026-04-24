@@ -23,7 +23,7 @@ repositories {
 }
 
 dependencies {
-    compileOnly("com.hypixel.hytale:Server:2026.03.26-89796e57b")
+    compileOnly("com.hypixel.hytale:Server:2026.04.23-937872667")
 
     implementation(project(":plugins:fancycore:fc-api"))
 
@@ -39,11 +39,11 @@ dependencies {
 
     compileOnly("net.luckperms:api:5.5")
 
-    compileOnly("com.google.code.gson:gson:2.13.2")
-    implementation("org.mongodb:mongodb-driver-sync:5.6.2")
-    implementation("org.jetbrains:annotations:26.0.2-1")
+    compileOnly("com.google.code.gson:gson:2.14.0")
+    implementation("org.mongodb:mongodb-driver-sync:5.6.5")
+    implementation("org.jetbrains:annotations:26.1.0")
 
-    testImplementation("org.junit.jupiter:junit-jupiter:6.0.2")
+    testImplementation("org.junit.jupiter:junit-jupiter:6.0.3")
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
 }
 
