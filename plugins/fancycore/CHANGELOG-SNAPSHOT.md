@@ -1,13 +1,6 @@
 ## Changes
 
-* Added missing permission for `/fancycore version` command
-* Added `/deop <target>` command to deop a specific player
-* Added placeholder parsing to private messages
-* Don't show kicks and warns as active punishments
-* Added `disable_scoreboard_system` feature flag to disable the scoreboard
-* Fixed report time not loading correctly
-* Fixed first join message getting sent twice (to the one who joined for the first time)
-* Updated duration arguments (for tempban and tempmute) to use "m" for minutes and "mo" for months to avoid confusion
+* Added support for `0.6.0-pre.4`
 
 ## Commit
 
