@@ -36,6 +36,6 @@ public class PlayerLocationPitchPlaceholder implements PlaceholderProvider {
             return "N/A";
         }
 
-        return NumberUtils.FORMAT_TWO_DECIMALS.format(transform.getRotation().getPitch());
+        return NumberUtils.FORMAT_TWO_DECIMALS.format(transform.getRotation().pitch());
     }
 }

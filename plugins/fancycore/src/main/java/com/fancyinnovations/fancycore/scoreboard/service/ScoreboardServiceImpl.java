@@ -82,7 +82,7 @@ public class ScoreboardServiceImpl implements ScoreboardService {
         }
 
         // Check if the player already has a scoreboard UI
-        if (player.getHudManager().getCustomHud() instanceof ScoreboardUI sui) {
+        if (player.getHudManager().getCustomHud(ScoreboardUI.KEY) != null && player.getHudManager().getCustomHud("FANCYCORE_SCOREBOARD") instanceof ScoreboardUI sui) {
             sui.setCurrentPage(page);
             sui.refreshUI();
 
@@ -94,7 +94,7 @@ public class ScoreboardServiceImpl implements ScoreboardService {
 
         // Create a new scoreboard UI and attach it to the player
         ScoreboardUI scoreboardUI = new ScoreboardUI(fancyPlayer, page);
-        player.getHudManager().setCustomHud(fancyPlayer.getPlayer(), scoreboardUI);
+        player.getHudManager().addCustomHud(fancyPlayer.getPlayer(), scoreboardUI);
 
         playerScoreboards.put(fancyPlayer, scoreboardUI);
     }

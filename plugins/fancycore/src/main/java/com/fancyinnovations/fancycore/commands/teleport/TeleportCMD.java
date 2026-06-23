@@ -17,6 +17,7 @@ import com.hypixel.hytale.server.core.universe.PlayerRef;
 import com.hypixel.hytale.server.core.universe.world.World;
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
 import org.jetbrains.annotations.NotNull;
+import org.joml.Vector3d;
 
 public class TeleportCMD extends CommandBase {
 
@@ -118,7 +119,13 @@ public class TeleportCMD extends CommandBase {
                 }
 
                 // Create teleport component
-                Teleport teleport = new Teleport(destinationWorld, destinationTransformComponent.getPosition().clone(), destinationHeadRotationComponent.getRotation().clone());
+                Vector3d pos = null;
+                try {
+                    pos = (Vector3d) destinationTransformComponent.getPosition().clone();
+                } catch (CloneNotSupportedException e) {
+                    throw new RuntimeException(e);
+                }
+                Teleport teleport = new Teleport(destinationWorld, pos, destinationHeadRotationComponent.getRotation().clone());
 
                 // Add teleport component to target player
                 targetStore.addComponent(targetRef, Teleport.getComponentType(), teleport);
@@ -157,7 +164,13 @@ public class TeleportCMD extends CommandBase {
                     }
 
                     // Create teleport component
-                    Teleport teleport = new Teleport(destinationWorld, destinationTransformComponent.getPosition().clone(), destinationHeadRotationComponent.getRotation().clone());
+                    Vector3d pos = null;
+                    try {
+                        pos = (Vector3d) destinationTransformComponent.getPosition().clone();
+                    } catch (CloneNotSupportedException e) {
+                        throw new RuntimeException(e);
+                    }
+                    Teleport teleport = new Teleport(destinationWorld, pos, destinationHeadRotationComponent.getRotation().clone());
 
                     // Add teleport component to target player
                     targetStore.addComponent(targetRef, Teleport.getComponentType(), teleport);

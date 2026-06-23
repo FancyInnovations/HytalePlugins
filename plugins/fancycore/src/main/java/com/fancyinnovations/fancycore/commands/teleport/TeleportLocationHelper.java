@@ -35,11 +35,11 @@ public class TeleportLocationHelper {
 
         Map<String, Object> backLocation = new HashMap<>();
         backLocation.put("world", world.getName());
-        backLocation.put("x", transformComponent.getPosition().getX());
-        backLocation.put("y", transformComponent.getPosition().getY());
-        backLocation.put("z", transformComponent.getPosition().getZ());
-        backLocation.put("yaw", headRotationComponent.getRotation().getYaw());
-        backLocation.put("pitch", headRotationComponent.getRotation().getPitch());
+        backLocation.put("x", transformComponent.getPosition().x());
+        backLocation.put("y", transformComponent.getPosition().y());
+        backLocation.put("z", transformComponent.getPosition().z());
+        backLocation.put("yaw", headRotationComponent.getRotation().yaw());
+        backLocation.put("pitch", headRotationComponent.getRotation().pitch());
         fp.getData().setCustomData("teleport_back_location", backLocation);
     }
 }

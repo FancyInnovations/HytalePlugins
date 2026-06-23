@@ -36,6 +36,6 @@ public class PlayerLocationRollPlaceholder implements PlaceholderProvider {
             return "N/A";
         }
 
-        return NumberUtils.FORMAT_TWO_DECIMALS.format(transform.getRotation().getRoll());
+        return NumberUtils.FORMAT_TWO_DECIMALS.format(transform.getRotation().roll());
     }
 }

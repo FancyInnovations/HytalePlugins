@@ -4,7 +4,7 @@ import com.fancyinnovations.fancycore.api.player.FancyPlayer;
 import com.fancyinnovations.fancycore.api.player.FancyPlayerService;
 import com.hypixel.hytale.component.Ref;
 import com.hypixel.hytale.component.Store;
-import com.hypixel.hytale.math.vector.Vector3d;
+import org.joml.Vector3d;
 import com.hypixel.hytale.server.core.Message;
 import com.hypixel.hytale.server.core.command.system.CommandContext;
 import com.hypixel.hytale.server.core.command.system.arguments.system.OptionalArg;
@@ -86,7 +86,7 @@ public class NearCMD extends AbstractPlayerCommand {
                 }
 
                 Vector3d otherPos = otherTransform.getPosition();
-                double distance = senderPos.distanceTo(otherPos);
+                double distance = senderPos.distance(otherPos);
 
                 if (distance <= radius) {
                     nearbyPlayers.add(new NearbyPlayer(otherPlayerRef.getUsername(), distance));

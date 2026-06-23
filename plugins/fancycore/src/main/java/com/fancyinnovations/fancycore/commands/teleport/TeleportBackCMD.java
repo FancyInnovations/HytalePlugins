@@ -4,8 +4,8 @@ import com.fancyinnovations.fancycore.api.player.FancyPlayer;
 import com.fancyinnovations.fancycore.api.player.FancyPlayerService;
 import com.hypixel.hytale.component.Ref;
 import com.hypixel.hytale.component.Store;
-import com.hypixel.hytale.math.vector.Vector3d;
-import com.hypixel.hytale.math.vector.Vector3f;
+import com.hypixel.hytale.math.vector.Rotation3f;
+import org.joml.Vector3d;
 import com.hypixel.hytale.server.core.Message;
 import com.hypixel.hytale.server.core.command.system.CommandContext;
 import com.hypixel.hytale.server.core.command.system.basecommands.CommandBase;
@@ -95,18 +95,18 @@ public class TeleportBackCMD extends CommandBase {
             // Save current location as new back location
             Map<String, Object> newBackLocation = new java.util.HashMap<>();
             newBackLocation.put("world", currentWorld.getName());
-            newBackLocation.put("x", transformComponent.getPosition().getX());
-            newBackLocation.put("y", transformComponent.getPosition().getY());
-            newBackLocation.put("z", transformComponent.getPosition().getZ());
-            newBackLocation.put("yaw", headRotationComponent.getRotation().getYaw());
-            newBackLocation.put("pitch", headRotationComponent.getRotation().getPitch());
+            newBackLocation.put("x", transformComponent.getPosition().x());
+            newBackLocation.put("y", transformComponent.getPosition().y());
+            newBackLocation.put("z", transformComponent.getPosition().z());
+            newBackLocation.put("yaw", headRotationComponent.getRotation().yaw());
+            newBackLocation.put("pitch", headRotationComponent.getRotation().pitch());
             fp.getData().setCustomData("teleport_back_location", newBackLocation);
 
             // Execute teleportation on the target world thread
             targetWorld.execute(() -> {
 
                 // Create teleport component
-                Teleport teleport = new Teleport(targetWorld, new Vector3d(x, y, z), new Vector3f((float) yaw.doubleValue(), (float) pitch.doubleValue(), 0.0f));
+                Teleport teleport = new Teleport(targetWorld, new Vector3d(x, y, z), new Rotation3f((float) yaw.doubleValue(), (float) pitch.doubleValue(), 0.0f));
 
                 // Add teleport component to sender
                 senderStore.addComponent(senderRef, Teleport.getComponentType(), teleport);

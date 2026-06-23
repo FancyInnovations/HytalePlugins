@@ -36,6 +36,6 @@ public class PlayerLocationYawPlaceholder implements PlaceholderProvider {
             return "N/A";
         }
 
-        return NumberUtils.FORMAT_TWO_DECIMALS.format(transform.getRotation().getYaw());
+        return NumberUtils.FORMAT_TWO_DECIMALS.format(transform.getRotation().yaw());
     }
 }

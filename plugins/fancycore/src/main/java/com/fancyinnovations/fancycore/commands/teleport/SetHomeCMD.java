@@ -8,8 +8,9 @@ import com.fancyinnovations.fancycore.api.teleport.Location;
 import com.fancyinnovations.hytaleutils.NumberUtils;
 import com.hypixel.hytale.component.Ref;
 import com.hypixel.hytale.component.Store;
-import com.hypixel.hytale.math.vector.Vector3d;
-import com.hypixel.hytale.math.vector.Vector3f;
+import com.hypixel.hytale.math.vector.Rotation3f;
+import com.hypixel.hytale.math.vector.Rotation3fc;
+import org.joml.Vector3d;
 import com.hypixel.hytale.server.core.Message;
 import com.hypixel.hytale.server.core.command.system.CommandContext;
 import com.hypixel.hytale.server.core.command.system.arguments.system.DefaultArg;
@@ -22,6 +23,7 @@ import com.hypixel.hytale.server.core.modules.entity.component.HeadRotation;
 import com.hypixel.hytale.server.core.modules.entity.component.TransformComponent;
 import com.hypixel.hytale.server.core.universe.world.World;
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
+import org.joml.Vector3f;
 
 import javax.annotation.Nonnull;
 
@@ -29,7 +31,7 @@ public class SetHomeCMD extends AbstractWorldCommand {
 
     protected final RequiredArg<String> nameArg = this.withRequiredArg("home", "name of the new home", ArgTypes.STRING);
     private final OptionalArg<RelativeDoublePosition> positionArg = this.withOptionalArg("position", "position to set", ArgTypes.RELATIVE_POSITION);
-    private final DefaultArg<Vector3f> rotationArg = this.withDefaultArg("rotation", "rotation to set", ArgTypes.ROTATION, Vector3f.FORWARD, "forward looking direction");
+    private final DefaultArg<Rotation3fc> rotationArg = this.withDefaultArg("rotation", "rotation to set", ArgTypes.ROTATION, new Rotation3f(0,0,0), "forward looking direction");
 
     public SetHomeCMD() {
         super("sethome", "Sets your home point to your current location");
@@ -57,10 +59,14 @@ public class SetHomeCMD extends AbstractWorldCommand {
             position = relativePosition.getRelativePosition(ctx, world, store);
         } else {
             TransformComponent transformComponent = store.getComponent(playerRef, TransformComponent.getComponentType());
-            position = transformComponent.getPosition().clone();
+            try {
+                position = (Vector3d) transformComponent.getPosition().clone();
+            } catch (CloneNotSupportedException e) {
+                throw new RuntimeException(e);
+            }
         }
 
-        Vector3f rotation;
+        Rotation3fc rotation;
         if (this.rotationArg.provided(ctx)) {
             rotation = this.rotationArg.get(ctx);
         } else  {
@@ -92,11 +98,11 @@ public class SetHomeCMD extends AbstractWorldCommand {
 
         Location homeLocation = new Location(
                 world.getName(),
-                position.getX(),
-                position.getY(),
-                position.getZ(),
-                rotation.getYaw(),
-                rotation.getPitch()
+                position.x(),
+                position.y(),
+                position.z(),
+                rotation.yaw(),
+                rotation.pitch()
         );
         fp.getData().addHome(new Home(name, homeLocation));
 

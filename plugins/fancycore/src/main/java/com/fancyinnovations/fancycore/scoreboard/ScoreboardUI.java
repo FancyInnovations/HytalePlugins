@@ -22,12 +22,14 @@ import java.lang.reflect.Method;
 
 public class ScoreboardUI extends CustomUIHud {
 
+    public static final String KEY = "FANCYCORE_SCOREBOARD";
+
     private final FancyPlayer fancyPlayer;
     private ScoreboardPage currentPage;
     private Method setBsonValueMethod = null;
 
     public ScoreboardUI(FancyPlayer fancyPlayer, ScoreboardPage scoreboardPage) {
-        super(fancyPlayer.getPlayer());
+        super(fancyPlayer.getPlayer(), KEY);
         this.fancyPlayer = fancyPlayer;
         this.currentPage = scoreboardPage;
 

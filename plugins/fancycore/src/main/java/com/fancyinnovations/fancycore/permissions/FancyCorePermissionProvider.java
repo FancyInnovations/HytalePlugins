@@ -8,6 +8,7 @@ import com.fancyinnovations.fancycore.api.player.FancyPlayerService;
 import com.fancyinnovations.fancycore.main.FancyCorePlugin;
 import com.hypixel.hytale.server.core.permissions.provider.PermissionProvider;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -159,5 +160,28 @@ public class FancyCorePermissionProvider implements PermissionProvider {
         }
 
         return Set.copyOf(fp.getData().getGroups());
+    }
+
+    @Override
+    public void setUserGroup(@NotNull UUID uuid, @NotNull String s) {
+        // TODO implement setUserGroup
+    }
+
+    @Override
+    public @Nullable String getGroupParent(@NotNull String s) {
+        // TODO implement getGroupParent
+        return "";
+    }
+
+    @Override
+    public @NotNull Set<String> getAllRegisteredGroups() {
+        // TODO implement getAllRegisteredGroups
+        return Set.of();
+    }
+
+    @Override
+    public @NotNull Set<String> getEffectiveGroupPermissions(@NotNull String s) {
+        // TODO implement getEffectiveGroupPermissions
+        return Set.of();
     }
 }

@@ -36,6 +36,6 @@ public class PlayerLocationYPlaceholder implements PlaceholderProvider {
             return "N/A";
         }
 
-        return NumberUtils.FORMAT_TWO_DECIMALS.format(transform.getPosition().getY());
+        return NumberUtils.FORMAT_TWO_DECIMALS.format(transform.getPosition().y());
     }
 }

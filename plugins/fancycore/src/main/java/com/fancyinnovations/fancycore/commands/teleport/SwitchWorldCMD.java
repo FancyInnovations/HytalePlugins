@@ -5,9 +5,9 @@ import com.fancyinnovations.fancycore.api.player.FancyPlayerService;
 import com.hypixel.hytale.builtin.teleport.components.TeleportHistory;
 import com.hypixel.hytale.component.Ref;
 import com.hypixel.hytale.component.Store;
+import com.hypixel.hytale.math.vector.Rotation3f;
 import com.hypixel.hytale.math.vector.Transform;
-import com.hypixel.hytale.math.vector.Vector3d;
-import com.hypixel.hytale.math.vector.Vector3f;
+import org.joml.Vector3d;
 import com.hypixel.hytale.server.core.Message;
 import com.hypixel.hytale.server.core.command.system.CommandContext;
 import com.hypixel.hytale.server.core.command.system.arguments.system.RequiredArg;
@@ -54,8 +54,13 @@ public class SwitchWorldCMD extends AbstractPlayerCommand {
         TransformComponent transformComponent = store.getComponent(ref, TransformComponent.getComponentType());
         HeadRotation headRotationComponent = store.getComponent(ref, HeadRotation.getComponentType());
 
-        Vector3d previousPos = transformComponent.getPosition().clone();
-        Vector3f previousRotation = headRotationComponent.getRotation().clone();
+        Vector3d previousPos = null;
+        try {
+            previousPos = (Vector3d) transformComponent.getPosition().clone();
+        } catch (CloneNotSupportedException e) {
+            throw new RuntimeException(e);
+        }
+        Rotation3f previousRotation = headRotationComponent.getRotation().clone();
 
         TeleportHistory teleportHistoryComponent = store.ensureAndGetComponent(ref, TeleportHistory.getComponentType());
         teleportHistoryComponent.append(world, previousPos, previousRotation, "World " + destinationWorld.getName());
@@ -63,6 +68,6 @@ public class SwitchWorldCMD extends AbstractPlayerCommand {
         store.addComponent(ref, Teleport.getComponentType(), new Teleport(destinationWorld, spawnPoint.getPosition(), spawnPoint.getRotation()));
         Vector3d spawnPos = spawnPoint.getPosition();
 
-        fp.sendMessage("Teleported to world " + destinationWorld.getName() + " at spawn point (" + spawnPos.getX() + ", " + spawnPos.getY() + ", " + spawnPos.getZ() + ").");
+        fp.sendMessage("Teleported to world " + destinationWorld.getName() + " at spawn point (" + spawnPos.x() + ", " + spawnPos.y() + ", " + spawnPos.z() + ").");
     }
 }

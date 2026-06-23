@@ -16,6 +16,7 @@ import com.hypixel.hytale.server.core.universe.PlayerRef;
 import com.hypixel.hytale.server.core.universe.world.World;
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
 import org.jetbrains.annotations.NotNull;
+import org.joml.Vector3d;
 
 public class TeleportHereCMD extends CommandBase {
 
@@ -85,8 +86,13 @@ public class TeleportHereCMD extends CommandBase {
                 }
 
                 // Create teleport component
-                Teleport teleport = new Teleport(senderWorld, senderTransformComponent.getPosition().clone(),
-                        senderHeadRotationComponent.getRotation().clone());
+                Vector3d pos = null;
+                try {
+                    pos = (Vector3d) senderTransformComponent.getPosition().clone();
+                } catch (CloneNotSupportedException e) {
+                    throw new RuntimeException(e);
+                }
+                Teleport teleport = new Teleport(senderWorld, pos, senderHeadRotationComponent.getRotation().clone());
 
                 // Add teleport component to target player
                 targetStore.addComponent(targetRef, Teleport.getComponentType(), teleport);
