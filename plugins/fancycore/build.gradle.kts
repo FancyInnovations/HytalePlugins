@@ -30,10 +30,10 @@ dependencies {
     compileOnly("net.luckperms:api:5.5")
 
     compileOnly("com.google.code.gson:gson:2.14.0")
-    implementation("org.mongodb:mongodb-driver-sync:5.6.5")
+    implementation("org.mongodb:mongodb-driver-sync:5.8.0")
     implementation("org.jetbrains:annotations:26.1.0")
 
-    testImplementation("org.junit.jupiter:junit-jupiter:6.0.3")
+    testImplementation("org.junit.jupiter:junit-jupiter:6.1.0")
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
 }
 
