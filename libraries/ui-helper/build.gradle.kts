@@ -19,8 +19,8 @@ dependencies {
     compileOnly("de.oliver.FancyAnalytics:java-sdk:0.0.6")
     compileOnly("com.fancyinnovations.fancyspaces:java-sdk:0.0.4")
 
-    compileOnly("com.google.code.gson:gson:2.13.2")
-    compileOnly("org.jetbrains:annotations:26.0.2-1")
+    compileOnly("com.google.code.gson:gson:2.14.0")
+    compileOnly("org.jetbrains:annotations:26.1.0")
 }
 
 tasks {
