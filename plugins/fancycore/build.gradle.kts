@@ -12,18 +12,8 @@ allprojects {
     description = "All the essentials for your Hytale server"
 }
 
-repositories {
-    mavenLocal()
-    mavenCentral()
-    maven(url = "https://jitpack.io")
-    maven("https://repo.fancyinnovations.com/releases")
-    maven("https://repo.fancyinnovations.com/snapshots")
-    maven(url = "https://maven.hytale.com/release")
-    maven(url = "https://maven.hytale.com/pre-release")
-}
-
 dependencies {
-    compileOnly("com.hypixel.hytale:Server:2026.03.26-89796e57b")
+    compileOnly("com.hypixel.hytale:Server:0.6.0-pre.4")
 
     implementation(project(":plugins:fancycore:fc-api"))
 
