@@ -4,7 +4,7 @@ plugins {
 }
 
 dependencies {
-    compileOnly("com.hypixel.hytale:Server:0.6.0-pre.4")
+    compileOnly("com.hypixel.hytale:Server:0.6.0-pre.5")
 
     compileOnly(project(":libraries:hytale-utils"))
 
