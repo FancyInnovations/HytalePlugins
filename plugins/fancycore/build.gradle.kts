@@ -13,7 +13,7 @@ allprojects {
 }
 
 dependencies {
-    compileOnly("com.hypixel.hytale:Server:0.6.0-pre.4")
+    compileOnly("com.hypixel.hytale:Server:0.6.0-pre.5")
 
     implementation(project(":plugins:fancycore:fc-api"))
 
@@ -33,7 +33,7 @@ dependencies {
     implementation("org.mongodb:mongodb-driver-sync:5.8.0")
     implementation("org.jetbrains:annotations:26.1.0")
 
-    testImplementation("org.junit.jupiter:junit-jupiter:6.1.0")
+    testImplementation("org.junit.jupiter:junit-jupiter:6.1.1")
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
 }
 
