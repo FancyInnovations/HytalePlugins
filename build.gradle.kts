@@ -1,5 +1,5 @@
 plugins {
-    id("com.gradleup.shadow") version "9.4.2" apply false
+    id("com.gradleup.shadow") version "9.5.1" apply false
 }
 
 allprojects {
