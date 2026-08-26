@@ -4,12 +4,12 @@ plugins {
 }
 
 dependencies {
-    compileOnly("com.hypixel.hytale:Server:0.6.0-pre.4")
+    compileOnly("com.hypixel.hytale:Server:0.6.0-pre.13.1")
 
     compileOnly("de.oliver.FancyAnalytics:logger:0.0.10")
 
     compileOnly("com.google.code.gson:gson:2.14.0")
-    compileOnly("org.mongodb:mongodb-driver-sync:5.8.0")
+    compileOnly("org.mongodb:mongodb-driver-sync:5.10.0")
     compileOnly("org.jetbrains:annotations:26.1.0")
 }
 
