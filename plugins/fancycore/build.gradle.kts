@@ -13,7 +13,7 @@ allprojects {
 }
 
 dependencies {
-    compileOnly("com.hypixel.hytale:Server:0.6.0-pre.4")
+    compileOnly("com.hypixel.hytale:Server:0.7.0-pre.3.1")
 
     implementation(project(":plugins:fancycore:fc-api"))
 
@@ -23,17 +23,17 @@ dependencies {
 
     implementation("de.oliver:JDB:1.0.4")
     implementation("de.oliver:config:1.0.1")
-    implementation("de.oliver.FancyAnalytics:java-sdk:0.0.5")
-    implementation("de.oliver.FancyAnalytics:logger:0.0.9")
+    implementation("de.oliver.FancyAnalytics:java-sdk:0.0.6")
+    implementation("de.oliver.FancyAnalytics:logger:0.0.10")
     implementation("com.fancyinnovations.fancyspaces:java-sdk:0.0.4")
 
     compileOnly("net.luckperms:api:5.5")
 
     compileOnly("com.google.code.gson:gson:2.14.0")
-    implementation("org.mongodb:mongodb-driver-sync:5.8.0")
+    implementation("org.mongodb:mongodb-driver-sync:5.12.0")
     implementation("org.jetbrains:annotations:26.1.0")
 
-    testImplementation("org.junit.jupiter:junit-jupiter:6.1.0")
+    testImplementation("org.junit.jupiter:junit-jupiter:6.1.3")
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
 }
 
